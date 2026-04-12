@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>XAT Search Fixed</title>
+<title>Ramy SaaS Platform</title>
 
 <style>
 body{
@@ -17,6 +17,7 @@ input,button{
   padding:12px;
   border:none;
   border-radius:10px;
+  margin:5px;
 }
 
 button{
@@ -31,82 +32,59 @@ button{
   padding:15px;
   border-radius:12px;
   display:inline-block;
-  min-width:300px;
+  min-width:320px;
+  text-align:left;
 }
+
+h1{margin-bottom:20px;}
 </style>
 </head>
 
 <body>
 
-<h1>🌍 XAT Profile Search (Stable)</h1>
+<h1>🌍 RAMY SAAS ANALYTICS</h1>
 
-<input id="q" placeholder="Enter username">
+<!-- SEARCH -->
+<input id="search" placeholder="Search ID / Username / Name">
 <button onclick="search()">Search</button>
 
-<div class="card" id="out">No data</div>
+<div id="result" class="card">No data yet</div>
 
 <script>
 
-// 🟡 Demo dataset fallback (يضمن أن البحث ALWAYS يعمل)
-const fallbackDB = [
-  {
-    name:"Ramy",
-    id:"101",
-    nick:"ramy_xat",
-    avatar:"https://xatimg.com/image/NTKWfOtODi9Z.jpg"
-  },
-  {
-    name:"Ahmed",
-    id:"102",
-    nick:"ahmed_xat",
-    avatar:"https://xatimg.com/image/NTKWfOtODi9Z.jpg"
-  },
-  {
-    name:"Sara",
-    id:"103",
-    nick:"sara_xat",
-    avatar:"https://xatimg.com/image/NTKWfOtODi9Z.jpg"
-  }
-];
+const API = "http://localhost:5000/api/search?q=";
 
 async function search(){
-  const q = document.getElementById("q").value.toLowerCase();
+  const q = document.getElementById("search").value;
 
   if(!q) return;
 
-  // 🟢 أولاً نحاول API الحقيقي
   try{
-    const url = "https://pythbots.com/api/xatprofile.php?u=" + q;
-    const res = await fetch(url);
-    const d = await res.json();
+    const res = await fetch(API + q);
+    const data = await res.json();
 
-    if(d && d.name){
-      render(d);
+    if(data.length === 0){
+      document.getElementById("result").innerHTML = "❌ No results";
       return;
     }
+
+    let html = "";
+
+    data.forEach(u=>{
+      html += `
+        👤 Name: ${u.name}<br>
+        🆔 ID: ${u.id}<br>
+        🔖 Username: ${u.username}<br>
+        📊 Status: ${u.status}<br>
+        🏅 Rank: ${u.rank}<br><br>
+      `;
+    });
+
+    document.getElementById("result").innerHTML = html;
+
   }catch(e){
-    console.log("API failed, using fallback");
+    document.getElementById("result").innerHTML = "❌ API Error";
   }
-
-  // 🔵 fallback system (يضمن النتيجة دائمًا)
-  const found = fallbackDB.find(u =>
-    u.id.includes(q) || u.name.toLowerCase().includes(q) || u.nick.toLowerCase().includes(q)
-  );
-
-  if(found){
-    render(found);
-  }else{
-    document.getElementById("out").innerHTML = "❌ No user found";
-  }
-}
-
-function render(d){
-  document.getElementById("out").innerHTML = `
-    👤 Name: ${d.name}<br>
-    🆔 ID: ${d.id}<br>
-    🔖 Nick: ${d.nick}<br>
-    <img src="${d.avatar}" width="100" style="border-radius:12px;margin-top:10px;">
-  `;
 }
 
 </script>
