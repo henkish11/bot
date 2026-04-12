@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>XAT Profile Search</title>
+<title>XAT Codes System</title>
 
 <style>
 body{
@@ -35,8 +35,8 @@ button{
 }
 
 img{
-  width:100px;
-  border-radius:12px;
+  width:110px;
+  border-radius:14px;
   margin-top:10px;
 }
 </style>
@@ -44,28 +44,27 @@ img{
 
 <body>
 
-<h1>🌍 XAT PROFILE SEARCH</h1>
+<h1>🌍 XAT CODES SYSTEM</h1>
 
-<input id="u" placeholder="Enter ID or Username">
+<input id="q" placeholder="Enter ID or Username">
 <button onclick="search()">Search</button>
 
 <div class="card" id="out">No data</div>
 
 <script>
 
-// 🔗 API مباشرة من كودك
+// 🔗 API الحقيقي
 const API = "https://pythbots.com/api/xatprofile.php?u=";
 
-// 🧠 fallback لو API فشل
+// 🧠 fallback
 const fallback = {
-  name: "Not Found",
   id: "-",
   username: "-",
-  avatar: "https://xatimg.com/image/NTKWfOtODi9Z.jpg"
+  image: "https://xatimg.com/image/NTKWfOtODi9Z.jpg"
 };
 
 async function search(){
-  const q = document.getElementById("u").value;
+  const q = document.getElementById("q").value;
 
   if(!q) return;
 
@@ -73,27 +72,29 @@ async function search(){
     const res = await fetch(API + q);
     const d = await res.json();
 
-    // لو البيانات ناقصة
     const data = {
-      name: d.name || fallback.name,
-      id: d.id || fallback.id,
-      username: d.nick || d.username || fallback.username,
-      avatar: d.avatar || fallback.avatar
+      idCode: d.id || fallback.id,
+      usernameCode: d.nick || d.username || fallback.username,
+      imageCode: d.avatar || fallback.image
     };
 
     render(data);
 
   }catch(e){
-    render(fallback);
+    render({
+      idCode: fallback.id,
+      usernameCode: fallback.username,
+      imageCode: fallback.image
+    });
   }
 }
 
 function render(d){
   document.getElementById("out").innerHTML = `
-    👤 Name: ${d.name}<br>
-    🆔 ID: ${d.id}<br>
-    🔖 Username: ${d.username}<br>
-    <img src="${d.avatar}">
+    🆔 ID CODE: ${d.idCode}<br>
+    👤 USERNAME CODE: ${d.usernameCode}<br>
+    🖼️ IMAGE CODE:<br>
+    <img src="${d.imageCode}">
   `;
 }
 
