@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Ramy SaaS Platform</title>
+<title>XAT Profile Search</title>
 
 <style>
 body{
@@ -17,7 +17,6 @@ input,button{
   padding:12px;
   border:none;
   border-radius:10px;
-  margin:5px;
 }
 
 button{
@@ -29,62 +28,73 @@ button{
 .card{
   margin-top:20px;
   background:#1a1a1a;
-  padding:15px;
+  padding:20px;
   border-radius:12px;
   display:inline-block;
   min-width:320px;
-  text-align:left;
 }
 
-h1{margin-bottom:20px;}
+img{
+  width:100px;
+  border-radius:12px;
+  margin-top:10px;
+}
 </style>
 </head>
 
 <body>
 
-<h1>🌍 RAMY SAAS ANALYTICS</h1>
+<h1>🌍 XAT PROFILE SEARCH</h1>
 
-<!-- SEARCH -->
-<input id="search" placeholder="Search ID / Username / Name">
+<input id="u" placeholder="Enter ID or Username">
 <button onclick="search()">Search</button>
 
-<div id="result" class="card">No data yet</div>
+<div class="card" id="out">No data</div>
 
 <script>
 
-const API = "http://localhost:5000/api/search?q=";
+// 🔗 API مباشرة من كودك
+const API = "https://pythbots.com/api/xatprofile.php?u=";
+
+// 🧠 fallback لو API فشل
+const fallback = {
+  name: "Not Found",
+  id: "-",
+  username: "-",
+  avatar: "https://xatimg.com/image/NTKWfOtODi9Z.jpg"
+};
 
 async function search(){
-  const q = document.getElementById("search").value;
+  const q = document.getElementById("u").value;
 
   if(!q) return;
 
   try{
     const res = await fetch(API + q);
-    const data = await res.json();
+    const d = await res.json();
 
-    if(data.length === 0){
-      document.getElementById("result").innerHTML = "❌ No results";
-      return;
-    }
+    // لو البيانات ناقصة
+    const data = {
+      name: d.name || fallback.name,
+      id: d.id || fallback.id,
+      username: d.nick || d.username || fallback.username,
+      avatar: d.avatar || fallback.avatar
+    };
 
-    let html = "";
-
-    data.forEach(u=>{
-      html += `
-        👤 Name: ${u.name}<br>
-        🆔 ID: ${u.id}<br>
-        🔖 Username: ${u.username}<br>
-        📊 Status: ${u.status}<br>
-        🏅 Rank: ${u.rank}<br><br>
-      `;
-    });
-
-    document.getElementById("result").innerHTML = html;
+    render(data);
 
   }catch(e){
-    document.getElementById("result").innerHTML = "❌ API Error";
+    render(fallback);
   }
+}
+
+function render(d){
+  document.getElementById("out").innerHTML = `
+    👤 Name: ${d.name}<br>
+    🆔 ID: ${d.id}<br>
+    🔖 Username: ${d.username}<br>
+    <img src="${d.avatar}">
+  `;
 }
 
 </script>
