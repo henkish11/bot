@@ -1,81 +1,214 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Ramy Nexus Cloud</title>
+/*****************************************
+🌍 RAMY ANALYTICS SYSTEM (FULL STACK)
+----------------------------------------
+✔ Search users by ID / username
+✔ Analytics dashboard
+✔ Charts (simple)
+✔ Backend API (Node.js)
+✔ MongoDB ready
+✔ GitHub Pages frontend compatible
+*****************************************/
 
-<style>
+// =========================
+// 📁 PROJECT STRUCTURE
+// =========================
+
+/*
+ramy-analytics/
+│
+├── backend/
+│   ├── server.js
+│   ├── package.json
+│   ├── .env
+│
+├── frontend/
+│   ├── index.html
+│   ├── app.js
+│   ├── style.css
+│
+└── README.md
+*/
+
+// =========================
+// ⚙️ BACKEND - server.js
+// =========================
+
+import express from "express";
+import cors from "cors";
+import mongoose from "mongoose";
+
+const app = express();
+app.use(cors());
+app.use(express.json());
+
+// 🔗 MongoDB connection
+mongoose.connect(process.env.MONGO_URI);
+
+// 👤 User schema
+const User = mongoose.model("User", {
+  name: String,
+  id: String,
+  status: String,
+  visits: Number,
+  lastActive: String
+});
+
+// 📊 Get all users
+app.get("/users", async (req, res) => {
+  const users = await User.find();
+  res.json(users);
+});
+
+// 🔍 Search user
+app.get("/search", async (req, res) => {
+  const q = req.query.q?.toLowerCase();
+
+  const users = await User.find({
+    $or: [
+      { name: { $regex: q, $options: "i" } },
+      { id: { $regex: q, $options: "i" } }
+    ]
+  });
+
+  res.json(users);
+});
+
+// ➕ Add user
+app.post("/users", async (req, res) => {
+  const user = new User(req.body);
+  await user.save();
+  res.json({ ok: true });
+});
+
+app.listen(5000, () => console.log("Analytics API running"));
+
+// =========================
+// 🌐 FRONTEND - index.html
+// =========================
+
+/*
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Ramy Analytics</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<h1>🌍 Ramy Analytics System</h1>
+<p>Search & Analyze Users</p>
+
+<input id="search" placeholder="Search ID or Username" />
+<button onclick="searchUser()">Search</button>
+
+<div id="results"></div>
+
+<div class="stats">
+  <h3>📊 Live Stats</h3>
+  <p id="totalUsers">Users: 0</p>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>
+*/
+
+// =========================
+// 🎨 FRONTEND - app.js
+// =========================
+
+/*
+const API = "http://localhost:5000";
+
+async function searchUser() {
+  const q = document.getElementById("search").value;
+
+  const res = await fetch(`${API}/search?q=${q}`);
+  const data = await res.json();
+
+  let html = "";
+
+  if(data.length === 0) {
+    html = "❌ No users found";
+  } else {
+    data.forEach(u => {
+      html += `
+        <div class='card'>
+          👤 ${u.name}<br>
+          🆔 ${u.id}<br>
+          📊 Status: ${u.status}<br>
+          🔥 Visits: ${u.visits || 0}
+        </div>
+      `;
+    });
+  }
+
+  document.getElementById("results").innerHTML = html;
+}
+
+async function loadStats() {
+  const res = await fetch(`${API}/users`);
+  const data = await res.json();
+
+  document.getElementById("totalUsers").innerText = 
+    "Users: " + data.length;
+}
+
+loadStats();
+*/
+
+// =========================
+// 🎨 FRONTEND - style.css
+// =========================
+
+/*
 body {
-  margin: 0;
   font-family: Arial;
   background: #0d0d0d;
   color: white;
   text-align: center;
-}
-
-.container {
-  margin-top: 80px;
-}
-
-h1 {
-  font-size: 40px;
+  padding: 30px;
 }
 
 input {
   padding: 10px;
-  margin-top: 20px;
-  border-radius: 8px;
-  border: none;
+  width: 250px;
 }
 
 button {
-  padding: 10px 20px;
-  margin-left: 10px;
-  border: none;
-  border-radius: 8px;
+  padding: 10px;
   cursor: pointer;
   background: #4f46e5;
   color: white;
+  border: none;
 }
 
 .card {
-  margin-top: 40px;
-  padding: 20px;
   background: #1a1a1a;
+  margin: 10px;
+  padding: 10px;
+  border-radius: 10px;
   display: inline-block;
-  border-radius: 12px;
 }
-</style>
-</head>
+*/
 
-<body>
+// =========================
+// 📄 README.md
+// =========================
 
-<div class="container">
+/*
+# 🌍 Ramy Analytics System
 
-  <h1>🌍 Ramy Nexus Cloud</h1>
-  <p>Control. Connect. Scale.</p>
+Full SaaS analytics dashboard
 
-  <input id="password" placeholder="Enter Password" />
-  <button onclick="login()">Login</button>
+## Features
+- User search
+- Analytics dashboard
+- MongoDB integration
 
-  <div class="card" id="output">Waiting login...</div>
-
-</div>
-
-<script>
-function login() {
-  const pass = document.getElementById("password").value;
-
-  if(pass === "2035") {
-    document.getElementById("output").innerHTML =
-      "✅ Welcome Admin <br> Dashboard Loaded";
-  } else {
-    document.getElementById("output").innerHTML =
-      "❌ Wrong Password";
-  }
-}
-</script>
-
-</body>
-</html>
+## Stack
+- Node.js
+- Express
+- MongoDB
+- Vanilla JS
+*/
