@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>XAT Codes System</title>
+<title>XAT Full Info Search</title>
 
 <style>
 body{
@@ -31,12 +31,13 @@ button{
   padding:20px;
   border-radius:12px;
   display:inline-block;
-  min-width:320px;
+  min-width:340px;
+  text-align:left;
 }
 
 img{
-  width:110px;
-  border-radius:14px;
+  width:120px;
+  border-radius:12px;
   margin-top:10px;
 }
 </style>
@@ -44,58 +45,46 @@ img{
 
 <body>
 
-<h1>🌍 XAT CODES SYSTEM</h1>
+<h1>🌍 XAT FULL INFO SEARCH</h1>
 
-<input id="q" placeholder="Enter ID or Username">
+<input id="q" placeholder="Search ID or Username">
 <button onclick="search()">Search</button>
 
 <div class="card" id="out">No data</div>
 
 <script>
 
-// 🔗 API الحقيقي
 const API = "https://pythbots.com/api/xatprofile.php?u=";
-
-// 🧠 fallback
-const fallback = {
-  id: "-",
-  username: "-",
-  image: "https://xatimg.com/image/NTKWfOtODi9Z.jpg"
-};
 
 async function search(){
   const q = document.getElementById("q").value;
-
   if(!q) return;
 
   try{
     const res = await fetch(API + q);
     const d = await res.json();
 
-    const data = {
-      idCode: d.id || fallback.id,
-      usernameCode: d.nick || d.username || fallback.username,
-      imageCode: d.avatar || fallback.image
-    };
-
-    render(data);
+    render(d);
 
   }catch(e){
-    render({
-      idCode: fallback.id,
-      usernameCode: fallback.username,
-      imageCode: fallback.image
-    });
+    document.getElementById("out").innerHTML = "❌ Error loading data";
   }
 }
 
 function render(d){
-  document.getElementById("out").innerHTML = `
-    🆔 ID CODE: ${d.idCode}<br>
-    👤 USERNAME CODE: ${d.usernameCode}<br>
-    🖼️ IMAGE CODE:<br>
-    <img src="${d.imageCode}">
-  `;
+
+  // 🧠 عرض كل البيانات الموجودة تلقائيًا
+  let html = "";
+
+  for(let key in d){
+    if(key.toLowerCase().includes("avatar") || key.toLowerCase().includes("image")){
+      html += `<b>${key.toUpperCase()}</b><br><img src="${d[key]}"><br><br>`;
+    }else{
+      html += `<b>${key.toUpperCase()}</b>: ${d[key]}<br>`;
+    }
+  }
+
+  document.getElementById("out").innerHTML = html || "No data found";
 }
 
 </script>
