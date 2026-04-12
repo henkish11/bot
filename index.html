@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>XAT Full Info Search</title>
+<title>XAT Full Profile Viewer</title>
 
 <style>
 body{
@@ -31,21 +31,30 @@ button{
   padding:20px;
   border-radius:12px;
   display:inline-block;
-  min-width:340px;
+  min-width:360px;
   text-align:left;
 }
 
 img{
   width:120px;
   border-radius:12px;
-  margin-top:10px;
+  margin:10px 0;
+  display:block;
+}
+.key{
+  color:#9ca3af;
+  font-size:12px;
+}
+.value{
+  margin-bottom:8px;
+  display:block;
 }
 </style>
 </head>
 
 <body>
 
-<h1>🌍 XAT FULL INFO SEARCH</h1>
+<h1>🌍 XAT FULL PROFILE VIEW</h1>
 
 <input id="q" placeholder="Search ID or Username">
 <button onclick="search()">Search</button>
@@ -57,8 +66,10 @@ img{
 const API = "https://pythbots.com/api/xatprofile.php?u=";
 
 async function search(){
-  const q = document.getElementById("q").value;
+  const q = document.getElementById("q").value.trim();
   if(!q) return;
+
+  document.getElementById("out").innerHTML = "Loading...";
 
   try{
     const res = await fetch(API + q);
@@ -67,20 +78,39 @@ async function search(){
     render(d);
 
   }catch(e){
-    document.getElementById("out").innerHTML = "❌ Error loading data";
+    document.getElementById("out").innerHTML = "❌ Failed to load data";
   }
 }
 
 function render(d){
 
-  // 🧠 عرض كل البيانات الموجودة تلقائيًا
   let html = "";
 
-  for(let key in d){
-    if(key.toLowerCase().includes("avatar") || key.toLowerCase().includes("image")){
-      html += `<b>${key.toUpperCase()}</b><br><img src="${d[key]}"><br><br>`;
-    }else{
-      html += `<b>${key.toUpperCase()}</b>: ${d[key]}<br>`;
+  for(const key in d){
+
+    let value = d[key];
+
+    // 🖼️ لو صورة
+    if(typeof value === "string" &&
+      (value.includes(".jpg") || value.includes(".png") || value.includes("http")) &&
+      key.toLowerCase().includes("avatar")
+    ){
+      html += `
+        <span class="key">${key}</span>
+        <img src="${value}">
+      `;
+    }
+    else if(typeof value === "string" && value.startsWith("http") && key.toLowerCase().includes("image")){
+      html += `
+        <span class="key">${key}</span>
+        <img src="${value}">
+      `;
+    }
+    else{
+      html += `
+        <span class="key">${key}</span>
+        <span class="value">${value}</span>
+      `;
     }
   }
 
