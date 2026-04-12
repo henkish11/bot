@@ -1,165 +1,81 @@
-/*
-🌍 Ramy Nexus Cloud - FULL GITHUB PROJECT (CLEAN VERSION)
-No mobile / no APK / web SaaS only
-*/
-
-// =========================
-// 📁 ROOT STRUCTURE
-// =========================
-
-/*
-ramy-nexus-cloud/
-│
-├── backend/
-│   ├── server.js
-│   ├── package.json
-│   ├── .env
-│
-├── frontend/
-│   ├── index.html
-│   ├── app.js
-│   ├── style.css
-│
-└── README.md
-*/
-
-// =========================
-// ⚙️ BACKEND - server.js
-// =========================
-
-import express from "express";
-import cors from "cors";
-import mongoose from "mongoose";
-import jwt from "jsonwebtoken";
-
-const app = express();
-app.use(cors());
-app.use(express.json());
-
-const SECRET = "ramy_secret";
-
-mongoose.connect(process.env.MONGO_URI);
-
-const User = mongoose.model("User", {
-  name: String,
-  status: String
-});
-
-// LOGIN
-app.post("/login", (req, res) => {
-  if (req.body.password === "2035") {
-    const token = jwt.sign({ role: "admin" }, SECRET);
-    return res.json({ token });
-  }
-  res.status(401).json({ error: "Invalid" });
-});
-
-// GET USERS
-app.get("/users", async (req, res) => {
-  const users = await User.find();
-  res.json(users);
-});
-
-// ADD USER
-app.post("/users", async (req, res) => {
-  const user = new User(req.body);
-  await user.save();
-  res.json({ ok: true });
-});
-
-app.listen(5000);
-
-// =========================
-// 🌐 FRONTEND - index.html
-// =========================
-
-/*
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Ramy Nexus Cloud</title>
-  <link rel="stylesheet" href="style.css" />
-</head>
-<body>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Ramy Nexus Cloud</title>
 
-<h1>Ramy Nexus Cloud</h1>
-<p>Control. Connect. Scale.</p>
-
-<input id="pass" placeholder="Enter Password" />
-<button onclick="login()">Login</button>
-
-<div id="panel"></div>
-
-<script src="app.js"></script>
-</body>
-</html>
-*/
-
-// =========================
-// 🎨 FRONTEND - app.js
-// =========================
-
-/*
-async function login() {
-  const password = document.getElementById("pass").value;
-
-  const res = await fetch("http://localhost:5000/login", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ password })
-  });
-
-  const data = await res.json();
-
-  if (data.token) {
-    document.getElementById("panel").innerHTML = "✅ Logged in";
-  } else {
-    alert("Wrong password");
-  }
-}
-*/
-
-// =========================
-// 🎨 FRONTEND - style.css
-// =========================
-
-/*
+<style>
 body {
+  margin: 0;
   font-family: Arial;
   background: #0d0d0d;
   color: white;
   text-align: center;
-  padding: 50px;
+}
+
+.container {
+  margin-top: 80px;
+}
+
+h1 {
+  font-size: 40px;
 }
 
 input {
   padding: 10px;
-  margin: 10px;
+  margin-top: 20px;
+  border-radius: 8px;
+  border: none;
 }
 
 button {
   padding: 10px 20px;
+  margin-left: 10px;
+  border: none;
+  border-radius: 8px;
   cursor: pointer;
+  background: #4f46e5;
+  color: white;
 }
-*/
 
-// =========================
-// 📄 README.md
-// =========================
+.card {
+  margin-top: 40px;
+  padding: 20px;
+  background: #1a1a1a;
+  display: inline-block;
+  border-radius: 12px;
+}
+</style>
+</head>
 
-/*
-# 🌍 Ramy Nexus Cloud
+<body>
 
-SaaS Dashboard System
+<div class="container">
 
-## Features
-- Login system
-- User management
-- Cloud backend
+  <h1>🌍 Ramy Nexus Cloud</h1>
+  <p>Control. Connect. Scale.</p>
 
-## Stack
-- Node.js
-- Express
-- MongoDB
-- Vanilla JS frontend
-*/
+  <input id="password" placeholder="Enter Password" />
+  <button onclick="login()">Login</button>
+
+  <div class="card" id="output">Waiting login...</div>
+
+</div>
+
+<script>
+function login() {
+  const pass = document.getElementById("password").value;
+
+  if(pass === "2035") {
+    document.getElementById("output").innerHTML =
+      "✅ Welcome Admin <br> Dashboard Loaded";
+  } else {
+    document.getElementById("output").innerHTML =
+      "❌ Wrong Password";
+  }
+}
+</script>
+
+</body>
+</html>
