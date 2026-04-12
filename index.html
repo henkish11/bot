@@ -2,30 +2,26 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Ramy Analytics GitHub</title>
+<title>Ramy XAT Profile Viewer</title>
 
 <style>
 body{
-  background:#0d0d0d;
+  background:#05060a;
   color:white;
   font-family:Arial;
   text-align:center;
-  padding:40px;
+  padding:30px;
 }
 
-input{
+input,button{
   padding:12px;
-  width:260px;
-  border-radius:8px;
   border:none;
+  border-radius:10px;
 }
 
 button{
-  padding:12px 18px;
   background:#4f46e5;
   color:white;
-  border:none;
-  border-radius:8px;
   cursor:pointer;
 }
 
@@ -33,55 +29,60 @@ button{
   margin-top:20px;
   background:#1a1a1a;
   padding:15px;
-  border-radius:10px;
+  border-radius:12px;
   display:inline-block;
-  min-width:280px;
+  min-width:300px;
+}
+
+img{
+  width:120px;
+  border-radius:20px;
+  margin-top:10px;
 }
 </style>
 </head>
 
 <body>
 
-<h1>🌍 GitHub Analytics System</h1>
+<h1>🌍 XAT Profile Search</h1>
 
-<input id="search" placeholder="Search ID or Name">
-<button onclick="search()">Search</button>
+<input id="userInput" placeholder="Enter username or ID">
+<button onclick="fetchData()">Search</button>
 
-<div id="result" class="card">No data yet</div>
+<div class="card">
+  <p>Full Name: <span id="name">-</span></p>
+  <p>ID: <span id="id">-</span></p>
+  <p>Username: <span id="nick">-</span></p>
+  <img id="avatar" />
+</div>
 
 <script>
-// 🧠 البيانات داخل GitHub (بدون سيرفر)
-const users = [
-  {id:"1001", name:"Ramy", status:"Online", visits:15},
-  {id:"1002", name:"Ahmed", status:"Offline", visits:8},
-  {id:"1003", name:"Sara", status:"Busy", visits:21},
-  {id:"2001", name:"Moon", status:"Online", visits:30}
-];
 
-function search(){
-  const q = document.getElementById("search").value.toLowerCase();
+async function fetchData(){
+  const u = document.getElementById("userInput").value;
 
-  const found = users.filter(u =>
-    u.id.includes(q) || u.name.toLowerCase().includes(q)
-  );
-
-  let output="";
-
-  if(found.length === 0){
-    output="❌ No user found";
-  } else {
-    found.forEach(u=>{
-      output += `
-        👤 Name: ${u.name}<br>
-        🆔 ID: ${u.id}<br>
-        📊 Status: ${u.status}<br>
-        🔥 Visits: ${u.visits}<br><br>
-      `;
-    });
+  if(!u){
+    alert("Enter username");
+    return;
   }
 
-  document.getElementById("result").innerHTML = output;
+  try{
+
+    const url = "https://pythbots.com/api/xatprofile.php?u=" + u;
+
+    const res = await fetch(url);
+    const d = await res.json();
+
+    document.getElementById("name").innerText = d.name || "N/A";
+    document.getElementById("id").innerText = d.id || "N/A";
+    document.getElementById("nick").innerText = d.nick || d.username || "N/A";
+    document.getElementById("avatar").src = d.avatar || "";
+
+  }catch(e){
+    document.getElementById("name").innerText = "Error loading data";
+  }
 }
+
 </script>
 
 </body>
