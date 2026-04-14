@@ -19,7 +19,6 @@ body{
   align-items:center;
 }
 
-/* BACKGROUND */
 body::before{
   content:"RAMY";
   position:fixed;
@@ -30,9 +29,6 @@ body::before{
   font-size:12vw;
   font-weight:900;
   color:rgba(255,255,255,0.05);
-  background:
-    radial-gradient(circle at 20% 20%, rgba(0,255,213,0.15), transparent 40%),
-    radial-gradient(circle at 80% 80%, rgba(124,92,255,0.15), transparent 45%);
   z-index:-1;
 }
 
@@ -43,10 +39,8 @@ body::before{
   height:90vh;
   display:flex;
   background:rgba(255,255,255,0.05);
-  backdrop-filter:blur(15px);
   border-radius:18px;
   overflow:hidden;
-  border:1px solid rgba(255,255,255,0.1);
 }
 
 /* SIDEBAR */
@@ -70,8 +64,6 @@ body::before{
   border-radius:10px;
   cursor:pointer;
 }
-
-.nav:hover{background:rgba(255,255,255,0.15);}
 
 /* MAIN */
 .main{
@@ -151,7 +143,8 @@ input{
 <div id="login">
   <div class="box">
     <h3>LOGIN</h3>
-    <input id="pass" type="password" placeholder="Password" onkeydown="if(event.key==='Enter')login()">
+    <input id="pass" type="password" placeholder="Password"
+    onkeydown="if(event.key==='Enter')login()">
   </div>
 </div>
 
@@ -166,22 +159,20 @@ input{
 
   <div class="main">
 
-    <!-- HOME -->
     <div id="home" class="section active">
-      <input id="search" placeholder="Search ID or Name" onkeydown="if(event.key==='Enter')searchUser()">
+      <input id="search" placeholder="Search ID or Name"
+      onkeydown="if(event.key==='Enter')searchUser()">
       <button onclick="searchUser()">Search</button>
     </div>
 
-    <!-- USER INFO -->
     <div id="info" class="section">
       <img id="avatar" class="avatar">
       <div class="card">Name: <span id="name"></span></div>
       <div class="card">ID: <span id="uid"></span></div>
       <div class="card">Username: <span id="nick"></span></div>
-      <div class="card">Avatar: <span id="img"></span></div>
+      <div class="card">Image: <span id="img"></span></div>
     </div>
 
-    <!-- HISTORY -->
     <div id="history" class="section"></div>
 
   </div>
@@ -191,16 +182,18 @@ input{
 
 <script>
 
-/* 🔥 ضع الـ API هنا */
+/* 🔥 API */
 const API_URL = "https://pythbots.com/api/xatprofile.php?u=";
 
 let historyList = [];
 
+/* NAV */
 function show(id){
   document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
   document.getElementById(id).classList.add('active');
 }
 
+/* TOAST */
 function toast(msg){
   let t=document.getElementById('toast');
   t.innerText=msg;
@@ -208,14 +201,19 @@ function toast(msg){
   setTimeout(()=>t.classList.remove('show'),1200);
 }
 
+/* ✅ FIXED LOGIN */
 function login(){
-  if(pass.value==="2035"){
-    login.style.display="none";
+  const passValue = document.getElementById("pass").value;
+
+  if(passValue === "2035"){
+    document.getElementById("login").style.display = "none";
+    toast("Welcome");
   }else{
     alert("Wrong password");
   }
 }
 
+/* SEARCH API */
 async function searchUser(){
   let q=document.getElementById("search").value;
   if(!q) return;
