@@ -2,70 +2,163 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Ultra Dashboard</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Ramy Ultra Profile</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
 
 <style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Inter',sans-serif;}
+
 body{
-  margin:0;
-  font-family:Arial;
-  background:#0b1220;
-  color:white;
+  min-height:100vh;
+  background:#05060a;
+  color:#fff;
+  overflow:hidden;
+  display:flex;
+  justify-content:center;
+  align-items:center;
 }
 
+/* BACKGROUND */
+body::before{
+  content:"RAMY";
+  position:fixed;
+  inset:0;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  font-size:14vw;
+  font-weight:900;
+  letter-spacing:10px;
+  color:rgba(255,255,255,0.06);
+  background:
+    radial-gradient(circle at 20% 20%, rgba(0,255,213,0.15), transparent 40%),
+    radial-gradient(circle at 80% 80%, rgba(124,92,255,0.15), transparent 45%),
+    url('https://xatimg.com/image/NTKWfOtODi9Z.jpg');
+  background-size:cover;
+  background-position:center;
+  filter:brightness(.55);
+  z-index:-2;
+  animation:zoom 18s infinite alternate;
+}
+
+@keyframes zoom{
+  from{transform:scale(1);}
+  to{transform:scale(1.08);}
+}
+
+/* APP */
+.app{
+  width:100%;
+  max-width:1100px;
+  height:100vh;
+  display:flex;
+  background:rgba(20,20,30,0.6);
+  backdrop-filter:blur(20px);
+  border:1px solid rgba(255,255,255,0.08);
+  border-radius:22px;
+  overflow:hidden;
+}
+
+/* SIDEBAR */
+.sidebar{
+  width:240px;
+  background:rgba(0,0,0,.35);
+  padding:20px;
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+}
+
+.myname{
+  text-align:center;
+  font-size:22px;
+  font-weight:900;
+  margin-bottom:10px;
+}
+
+.nav{
+  padding:14px;
+  border-radius:14px;
+  cursor:pointer;
+  text-align:center;
+  background:rgba(255,255,255,.05);
+}
+
+.nav:hover{background:rgba(255,255,255,.15);}
+
+/* MAIN */
+.main{
+  flex:1;
+  padding:18px;
+  overflow:auto;
+}
+
+.section{display:none;}
+.active{display:block;}
+
 /* LOGIN */
+#loginScreen{
+  position:fixed;
+  inset:0;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  background:rgba(0,0,0,.9);
+  z-index:9999;
+}
+
 .login-box{
-  width:320px;
-  margin:120px auto;
-  background:#111827;
-  padding:25px;
-  border-radius:12px;
+  width:340px;
+  padding:24px;
+  border-radius:18px;
+  background:rgba(20,20,30,.95);
   text-align:center;
 }
 
 input{
-  width:90%;
-  padding:10px;
-  margin:10px 0;
+  width:100%;
+  padding:12px;
+  margin-top:12px;
   border:none;
-  border-radius:8px;
+  border-radius:12px;
+  text-align:center;
 }
 
 button{
-  width:95%;
-  padding:10px;
+  margin-top:12px;
+  width:100%;
+  padding:12px;
   border:none;
-  border-radius:8px;
+  border-radius:12px;
   cursor:pointer;
   background:#4f46e5;
   color:white;
 }
 
-/* DASHBOARD */
-.sidebar{
-  width:200px;
-  height:100vh;
-  background:#111827;
-  position:fixed;
-  padding:20px;
-  display:none;
-}
-
-.main{
-  margin-left:220px;
-  padding:20px;
-  display:none;
-}
-
+/* CARD */
 .card{
-  background:#1f2937;
   padding:15px;
-  border-radius:10px;
-  margin-top:20px;
+  margin:10px 0;
+  border-radius:14px;
+  background:rgba(255,255,255,.05);
+  cursor:pointer;
 }
 
-.logout{
-  background:red;
-  margin-top:20px;
+.avatar{
+  width:110px;
+  height:110px;
+  border-radius:28px;
+  object-fit:cover;
+  margin:10px auto;
+  display:block;
+}
+
+/* MOBILE */
+@media(max-width:768px){
+  .app{flex-direction:column;border-radius:0;}
+  .sidebar{display:none;}
 }
 </style>
 </head>
@@ -73,83 +166,99 @@ button{
 <body>
 
 <!-- LOGIN -->
-<div class="login-box" id="loginBox">
-  <h2>Login</h2>
-  <input id="user" placeholder="username">
-  <input id="pass" type="password" placeholder="password">
-  <button onclick="login()">Login</button>
+<div id="loginScreen">
+  <div class="login-box">
+    <h3>RAMY ACCESS</h3>
+    <input id="passInput" type="password" placeholder="Enter Password">
+    <button onclick="login()">Login</button>
+  </div>
 </div>
 
-<!-- DASHBOARD -->
-<div class="sidebar" id="sidebar">
-  <h3>Panel</h3>
-  <p>Dashboard</p>
-  <p>User Info</p>
-</div>
+<div class="app">
 
-<div class="main" id="main">
-  <h1>Dashboard</h1>
+  <div class="sidebar">
+    <div class="myname">RAMY</div>
+    <div class="nav" onclick="show('home')">Search</div>
+    <div class="nav" onclick="show('history')">History</div>
+    <div class="nav" onclick="show('settings')">Settings</div>
+  </div>
 
-  <div class="card" id="userinfo"></div>
+  <div class="main">
 
-  <button class="logout" onclick="logout()">Logout</button>
+    <div id="home" class="section active">
+
+      <img id="avatar" class="avatar">
+
+      <input id="userInput" placeholder="Search ID or Name" onkeydown="if(event.key==='Enter')fetchData()">
+      <button onclick="fetchData()">Search</button>
+
+      <div class="card">Full Name: <span id="fullName"></span></div>
+      <div class="card">ID: <span id="id"></span></div>
+      <div class="card">Username: <span id="username"></span></div>
+      <div class="card">Image: <span id="imgLink"></span></div>
+
+    </div>
+
+    <div id="history" class="section">
+      <div id="historyBox"></div>
+    </div>
+
+    <div id="settings" class="section">
+      <div class="card">System Ready ✔</div>
+    </div>
+
+  </div>
 </div>
 
 <script>
-// ===== FAKE USER DATABASE =====
-const userDB = {
-  username: "ramy",
-  password: "1234",
-  role: "admin",
-  powers: 120,
-  chats: 9
-};
 
-// ===== LOGIN =====
+let history = [];
+
 function login(){
-  const u = document.getElementById("user").value;
-  const p = document.getElementById("pass").value;
-
-  if(u === userDB.username && p === userDB.password){
-
-    localStorage.setItem("user", JSON.stringify(userDB));
-
-    showDashboard();
-
-  } else {
-    alert("Wrong login ❌");
+  const pass = document.getElementById("passInput").value;
+  if(pass === "2035"){
+    document.getElementById("loginScreen").style.display="none";
+  }else{
+    alert("Wrong Password");
   }
 }
 
-// ===== SHOW DASHBOARD =====
-function showDashboard(){
-  document.getElementById("loginBox").style.display = "none";
-  document.getElementById("sidebar").style.display = "block";
-  document.getElementById("main").style.display = "block";
-
-  const user = JSON.parse(localStorage.getItem("user"));
-
-  document.getElementById("userinfo").innerHTML = `
-    <h3>User Info</h3>
-    <p>Username: ${user.username}</p>
-    <p>Role: ${user.role}</p>
-    <p>Powers: ${user.powers}</p>
-    <p>Chats: ${user.chats}</p>
-  `;
+function show(id){
+ document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+ document.getElementById(id).classList.add('active');
 }
 
-// ===== LOGOUT =====
-function logout(){
-  localStorage.removeItem("user");
-  location.reload();
+async function fetchData(){
+ let u=document.getElementById('userInput').value.trim();
+ if(!u)return;
+
+ let url=`https://pythbots.com/api/xatprofile.php?u=${u}`;
+ let proxy=`https://api.codetabs.com/v1/proxy?quest=${encodeURIComponent(url)}`;
+
+ try{
+   let res=await fetch(proxy);
+   let d=await res.json();
+
+   fullName.innerText=d.name||'N/A';
+   id.innerText=d.id||'N/A';
+   username.innerText=d.nick||d.username||'N/A';
+   imgLink.innerText=d.avatar||'N/A';
+   avatar.src=d.avatar||'';
+
+   history.push(u);
+   renderHistory();
+
+ }catch(e){
+   alert("Error loading data");
+ }
 }
 
-// ===== AUTO LOGIN IF EXISTS =====
-window.onload = function(){
-  if(localStorage.getItem("user")){
-    showDashboard();
-  }
+function renderHistory(){
+  historyBox.innerHTML = history.map(h=>`
+    <div class="card">${h}</div>
+  `).join('');
 }
+
 </script>
 
 </body>
