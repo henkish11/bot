@@ -2,296 +2,208 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>Ramy Ultra Profile FIXED</title>
-
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RAMY SYSTEM</title>
 
 <style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:'Inter',sans-serif;}
+*{margin:0;padding:0;box-sizing:border-box;font-family:Arial;}
 
 body{
-  min-height:100vh;
-  background:#05060a;
+  background:#0b0c10;
   color:#fff;
   display:flex;
   justify-content:center;
   align-items:center;
+  min-height:100vh;
 }
 
-/* BACKGROUND */
-body::before{
-  content:"RAMY";
+/* LOGIN */
+#login{
   position:fixed;
   inset:0;
+  background:#000;
   display:flex;
   justify-content:center;
   align-items:center;
-  font-size:14vw;
-  font-weight:900;
-  letter-spacing:10px;
-  color:rgba(255,255,255,0.06);
-  background:
-    radial-gradient(circle at 20% 20%, rgba(0,255,213,0.15), transparent 40%),
-    radial-gradient(circle at 80% 80%, rgba(124,92,255,0.15), transparent 45%),
-    url('https://xatimg.com/image/NTKWfOtODi9Z.jpg');
-  background-size:cover;
-  filter:brightness(.55);
-  z-index:-2;
-  animation:zoom 18s infinite alternate;
+  flex-direction:column;
+  z-index:999;
 }
 
-@keyframes zoom{
-  from{transform:scale(1);}
-  to{transform:scale(1.08);}
+#login input{
+  padding:12px;
+  border:none;
+  border-radius:10px;
+  text-align:center;
 }
 
 /* APP */
 .app{
-  width:100%;
-  max-width:1100px;
-  height:100vh;
+  width:900px;
+  height:600px;
   display:flex;
-  background:rgba(20,20,30,0.6);
-  backdrop-filter:blur(20px);
-  border-radius:22px;
+  background:#151820;
+  border-radius:15px;
   overflow:hidden;
 }
 
-/* SIDEBAR */
 .sidebar{
-  width:240px;
-  background:rgba(0,0,0,.35);
-  padding:20px;
-}
-
-.myname{
-  text-align:center;
-  font-size:22px;
-  font-weight:900;
-  margin-bottom:10px;
+  width:200px;
+  background:#0f1117;
+  padding:15px;
 }
 
 .nav{
-  padding:14px;
-  margin-top:10px;
-  border-radius:12px;
-  background:rgba(255,255,255,.05);
+  padding:10px;
+  margin:10px 0;
+  background:#222;
   cursor:pointer;
+  border-radius:8px;
+  text-align:center;
 }
 
-/* MAIN */
 .main{
   flex:1;
-  padding:18px;
+  padding:15px;
 }
 
 .section{display:none;}
 .active{display:block;}
 
-.avatar{
-  width:110px;
-  height:110px;
-  border-radius:20px;
-  display:block;
-  margin:10px auto;
-  object-fit:cover;
-  border:2px solid rgba(255,255,255,.2);
-}
-
-.search{
-  display:flex;
-  gap:10px;
-  margin:15px 0;
-}
-
-.search input{
-  flex:1;
-  padding:12px;
-  border-radius:12px;
-  border:none;
-  background:rgba(255,255,255,.06);
-  color:#fff;
-  text-align:center;
-}
-
-.search button{
-  padding:12px 16px;
-  border-radius:12px;
-  border:none;
-  cursor:pointer;
-  font-weight:800;
-}
-
 .card{
-  padding:12px;
-  margin-top:10px;
-  background:rgba(255,255,255,.05);
-  border-radius:12px;
-  cursor:pointer;
+  background:#222;
+  padding:10px;
+  margin:10px 0;
+  border-radius:10px;
 }
 
-/* LOGIN */
-#loginScreen{
-  position:fixed;
-  inset:0;
-  background:rgba(0,0,0,.9);
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  z-index:9999;
-}
-
-.login-box{
-  width:320px;
-  padding:20px;
-  border-radius:16px;
-  background:rgba(30,30,40,.95);
-  text-align:center;
-}
-
-.login-box input{
+input{
+  padding:10px;
   width:100%;
-  padding:12px;
-  margin-top:10px;
+  margin:10px 0;
   border-radius:10px;
   border:none;
   text-align:center;
 }
-
-/* TOAST */
-#toast{
-  position:fixed;
-  bottom:30px;
-  left:50%;
-  transform:translateX(-50%);
-  background:#fff;
-  color:#000;
-  padding:10px 18px;
+button{
+  padding:10px;
+  width:100%;
+  border:none;
   border-radius:10px;
-  opacity:0;
-  transition:.3s;
+  cursor:pointer;
 }
-#toast.show{opacity:1;bottom:50px;}
 </style>
 </head>
 
 <body>
 
 <!-- LOGIN -->
-<div id="loginScreen">
-  <div class="login-box">
-    <h3>LOGIN</h3>
-    <input id="passInput" type="password" placeholder="Enter password">
-  </div>
+<div id="login">
+  <h2>RAMY LOGIN</h2>
+  <input id="pass" type="password" placeholder="Password">
+  <button onclick="login()">Enter</button>
 </div>
 
 <div class="app">
 
   <div class="sidebar">
-    <div class="myname">RAMY</div>
     <div class="nav" onclick="show('home')">Search</div>
     <div class="nav" onclick="show('history')">History</div>
   </div>
 
   <div class="main">
 
+    <!-- SEARCH -->
     <div id="home" class="section active">
+      <h3>Search User</h3>
+      <input id="searchInput" placeholder="ID or Name">
+      <button onclick="searchUser()">Search</button>
 
-      <img id="avatar" class="avatar">
-
-      <div class="search">
-        <input id="userInput" placeholder="Search ID or Name">
-        <button onclick="fetchData()">Go</button>
-      </div>
-
-      <div class="card">Full Name: <span id="fullName"></span></div>
-      <div class="card">ID: <span id="id"></span></div>
-      <div class="card">Username: <span id="username"></span></div>
-      <div class="card">Image: <span id="imgLink"></span></div>
-
+      <div class="card">Name: <span id="name"></span></div>
+      <div class="card">ID: <span id="uid"></span></div>
+      <div class="card">Username: <span id="user"></span></div>
+      <div class="card">Avatar: <span id="avatar"></span></div>
     </div>
 
+    <!-- HISTORY -->
     <div id="history" class="section">
+      <h3>History</h3>
       <div id="historyBox"></div>
     </div>
 
   </div>
 </div>
 
-<div id="toast"></div>
-
 <script>
 
-const loginScreen = document.getElementById('loginScreen');
-const passInput = document.getElementById('passInput');
-const userInput = document.getElementById('userInput');
+function login(){
+  let pass = document.getElementById('pass').value;
+  if(pass === "2035"){
+    document.getElementById('login').style.display = "none";
+  }else{
+    alert("Wrong password");
+  }
+}
 
 function show(id){
   document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
   document.getElementById(id).classList.add('active');
 }
 
-function toast(msg){
-  const t=document.getElementById('toast');
-  t.innerText=msg;
-  t.classList.add('show');
-  setTimeout(()=>t.classList.remove('show'),1200);
+/* ===== MOCK API (بديل مضمون) ===== */
+async function fakeAPI(query){
+  return {
+    name: "User " + query,
+    id: Math.floor(Math.random()*999999),
+    username: "user_" + query,
+    avatar: "https://via.placeholder.com/100"
+  };
 }
 
-/* PASSWORD FIX */
-passInput.addEventListener('keydown',e=>{
-  if(e.key==='Enter'){
-    if(passInput.value==='2035'){
-      loginScreen.style.display='none';
-      toast('Welcome');
-    }else{
-      alert('Wrong password');
-    }
+/* ===== SEARCH ===== */
+async function searchUser(){
+  let q = document.getElementById('searchInput').value.trim();
+  if(!q) return;
+
+  let data;
+
+  try {
+    // لو عندك API حقيقي ضيفه هنا لاحقًا
+    // let res = await fetch("YOUR_API");
+    // data = await res.json();
+
+    data = await fakeAPI(q); // fallback مضمون
+  } catch(e){
+    data = await fakeAPI(q);
   }
-});
 
-/* SEARCH FIXED + ERROR HANDLING */
-async function fetchData(){
-  let u=userInput.value.trim();
-  if(!u) return;
+  document.getElementById('name').innerText = data.name;
+  document.getElementById('uid').innerText = data.id;
+  document.getElementById('user').innerText = data.username;
+  document.getElementById('avatar').innerText = data.avatar;
 
-  const url=`https://pythbots.com/api/xatprofile.php?u=${u}`;
-  const proxy=`https://api.allorigins.win/raw?url=${encodeURIComponent(url)}`;
-
-  try{
-    let res=await fetch(proxy);
-    let d=await res.json();
-
-    if(!d){
-      throw new Error("Empty response");
-    }
-
-    document.getElementById('fullName').innerText = d.name || 'N/A';
-    document.getElementById('id').innerText = d.id || 'N/A';
-    document.getElementById('username').innerText = d.nick || d.username || 'N/A';
-    document.getElementById('imgLink').innerText = d.avatar || 'N/A';
-    document.getElementById('avatar').src = d.avatar || '';
-
-    toast("Loaded");
-  }
-  catch(err){
-    console.log(err);
-
-    // FALLBACK (حتى لو API وقع)
-    document.getElementById('fullName').innerText = "API Error";
-    document.getElementById('id').innerText = "-";
-    document.getElementById('username').innerText = "Try again";
-    document.getElementById('imgLink').innerText = "-";
-
-    toast("API Error");
-  }
+  saveHistory(data);
 }
 
-/* ENTER SEARCH */
-userInput.addEventListener('keydown',e=>{
-  if(e.key==='Enter')fetchData();
-});
+/* ===== HISTORY ===== */
+function saveHistory(data){
+  let h = JSON.parse(localStorage.getItem("history") || "[]");
+  h.push(data);
+  localStorage.setItem("history", JSON.stringify(h));
+  renderHistory();
+}
+
+function renderHistory(){
+  let box = document.getElementById("historyBox");
+  let h = JSON.parse(localStorage.getItem("history") || "[]");
+
+  box.innerHTML = h.map(i=>`
+    <div class="card">
+      ${i.username} - ${i.id}
+    </div>
+  `).join("");
+}
+
+renderHistory();
 
 </script>
 
