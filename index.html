@@ -2,19 +2,18 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>Ramy Ultra Profile</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ramy Dashboard</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
 
 <style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:'Inter',sans-serif;}
+*{margin:0;padding:0;box-sizing:border-box;font-family:Inter,sans-serif;}
 
 body{
   min-height:100vh;
   background:#05060a;
   color:#fff;
-  overflow:hidden;
   display:flex;
   justify-content:center;
   align-items:center;
@@ -28,70 +27,56 @@ body::before{
   display:flex;
   justify-content:center;
   align-items:center;
-  font-size:14vw;
+  font-size:12vw;
   font-weight:900;
-  letter-spacing:10px;
-  color:rgba(255,255,255,0.06);
+  color:rgba(255,255,255,0.05);
   background:
     radial-gradient(circle at 20% 20%, rgba(0,255,213,0.15), transparent 40%),
-    radial-gradient(circle at 80% 80%, rgba(124,92,255,0.15), transparent 45%),
-    url('https://xatimg.com/image/NTKWfOtODi9Z.jpg');
-  background-size:cover;
-  background-position:center;
-  filter:brightness(.55);
-  z-index:-2;
-  animation:zoom 18s infinite alternate;
-}
-
-@keyframes zoom{
-  from{transform:scale(1);}
-  to{transform:scale(1.08);}
+    radial-gradient(circle at 80% 80%, rgba(124,92,255,0.15), transparent 45%);
+  z-index:-1;
 }
 
 /* APP */
 .app{
   width:100%;
   max-width:1100px;
-  height:100vh;
+  height:90vh;
   display:flex;
-  background:rgba(20,20,30,0.6);
-  backdrop-filter:blur(20px);
-  border:1px solid rgba(255,255,255,0.08);
-  border-radius:22px;
+  background:rgba(255,255,255,0.05);
+  backdrop-filter:blur(15px);
+  border-radius:18px;
   overflow:hidden;
+  border:1px solid rgba(255,255,255,0.1);
 }
 
 /* SIDEBAR */
 .sidebar{
-  width:240px;
-  background:rgba(0,0,0,.35);
-  padding:20px;
-  display:flex;
-  flex-direction:column;
-  gap:10px;
+  width:220px;
+  padding:15px;
+  background:rgba(0,0,0,0.3);
 }
 
 .myname{
   text-align:center;
-  font-size:22px;
   font-weight:900;
-  margin-bottom:10px;
+  margin-bottom:20px;
 }
 
 .nav{
-  padding:14px;
-  border-radius:14px;
-  cursor:pointer;
+  padding:12px;
+  margin:8px 0;
   text-align:center;
-  background:rgba(255,255,255,.05);
+  background:rgba(255,255,255,0.05);
+  border-radius:10px;
+  cursor:pointer;
 }
 
-.nav:hover{background:rgba(255,255,255,.15);}
+.nav:hover{background:rgba(255,255,255,0.15);}
 
 /* MAIN */
 .main{
   flex:1;
-  padding:18px;
+  padding:20px;
   overflow:auto;
 }
 
@@ -99,78 +84,74 @@ body::before{
 .active{display:block;}
 
 /* LOGIN */
-#loginScreen{
+#login{
   position:fixed;
   inset:0;
   display:flex;
   justify-content:center;
   align-items:center;
-  background:rgba(0,0,0,.9);
-  z-index:9999;
+  background:rgba(0,0,0,0.9);
+  z-index:999;
 }
 
-.login-box{
-  width:340px;
-  padding:24px;
-  border-radius:18px;
-  background:rgba(20,20,30,.95);
+.box{
+  width:320px;
+  padding:20px;
+  background:#111;
+  border-radius:15px;
   text-align:center;
 }
 
 input{
   width:100%;
   padding:12px;
-  margin-top:12px;
+  margin-top:10px;
+  border-radius:10px;
   border:none;
-  border-radius:12px;
   text-align:center;
-}
-
-button{
-  margin-top:12px;
-  width:100%;
-  padding:12px;
-  border:none;
-  border-radius:12px;
-  cursor:pointer;
-  background:#4f46e5;
-  color:white;
 }
 
 /* CARD */
 .card{
-  padding:15px;
+  padding:12px;
   margin:10px 0;
-  border-radius:14px;
-  background:rgba(255,255,255,.05);
+  background:rgba(255,255,255,0.05);
+  border-radius:10px;
   cursor:pointer;
 }
 
 .avatar{
-  width:110px;
-  height:110px;
-  border-radius:28px;
-  object-fit:cover;
-  margin:10px auto;
+  width:90px;
+  height:90px;
+  border-radius:20px;
   display:block;
+  margin:10px auto;
 }
 
-/* MOBILE */
-@media(max-width:768px){
-  .app{flex-direction:column;border-radius:0;}
-  .sidebar{display:none;}
+/* TOAST */
+#toast{
+  position:fixed;
+  bottom:20px;
+  left:50%;
+  transform:translateX(-50%);
+  background:#fff;
+  color:#000;
+  padding:8px 15px;
+  border-radius:8px;
+  opacity:0;
+  transition:.3s;
 }
+#toast.show{opacity:1;bottom:40px;}
 </style>
 </head>
 
 <body>
 
 <!-- LOGIN -->
-<div id="loginScreen">
-  <div class="login-box">
-    <h3>RAMY ACCESS</h3>
-    <input id="passInput" type="password" placeholder="Enter Password">
-    <button onclick="login()">Login</button>
+<div id="login">
+  <div class="box">
+    <h3>LOGIN</h3>
+    <input id="pass" type="password" placeholder="Password" onkeydown="if(event.key==='Enter')login()">
   </div>
 </div>
 
@@ -178,73 +159,90 @@ button{
 
   <div class="sidebar">
     <div class="myname">RAMY</div>
-    <div class="nav" onclick="show('home')">Search</div>
+    <div class="nav" onclick="show('home')">Home</div>
+    <div class="nav" onclick="show('info')">User Info</div>
     <div class="nav" onclick="show('history')">History</div>
-    <div class="nav" onclick="show('settings')">Settings</div>
   </div>
 
   <div class="main">
 
+    <!-- HOME -->
     <div id="home" class="section active">
+      <input id="search" placeholder="Search ID or Name" onkeydown="if(event.key==='Enter')searchUser()">
+      <button onclick="searchUser()">Search</button>
+    </div>
 
+    <!-- USER INFO -->
+    <div id="info" class="section">
       <img id="avatar" class="avatar">
-
-      <input id="userInput" placeholder="Search ID or Name" onkeydown="if(event.key==='Enter')fetchData()">
-      <button onclick="fetchData()">Search</button>
-
-      <div class="card">Full Name: <span id="fullName"></span></div>
-      <div class="card">ID: <span id="id"></span></div>
-      <div class="card">Username: <span id="username"></span></div>
-      <div class="card">Image: <span id="imgLink"></span></div>
-
+      <div class="card">Name: <span id="name"></span></div>
+      <div class="card">ID: <span id="uid"></span></div>
+      <div class="card">Username: <span id="nick"></span></div>
+      <div class="card">Avatar: <span id="img"></span></div>
     </div>
 
+    <!-- HISTORY -->
     <div id="history" class="section"></div>
-
-    <div id="settings" class="section">
-      <div class="card">System Ready ✔</div>
-    </div>
 
   </div>
 </div>
 
+<div id="toast"></div>
+
 <script>
 
+/* 🔥 ضع الـ API هنا */
+const API_URL = "https://pythbots.com/api/xatprofile.php?u=";
+
+let historyList = [];
+
+function show(id){
+  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+}
+
+function toast(msg){
+  let t=document.getElementById('toast');
+  t.innerText=msg;
+  t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'),1200);
+}
+
 function login(){
-  const pass = document.getElementById("passInput").value;
-  if(pass === "2035"){
-    document.getElementById("loginScreen").style.display="none";
+  if(pass.value==="2035"){
+    login.style.display="none";
   }else{
-    alert("Wrong Password");
+    alert("Wrong password");
   }
 }
 
-function show(id){
- document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
- document.getElementById(id).classList.add('active');
+async function searchUser(){
+  let q=document.getElementById("search").value;
+  if(!q) return;
+
+  try{
+    let res=await fetch(API_URL + q);
+    let d=await res.json();
+
+    document.getElementById("name").innerText = d.name || "N/A";
+    document.getElementById("uid").innerText = d.id || "N/A";
+    document.getElementById("nick").innerText = d.nick || "N/A";
+    document.getElementById("img").innerText = d.avatar || "N/A";
+    document.getElementById("avatar").src = d.avatar || "";
+
+    historyList.push(d.name + " (" + d.id + ")");
+    renderHistory();
+
+    show('info');
+
+  }catch(e){
+    toast("API Error");
+  }
 }
 
-// ===== API (نفس القديم تمامًا) =====
-async function fetchData(){
- let u=document.getElementById('userInput').value.trim();
- if(!u) return;
-
- let url = `https://pythbots.com/api/xatprofile.php?u=${u}`;
- let proxy = `https://api.codetabs.com/v1/proxy?quest=${encodeURIComponent(url)}`;
-
- try{
-   let res = await fetch(proxy);
-   let d = await res.json();
-
-   fullName.innerText = d.name || 'N/A';
-   id.innerText = d.id || 'N/A';
-   username.innerText = d.nick || d.username || 'N/A';
-   imgLink.innerText = d.avatar || 'N/A';
-   avatar.src = d.avatar || '';
-
- }catch(e){
-   alert("API Error");
- }
+function renderHistory(){
+  let box=document.getElementById("history");
+  box.innerHTML = historyList.map(h=>`<div class="card">${h}</div>`).join("");
 }
 
 </script>
