@@ -15,7 +15,7 @@ body {
     color: white;
 }
 
-/* ===== PHARAOH CANVAS BACKGROUND ===== */
+/* ===== PHARAOH BACKGROUND ONLY ===== */
 #pharaohBG {
     position: fixed;
     top: 0;
@@ -24,14 +24,6 @@ body {
     height: 100%;
     z-index: 0;
     background: black;
-}
-
-/* ===== MATRIX ===== */
-canvas {
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: 1;
 }
 
 /* ===== LOGIN ===== */
@@ -101,6 +93,22 @@ canvas {
     padding: 20px;
     border-radius: 15px;
 }
+
+/* ===== VIDEOS ===== */
+.videos {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    flex-wrap: wrap;
+    margin-top: 20px;
+}
+
+iframe {
+    width: 220px;
+    height: 150px;
+    border-radius: 10px;
+    border: 1px solid #00fff2;
+}
 </style>
 </head>
 
@@ -108,9 +116,6 @@ canvas {
 
 <!-- 👑 PHARAOH BACKGROUND -->
 <canvas id="pharaohBG"></canvas>
-
-<!-- MATRIX -->
-<canvas id="matrix"></canvas>
 
 <!-- LOGIN -->
 <div id="login">
@@ -124,13 +129,37 @@ canvas {
 
 <!-- CONTENT -->
 <div id="content">
+
 <div class="card">
 
 <h1>Hello, ramy</h1>
-<p>VIP Pharaoh Hacker Profile</p>
+<p>I'm xats trader and I love trading</p>
+
+<p>iEgypt (106080) ❤️ DodoLove14 (1541187216)</p>
+
+<p>ramy ❤️ Dodo</p>
+
+<p>Age: 35</p>
+<p>Status: Online</p>
+<p>VIP Pharaoh Profile</p>
+
+<!-- MUSIC -->
+<button onclick="toggleMusic()">Play / Pause Music</button>
+
+<!-- VIDEOS (رجعتهم) -->
+<div class="videos">
+    <iframe src="https://www.youtube.com/embed/4ulSR860HyU"></iframe>
+    <iframe src="https://www.youtube.com/embed/b-KFYv7cuxk"></iframe>
+    <iframe src="https://www.youtube.com/embed/OoyK4I3DyJ0"></iframe>
+</div>
 
 </div>
 </div>
+
+<!-- MUSIC -->
+<iframe id="music" width="0" height="0"
+src="https://www.youtube.com/embed/4ulSR860HyU?enablejsapi=1"
+allow="autoplay"></iframe>
 
 <script>
 const correctPass = "111991";
@@ -141,46 +170,16 @@ function checkPass() {
     if(input === correctPass){
         document.getElementById("login").style.display = "none";
         document.getElementById("content").style.display = "block";
-        startMatrix();
         startPharaoh();
     } else {
         document.getElementById("msg").innerText = "Access Denied!";
     }
 }
 
-/* MATRIX */
-function startMatrix(){
-    const canvas = document.getElementById("matrix");
-    const ctx = canvas.getContext("2d");
-
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-
-    let letters = "01PHARAOHVIP".split("");
-    let fontSize = 14;
-    let columns = canvas.width / fontSize;
-    let drops = [];
-
-    for(let i=0;i<columns;i++) drops[i]=1;
-
-    function draw(){
-        ctx.fillStyle = "rgba(0,0,0,0.05)";
-        ctx.fillRect(0,0,canvas.width,canvas.height);
-
-        ctx.fillStyle = "#00fff2";
-        ctx.font = fontSize+"px monospace";
-
-        for(let i=0;i<drops.length;i++){
-            let text = letters[Math.floor(Math.random()*letters.length)];
-            ctx.fillText(text,i*fontSize,drops[i]*fontSize);
-
-            if(drops[i]*fontSize>canvas.height && Math.random()>0.975){
-                drops[i]=0;
-            }
-            drops[i]++;
-        }
-    }
-    setInterval(draw,33);
+/* MUSIC */
+function toggleMusic(){
+    let frame = document.getElementById("music");
+    frame.src = frame.src + "&autoplay=1";
 }
 
 /* PHARAOH ANIMATION */
@@ -194,21 +193,20 @@ function startPharaoh(){
     let x = -200;
 
     function draw(){
-        ctx.fillStyle = "rgba(0,0,0,0.15)";
+        ctx.fillStyle = "rgba(0,0,0,0.12)";
         ctx.fillRect(0,0,canvas.width,canvas.height);
 
-        ctx.shadowBlur = 30;
+        ctx.shadowBlur = 40;
         ctx.shadowColor = "#d4af37";
 
-        ctx.fillStyle = "#d4af37";
-
         // body
+        ctx.fillStyle = "#d4af37";
         ctx.fillRect(x, canvas.height/2 - 100, 80, 160);
 
         // head
         ctx.fillRect(x+20, canvas.height/2 - 150, 40, 50);
 
-        // eyes
+        // eyes scary
         ctx.fillStyle = "red";
         ctx.fillRect(x+25, canvas.height/2 - 130, 5, 5);
         ctx.fillRect(x+45, canvas.height/2 - 130, 5, 5);
