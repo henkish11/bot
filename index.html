@@ -15,19 +15,18 @@ body {
     color: white;
 }
 
-/* ===== PHARAOH VIDEO BACKGROUND ===== */
-#bgVideo {
+/* ===== PHARAOH CANVAS BACKGROUND ===== */
+#pharaohBG {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    object-fit: cover;
     z-index: 0;
-    filter: brightness(0.35) contrast(1.3);
+    background: black;
 }
 
-/* ===== FLOATING PARTICLES ===== */
+/* ===== MATRIX ===== */
 canvas {
     position: fixed;
     top: 0;
@@ -56,21 +55,10 @@ canvas {
     border-radius: 15px;
     text-align: center;
     width: 340px;
-    animation: glitch 2s infinite;
-}
-
-@keyframes glitch {
-    0% { transform: translate(0); }
-    20% { transform: translate(-1px, 1px); }
-    40% { transform: translate(1px, -1px); }
-    60% { transform: translate(-1px, -1px); }
-    80% { transform: translate(1px, 1px); }
-    100% { transform: translate(0); }
 }
 
 .login-box h2 {
     color: #00fff2;
-    letter-spacing: 4px;
 }
 
 .login-box input {
@@ -80,7 +68,6 @@ canvas {
     border-radius: 8px;
     border: none;
     text-align: center;
-    font-size: 16px;
 }
 
 .login-box button {
@@ -94,10 +81,6 @@ canvas {
     cursor: pointer;
 }
 
-.login-box button:hover {
-    background: #00c2b8;
-}
-
 /* ===== MAIN CONTENT ===== */
 #content {
     display: none;
@@ -107,20 +90,7 @@ canvas {
     padding-top: 50px;
 }
 
-/* ===== TEXT ANIMATION ===== */
-.glowIn span {
-    display: inline-block;
-    opacity: 0;
-    animation: glow 1s forwards;
-}
-
-@keyframes glow {
-    from { opacity: 0; transform: translateY(10px); }
-    60% { opacity: 1; text-shadow: 0 0 25px #00fff2; }
-    to { opacity: 1; }
-}
-
-/* ===== PROFILE CARD ===== */
+/* ===== CARD ===== */
 .card {
     background: rgba(0,0,0,0.6);
     border: 1px solid #00fff2;
@@ -131,43 +101,15 @@ canvas {
     padding: 20px;
     border-radius: 15px;
 }
-
-/* ===== VIDEOS ===== */
-.videos {
-    display: flex;
-    justify-content: center;
-    gap: 15px;
-    flex-wrap: wrap;
-    margin-top: 20px;
-}
-
-iframe {
-    width: 220px;
-    height: 150px;
-    border-radius: 10px;
-    border: 1px solid #00fff2;
-}
-
-/* ===== MUSIC BUTTON ===== */
-.music-btn {
-    margin-top: 15px;
-    padding: 10px 15px;
-    background: #00fff2;
-    border: none;
-    cursor: pointer;
-    border-radius: 8px;
-    font-weight: bold;
-}
 </style>
 </head>
 
 <body>
 
-<!-- 🔥 PHARAOH VIDEO BACKGROUND -->
-<video autoplay muted loop id="bgVideo">
-    <source src="https://files.catbox.moe/your-pharaoh-video.mp4" type="video/mp4">
-</video>
+<!-- 👑 PHARAOH BACKGROUND -->
+<canvas id="pharaohBG"></canvas>
 
+<!-- MATRIX -->
 <canvas id="matrix"></canvas>
 
 <!-- LOGIN -->
@@ -182,72 +124,28 @@ iframe {
 
 <!-- CONTENT -->
 <div id="content">
-
 <div class="card">
 
-    <h1 class="glowIn">Hello, ramy</h1>
-
-    <p class="glowIn">I'm xats trader and I love trading very much and selling and buying ID's</p>
-
-    <p class="glowIn">iEgypt (106080) ❤️ DodoLove14 (1541187216)</p>
-
-    <p class="glowIn">ramy ❤️ Dodo</p>
-
-    <p class="glowIn">Age: 35</p>
-    <p class="glowIn">Status: Online</p>
-    <p class="glowIn">VIP Pharaoh Hacker Profile</p>
-
-    <button class="music-btn" onclick="toggleMusic()">Play / Pause Music</button>
-
-    <div class="videos">
-        <iframe src="https://www.youtube.com/embed/4ulSR860HyU"></iframe>
-        <iframe src="https://www.youtube.com/embed/b-KFYv7cuxk"></iframe>
-        <iframe src="https://www.youtube.com/embed/OoyK4I3DyJ0"></iframe>
-    </div>
+<h1>Hello, ramy</h1>
+<p>VIP Pharaoh Hacker Profile</p>
 
 </div>
-
 </div>
-
-<!-- MUSIC -->
-<iframe id="music" width="0" height="0"
-src="https://www.youtube.com/embed/4ulSR860HyU?enablejsapi=1"
-allow="autoplay"></iframe>
 
 <script>
 const correctPass = "111991";
-let musicOn = false;
 
+/* LOGIN */
 function checkPass() {
     let input = document.getElementById("pass").value;
     if(input === correctPass){
         document.getElementById("login").style.display = "none";
         document.getElementById("content").style.display = "block";
-        animateText();
         startMatrix();
+        startPharaoh();
     } else {
         document.getElementById("msg").innerText = "Access Denied!";
     }
-}
-
-function animateText(){
-    document.querySelectorAll(".glowIn").forEach(el=>{
-        let letters = el.textContent.split("");
-        el.textContent = "";
-        letters.forEach((l,i)=>{
-            let span = document.createElement("span");
-            span.textContent = l;
-            span.style.animationDelay = (i*0.03)+"s";
-            el.appendChild(span);
-        });
-    });
-}
-
-/* MUSIC */
-function toggleMusic(){
-    let frame = document.getElementById("music");
-    frame.src = frame.src + "&autoplay=1";
-    musicOn = true;
 }
 
 /* MATRIX */
@@ -258,7 +156,7 @@ function startMatrix(){
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
 
-    let letters = "01RAMYVIPPHARAOH".split("");
+    let letters = "01PHARAOHVIP".split("");
     let fontSize = 14;
     let columns = canvas.width / fontSize;
     let drops = [];
@@ -283,6 +181,48 @@ function startMatrix(){
         }
     }
     setInterval(draw,33);
+}
+
+/* PHARAOH ANIMATION */
+function startPharaoh(){
+    const canvas = document.getElementById("pharaohBG");
+    const ctx = canvas.getContext("2d");
+
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    let x = -200;
+
+    function draw(){
+        ctx.fillStyle = "rgba(0,0,0,0.15)";
+        ctx.fillRect(0,0,canvas.width,canvas.height);
+
+        ctx.shadowBlur = 30;
+        ctx.shadowColor = "#d4af37";
+
+        ctx.fillStyle = "#d4af37";
+
+        // body
+        ctx.fillRect(x, canvas.height/2 - 100, 80, 160);
+
+        // head
+        ctx.fillRect(x+20, canvas.height/2 - 150, 40, 50);
+
+        // eyes
+        ctx.fillStyle = "red";
+        ctx.fillRect(x+25, canvas.height/2 - 130, 5, 5);
+        ctx.fillRect(x+45, canvas.height/2 - 130, 5, 5);
+
+        x += 2;
+
+        if(x > canvas.width + 100){
+            x = -200;
+        }
+
+        requestAnimationFrame(draw);
+    }
+
+    draw();
 }
 </script>
 
