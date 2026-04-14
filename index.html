@@ -3,48 +3,35 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>PHARAOH LIMIT BREAK</title>
+<title>Pharaoh VIP Profile</title>
 
 <style>
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;800&display=swap');
+
 body{
     margin:0;
+    font-family:'Cinzel',serif;
     overflow:hidden;
-    background:black;
-    font-family:Arial;
     color:#f5d27a;
 }
 
-/* ===== VIDEO BACKGROUND ===== */
+/* ===== VIDEO BACKGROUND (FIXED) ===== */
 #bgVideo{
     position:fixed;
     width:100%;
     height:100%;
     object-fit:cover;
     z-index:0;
-    filter:brightness(0.35) contrast(1.4);
+    filter:brightness(0.40) contrast(1.2) saturate(1.1);
 }
 
-/* ===== PARTICLES CANVAS ===== */
-canvas{
-    position:fixed;
-    top:0;
-    left:0;
-    z-index:1;
-}
-
-/* ===== LIGHT SHAKE LAYER ===== */
-.flash{
+/* DARK OVERLAY FOR READABILITY */
+.overlay{
     position:fixed;
     width:100%;
     height:100%;
-    background:radial-gradient(circle,rgba(255,215,0,0.2),transparent);
-    animation:flash 4s infinite alternate;
-    z-index:2;
-}
-
-@keyframes flash{
-    from{opacity:0.2;transform:scale(1);}
-    to{opacity:0.05;transform:scale(1.2);}
+    background:rgba(0,0,0,0.55);
+    z-index:1;
 }
 
 /* ===== LOGIN ===== */
@@ -56,141 +43,164 @@ canvas{
     justify-content:center;
     align-items:center;
     z-index:10;
-    backdrop-filter:blur(10px);
 }
 
 .box{
+    width:360px;
     padding:30px;
-    background:rgba(0,0,0,0.8);
+    background:rgba(20,15,10,0.85);
     border:2px solid gold;
-    border-radius:15px;
+    border-radius:18px;
     text-align:center;
-    box-shadow:0 0 60px gold;
+    box-shadow:0 0 60px rgba(255,215,0,0.4);
 }
 
-input,button{
+input{
     width:100%;
-    padding:10px;
+    padding:12px;
     margin-top:10px;
+    border:none;
+    border-radius:10px;
     text-align:center;
 }
 
 button{
+    width:100%;
+    padding:12px;
+    margin-top:12px;
     background:gold;
     border:none;
     font-weight:bold;
     cursor:pointer;
+    border-radius:10px;
 }
 
-/* ===== MAIN UI ===== */
+/* ===== MAIN CONTENT ===== */
 #content{
     display:none;
     position:relative;
-    z-index:3;
+    z-index:2;
     text-align:center;
-    padding-top:30px;
-    animation:zoomIn 1s ease;
+    padding-top:40px;
 }
 
-@keyframes zoomIn{
-    from{transform:scale(1.3);opacity:0;}
-    to{transform:scale(1);opacity:1;}
-}
-
+/* TITLE */
 .title{
-    font-size:45px;
-    text-shadow:0 0 40px gold;
+    font-size:40px;
+    text-shadow:0 0 30px gold;
+    margin-bottom:20px;
 }
 
-/* CARDS */
+/* CARD */
 .card{
     margin:20px auto;
-    width:80%;
-    max-width:800px;
-    padding:20px;
-    background:rgba(20,15,10,0.75);
-    border:1px solid gold;
-    border-radius:15px;
+    width:85%;
+    max-width:850px;
+    padding:22px;
+    background:rgba(25,18,10,0.75);
+    border:1px solid rgba(255,215,0,0.4);
+    border-radius:18px;
     backdrop-filter:blur(10px);
+    box-shadow:0 0 30px rgba(255,215,0,0.15);
+}
+
+/* BADGES */
+.badge{
+    display:inline-block;
+    padding:6px 12px;
+    margin:5px;
+    border:1px solid gold;
+    border-radius:20px;
+    font-size:12px;
+}
+
+/* VIDEOS */
+.videos{
+    display:flex;
+    justify-content:center;
+    gap:10px;
+    flex-wrap:wrap;
+    margin-top:15px;
+}
+
+iframe{
+    width:200px;
+    height:140px;
+    border-radius:12px;
+    border:1px solid gold;
 }
 </style>
 </head>
 
 <body>
 
-<!-- VIDEO -->
+<!-- 👑 VIDEO BACKGROUND (KEPT WORKING) -->
 <video autoplay muted loop id="bgVideo">
     <source src="https://cdn.coverr.co/videos/coverr-desert-pyramids-at-sunset-6541/1080p.mp4">
 </video>
 
-<canvas id="fx"></canvas>
-<div class="flash"></div>
+<div class="overlay"></div>
 
 <!-- LOGIN -->
 <div id="login">
     <div class="box">
-        <h2>⚱ LIMIT GATE ⚱</h2>
+        <h2>⚱ PHARAOH ACCESS ⚱</h2>
         <input type="password" id="pass" placeholder="Enter Code">
-        <button onclick="enter()">ENTER REALM</button>
+        <button onclick="login()">ENTER</button>
         <p id="msg"></p>
     </div>
 </div>
 
-<!-- CONTENT -->
+<!-- CONTENT (YOUR DATA KEPT) -->
 <div id="content">
-    <div class="title">👑 PHARAOH LIMIT BREAK</div>
 
-    <div class="card">
-        <h3>⚡ GOD MODE ACTIVE</h3>
-        <p>Ancient Power Awakening...</p>
+<div class="title">👑 RAMY PHARAOH PROFILE</div>
+
+<div class="card">
+
+    <h2>👑 Profile Info</h2>
+
+    <p>I'm xats trader and I love trading very much and selling and buying ID's</p>
+
+    <p>iEgypt (106080) ❤️ DodoLove14 (1541187216)</p>
+
+    <p>ramy ❤️ Dodo</p>
+
+    <p>Age: 35</p>
+    <p>Status: Online</p>
+    <p>VIP Hacker Profile</p>
+
+    <div>
+        <span class="badge">VIP</span>
+        <span class="badge">Trader</span>
+        <span class="badge">Egypt Power</span>
     </div>
+
+</div>
+
+<div class="card">
+
+    <h2>🎬 Videos</h2>
+
+    <div class="videos">
+        <iframe src="https://www.youtube.com/embed/4ulSR860HyU"></iframe>
+        <iframe src="https://www.youtube.com/embed/b-KFYv7cuxk"></iframe>
+        <iframe src="https://www.youtube.com/embed/OoyK4I3DyJ0"></iframe>
+    </div>
+
+</div>
+
 </div>
 
 <script>
-function enter(){
-    if(document.getElementById("pass").value==="111991"){
+function login(){
+    let pass=document.getElementById("pass").value;
+    if(pass==="111991"){
         document.getElementById("login").style.display="none";
         document.getElementById("content").style.display="block";
-        startFX();
     }else{
-        document.getElementById("msg").innerText="❌ Rejected";
+        document.getElementById("msg").innerText="❌ Wrong Code";
     }
-}
-
-/* ===== PARTICLES (SAND STORM) ===== */
-function startFX(){
-    const c=document.getElementById("fx");
-    const x=c.getContext("2d");
-
-    c.width=innerWidth;
-    c.height=innerHeight;
-
-    let p=[];
-
-    for(let i=0;i<200;i++){
-        p.push({x:Math.random()*c.width,y:Math.random()*c.height,s:Math.random()*3});
-    }
-
-    function draw(){
-        x.fillStyle="rgba(0,0,0,0.2)";
-        x.fillRect(0,0,c.width,c.height);
-
-        x.fillStyle="rgba(255,215,0,0.6)";
-
-        for(let i=0;i<p.length;i++){
-            let o=p[i];
-            x.fillRect(o.x,o.y,o.s,o.s);
-
-            o.x+=Math.random()*2;
-            o.y+=Math.random()*1-0.5;
-
-            if(o.x>c.width)o.x=0;
-        }
-
-        requestAnimationFrame(draw);
-    }
-
-    draw();
 }
 </script>
 
