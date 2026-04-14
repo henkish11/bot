@@ -1,58 +1,289 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>XAT USER SEARCH</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ramy VIP Profile</title>
+
 <style>
-body{background:#0b0c10;color:#fff;font-family:Arial;display:flex;justify-content:center;align-items:center;height:100vh}
-.box{width:500px;background:#151820;padding:20px;border-radius:15px}
-input,button{width:100%;padding:10px;margin-top:10px;border-radius:10px;border:none}
-.card{background:#222;padding:10px;margin-top:10px;border-radius:10px}
+@import url("https://fonts.googleapis.com/css?family=Lora:400,700");
+
+body {
+    margin: 0;
+    font-family: Lora, serif;
+    overflow: hidden;
+    color: white;
+}
+
+/* ===== PHARAOH VIDEO BACKGROUND ===== */
+#bgVideo {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: 0;
+    filter: brightness(0.35) contrast(1.3);
+}
+
+/* ===== FLOATING PARTICLES ===== */
+canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1;
+}
+
+/* ===== LOGIN ===== */
+#login {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: rgba(0,0,0,0.8);
+    backdrop-filter: blur(15px);
+    z-index: 999;
+}
+
+.login-box {
+    background: rgba(0,0,0,0.7);
+    border: 1px solid #00fff2;
+    box-shadow: 0 0 30px #00fff2;
+    padding: 30px;
+    border-radius: 15px;
+    text-align: center;
+    width: 340px;
+    animation: glitch 2s infinite;
+}
+
+@keyframes glitch {
+    0% { transform: translate(0); }
+    20% { transform: translate(-1px, 1px); }
+    40% { transform: translate(1px, -1px); }
+    60% { transform: translate(-1px, -1px); }
+    80% { transform: translate(1px, 1px); }
+    100% { transform: translate(0); }
+}
+
+.login-box h2 {
+    color: #00fff2;
+    letter-spacing: 4px;
+}
+
+.login-box input {
+    width: 90%;
+    padding: 12px;
+    margin-top: 15px;
+    border-radius: 8px;
+    border: none;
+    text-align: center;
+    font-size: 16px;
+}
+
+.login-box button {
+    margin-top: 15px;
+    width: 100%;
+    padding: 10px;
+    background: #00fff2;
+    border: none;
+    font-weight: bold;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.login-box button:hover {
+    background: #00c2b8;
+}
+
+/* ===== MAIN CONTENT ===== */
+#content {
+    display: none;
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    padding-top: 50px;
+}
+
+/* ===== TEXT ANIMATION ===== */
+.glowIn span {
+    display: inline-block;
+    opacity: 0;
+    animation: glow 1s forwards;
+}
+
+@keyframes glow {
+    from { opacity: 0; transform: translateY(10px); }
+    60% { opacity: 1; text-shadow: 0 0 25px #00fff2; }
+    to { opacity: 1; }
+}
+
+/* ===== PROFILE CARD ===== */
+.card {
+    background: rgba(0,0,0,0.6);
+    border: 1px solid #00fff2;
+    box-shadow: 0 0 25px #00fff2;
+    margin: auto;
+    width: 80%;
+    max-width: 800px;
+    padding: 20px;
+    border-radius: 15px;
+}
+
+/* ===== VIDEOS ===== */
+.videos {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    flex-wrap: wrap;
+    margin-top: 20px;
+}
+
+iframe {
+    width: 220px;
+    height: 150px;
+    border-radius: 10px;
+    border: 1px solid #00fff2;
+}
+
+/* ===== MUSIC BUTTON ===== */
+.music-btn {
+    margin-top: 15px;
+    padding: 10px 15px;
+    background: #00fff2;
+    border: none;
+    cursor: pointer;
+    border-radius: 8px;
+    font-weight: bold;
+}
 </style>
 </head>
 
 <body>
 
-<div class="box">
-<h2>XAT SEARCH</h2>
+<!-- 🔥 PHARAOH VIDEO BACKGROUND -->
+<video autoplay muted loop id="bgVideo">
+    <source src="https://files.catbox.moe/your-pharaoh-video.mp4" type="video/mp4">
+</video>
 
-<input id="user" placeholder="Enter XAT username">
-<button onclick="search()">Search</button>
+<canvas id="matrix"></canvas>
 
-<div class="card">Name: <span id="name"></span></div>
-<div class="card">Info: <span id="info"></span></div>
+<!-- LOGIN -->
+<div id="login">
+    <div class="login-box">
+        <h2>VIP ACCESS</h2>
+        <input type="password" id="pass" placeholder="Enter Password">
+        <button onclick="checkPass()">UNLOCK</button>
+        <p id="msg" style="color:red;"></p>
+    </div>
+</div>
+
+<!-- CONTENT -->
+<div id="content">
+
+<div class="card">
+
+    <h1 class="glowIn">Hello, ramy</h1>
+
+    <p class="glowIn">I'm xats trader and I love trading very much and selling and buying ID's</p>
+
+    <p class="glowIn">iEgypt (106080) ❤️ DodoLove14 (1541187216)</p>
+
+    <p class="glowIn">ramy ❤️ Dodo</p>
+
+    <p class="glowIn">Age: 35</p>
+    <p class="glowIn">Status: Online</p>
+    <p class="glowIn">VIP Pharaoh Hacker Profile</p>
+
+    <button class="music-btn" onclick="toggleMusic()">Play / Pause Music</button>
+
+    <div class="videos">
+        <iframe src="https://www.youtube.com/embed/4ulSR860HyU"></iframe>
+        <iframe src="https://www.youtube.com/embed/b-KFYv7cuxk"></iframe>
+        <iframe src="https://www.youtube.com/embed/OoyK4I3DyJ0"></iframe>
+    </div>
 
 </div>
 
+</div>
+
+<!-- MUSIC -->
+<iframe id="music" width="0" height="0"
+src="https://www.youtube.com/embed/4ulSR860HyU?enablejsapi=1"
+allow="autoplay"></iframe>
+
 <script>
+const correctPass = "111991";
+let musicOn = false;
 
-async function search(){
-
-  let u = document.getElementById("user").value.trim();
-  if(!u) return;
-
-  try {
-
-    // جلب صفحة البروفايل العامة
-    let url = `https://xat.com/web_gear/chat/profile.php?name=${u}`;
-
-    let res = await fetch(url);
-    let text = await res.text();
-
-    // استخراج الاسم من الصفحة
-    let nameMatch = text.match(/<title>(.*?)<\/title>/);
-
-    document.getElementById("name").innerText =
-      nameMatch ? nameMatch[1] : "Not found";
-
-    document.getElementById("info").innerText =
-      "Loaded from XAT public page";
-
-  } catch(e){
-    document.getElementById("name").innerText = "Error loading user";
-  }
+function checkPass() {
+    let input = document.getElementById("pass").value;
+    if(input === correctPass){
+        document.getElementById("login").style.display = "none";
+        document.getElementById("content").style.display = "block";
+        animateText();
+        startMatrix();
+    } else {
+        document.getElementById("msg").innerText = "Access Denied!";
+    }
 }
 
+function animateText(){
+    document.querySelectorAll(".glowIn").forEach(el=>{
+        let letters = el.textContent.split("");
+        el.textContent = "";
+        letters.forEach((l,i)=>{
+            let span = document.createElement("span");
+            span.textContent = l;
+            span.style.animationDelay = (i*0.03)+"s";
+            el.appendChild(span);
+        });
+    });
+}
+
+/* MUSIC */
+function toggleMusic(){
+    let frame = document.getElementById("music");
+    frame.src = frame.src + "&autoplay=1";
+    musicOn = true;
+}
+
+/* MATRIX */
+function startMatrix(){
+    const canvas = document.getElementById("matrix");
+    const ctx = canvas.getContext("2d");
+
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    let letters = "01RAMYVIPPHARAOH".split("");
+    let fontSize = 14;
+    let columns = canvas.width / fontSize;
+    let drops = [];
+
+    for(let i=0;i<columns;i++) drops[i]=1;
+
+    function draw(){
+        ctx.fillStyle = "rgba(0,0,0,0.05)";
+        ctx.fillRect(0,0,canvas.width,canvas.height);
+
+        ctx.fillStyle = "#00fff2";
+        ctx.font = fontSize+"px monospace";
+
+        for(let i=0;i<drops.length;i++){
+            let text = letters[Math.floor(Math.random()*letters.length)];
+            ctx.fillText(text,i*fontSize,drops[i]*fontSize);
+
+            if(drops[i]*fontSize>canvas.height && Math.random()>0.975){
+                drops[i]=0;
+            }
+            drops[i]++;
+        }
+    }
+    setInterval(draw,33);
+}
 </script>
 
 </body>
