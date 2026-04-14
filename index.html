@@ -73,6 +73,15 @@ body{
   font-size:25px;
   margin-right:10px;
 }
+
+@keyframes glow{0%{box-shadow:0 0 10px #38bdf8}50%{box-shadow:0 0 30px #38bdf8,0 0 60px #2563eb}100%{box-shadow:0 0 10px #38bdf8}}
+@keyframes floaty{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+body:before{content:'';position:fixed;inset:0;background:radial-gradient(circle at 20% 20%,rgba(56,189,248,.18),transparent 25%),radial-gradient(circle at 80% 30%,rgba(59,130,246,.14),transparent 25%),radial-gradient(circle at 50% 80%,rgba(14,165,233,.12),transparent 25%);pointer-events:none}
+.profile{animation:glow 3s infinite ease-in-out}
+.top img{animation:floaty 3s ease-in-out infinite}
+.tab:hover{transform:translateY(-3px) scale(1.04);transition:.25s;box-shadow:0 10px 25px rgba(14,165,233,.45)}
+.card:hover{transform:translateY(-6px);transition:.3s;box-shadow:0 15px 35px rgba(0,140,255,.25)}
+.name{text-shadow:0 0 15px rgba(79,195,255,.8)}
 </style>
 </head>
 <body>
