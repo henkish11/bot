@@ -2,13 +2,13 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Ramy Dashboard Fixed</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Ramy Ultra Profile FIXED</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
 
 <style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:Inter,sans-serif;}
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Inter',sans-serif;}
 
 body{
   min-height:100vh;
@@ -19,6 +19,7 @@ body{
   align-items:center;
 }
 
+/* BACKGROUND */
 body::before{
   content:"RAMY";
   position:fixed;
@@ -26,72 +27,130 @@ body::before{
   display:flex;
   justify-content:center;
   align-items:center;
-  font-size:12vw;
+  font-size:14vw;
   font-weight:900;
-  color:rgba(255,255,255,0.05);
-  z-index:-1;
+  letter-spacing:10px;
+  color:rgba(255,255,255,0.06);
+  background:
+    radial-gradient(circle at 20% 20%, rgba(0,255,213,0.15), transparent 40%),
+    radial-gradient(circle at 80% 80%, rgba(124,92,255,0.15), transparent 45%),
+    url('https://xatimg.com/image/NTKWfOtODi9Z.jpg');
+  background-size:cover;
+  filter:brightness(.55);
+  z-index:-2;
+  animation:zoom 18s infinite alternate;
+}
+
+@keyframes zoom{
+  from{transform:scale(1);}
+  to{transform:scale(1.08);}
 }
 
 /* APP */
 .app{
   width:100%;
   max-width:1100px;
-  height:90vh;
+  height:100vh;
   display:flex;
-  background:rgba(255,255,255,0.05);
-  border-radius:18px;
+  background:rgba(20,20,30,0.6);
+  backdrop-filter:blur(20px);
+  border-radius:22px;
   overflow:hidden;
 }
 
+/* SIDEBAR */
 .sidebar{
-  width:220px;
-  padding:15px;
-  background:rgba(0,0,0,0.3);
+  width:240px;
+  background:rgba(0,0,0,.35);
+  padding:20px;
 }
 
 .myname{
   text-align:center;
+  font-size:22px;
   font-weight:900;
-  margin-bottom:20px;
+  margin-bottom:10px;
 }
 
 .nav{
-  padding:12px;
-  margin:8px 0;
-  text-align:center;
-  background:rgba(255,255,255,0.05);
-  border-radius:10px;
+  padding:14px;
+  margin-top:10px;
+  border-radius:12px;
+  background:rgba(255,255,255,.05);
   cursor:pointer;
 }
 
+/* MAIN */
 .main{
   flex:1;
-  padding:20px;
-  overflow:auto;
+  padding:18px;
 }
 
 .section{display:none;}
 .active{display:block;}
 
-#login{
-  position:fixed;
-  inset:0;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  background:rgba(0,0,0,0.9);
-  z-index:999;
+.avatar{
+  width:110px;
+  height:110px;
+  border-radius:20px;
+  display:block;
+  margin:10px auto;
+  object-fit:cover;
+  border:2px solid rgba(255,255,255,.2);
 }
 
-.box{
-  width:320px;
-  padding:20px;
-  background:#111;
-  border-radius:15px;
+.search{
+  display:flex;
+  gap:10px;
+  margin:15px 0;
+}
+
+.search input{
+  flex:1;
+  padding:12px;
+  border-radius:12px;
+  border:none;
+  background:rgba(255,255,255,.06);
+  color:#fff;
   text-align:center;
 }
 
-input{
+.search button{
+  padding:12px 16px;
+  border-radius:12px;
+  border:none;
+  cursor:pointer;
+  font-weight:800;
+}
+
+.card{
+  padding:12px;
+  margin-top:10px;
+  background:rgba(255,255,255,.05);
+  border-radius:12px;
+  cursor:pointer;
+}
+
+/* LOGIN */
+#loginScreen{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.9);
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  z-index:9999;
+}
+
+.login-box{
+  width:320px;
+  padding:20px;
+  border-radius:16px;
+  background:rgba(30,30,40,.95);
+  text-align:center;
+}
+
+.login-box input{
   width:100%;
   padding:12px;
   margin-top:10px;
@@ -100,46 +159,30 @@ input{
   text-align:center;
 }
 
-.card{
-  padding:12px;
-  margin:10px 0;
-  background:rgba(255,255,255,0.05);
-  border-radius:10px;
-  cursor:pointer;
-}
-
-.avatar{
-  width:90px;
-  height:90px;
-  border-radius:20px;
-  display:block;
-  margin:10px auto;
-}
-
+/* TOAST */
 #toast{
   position:fixed;
-  bottom:20px;
+  bottom:30px;
   left:50%;
   transform:translateX(-50%);
   background:#fff;
   color:#000;
-  padding:8px 15px;
-  border-radius:8px;
+  padding:10px 18px;
+  border-radius:10px;
   opacity:0;
   transition:.3s;
 }
-#toast.show{opacity:1;bottom:40px;}
+#toast.show{opacity:1;bottom:50px;}
 </style>
 </head>
 
 <body>
 
 <!-- LOGIN -->
-<div id="login">
-  <div class="box">
+<div id="loginScreen">
+  <div class="login-box">
     <h3>LOGIN</h3>
-    <input id="pass" type="password" placeholder="Password"
-    onkeydown="if(event.key==='Enter')login()">
+    <input id="passInput" type="password" placeholder="Enter password">
   </div>
 </div>
 
@@ -147,28 +190,31 @@ input{
 
   <div class="sidebar">
     <div class="myname">RAMY</div>
-    <div class="nav" onclick="show('home')">Home</div>
-    <div class="nav" onclick="show('info')">User Info</div>
+    <div class="nav" onclick="show('home')">Search</div>
     <div class="nav" onclick="show('history')">History</div>
   </div>
 
   <div class="main">
 
     <div id="home" class="section active">
-      <input id="search" placeholder="Search ID or Name"
-      onkeydown="if(event.key==='Enter')searchUser()">
-      <button onclick="searchUser()">Search</button>
-    </div>
 
-    <div id="info" class="section">
       <img id="avatar" class="avatar">
-      <div class="card">Name: <span id="name"></span></div>
-      <div class="card">ID: <span id="uid"></span></div>
-      <div class="card">Username: <span id="nick"></span></div>
-      <div class="card">Image: <span id="img"></span></div>
+
+      <div class="search">
+        <input id="userInput" placeholder="Search ID or Name">
+        <button onclick="fetchData()">Go</button>
+      </div>
+
+      <div class="card">Full Name: <span id="fullName"></span></div>
+      <div class="card">ID: <span id="id"></span></div>
+      <div class="card">Username: <span id="username"></span></div>
+      <div class="card">Image: <span id="imgLink"></span></div>
+
     </div>
 
-    <div id="history" class="section"></div>
+    <div id="history" class="section">
+      <div id="historyBox"></div>
+    </div>
 
   </div>
 </div>
@@ -177,87 +223,75 @@ input{
 
 <script>
 
-/* 🔥 API الأساسي */
-const API_URL = "https://pythbots.com/api/xatprofile.php?u=";
+const loginScreen = document.getElementById('loginScreen');
+const passInput = document.getElementById('passInput');
+const userInput = document.getElementById('userInput');
 
-/* 🔥 Proxy لحل CORS (مهم جداً) */
-const PROXY = "https://api.allorigins.win/raw?url=";
-
-let historyList = [];
-
-/* NAV */
 function show(id){
   document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
   document.getElementById(id).classList.add('active');
 }
 
-/* TOAST */
 function toast(msg){
-  let t=document.getElementById('toast');
+  const t=document.getElementById('toast');
   t.innerText=msg;
   t.classList.add('show');
   setTimeout(()=>t.classList.remove('show'),1200);
 }
 
-/* LOGIN (FIXED) */
-function login(){
-  const passValue = document.getElementById("pass").value.trim();
-
-  if(passValue === "2035"){
-    document.getElementById("login").style.display = "none";
-    toast("Welcome");
-  }else{
-    alert("Wrong password");
+/* PASSWORD FIX */
+passInput.addEventListener('keydown',e=>{
+  if(e.key==='Enter'){
+    if(passInput.value==='2035'){
+      loginScreen.style.display='none';
+      toast('Welcome');
+    }else{
+      alert('Wrong password');
+    }
   }
-}
+});
 
-/* 🔥 FIXED API FUNCTION (NO ERRORS) */
-async function searchUser(){
+/* SEARCH FIXED + ERROR HANDLING */
+async function fetchData(){
+  let u=userInput.value.trim();
+  if(!u) return;
 
-  let q = document.getElementById("search").value.trim();
-  if(!q) return;
-
-  const url = PROXY + encodeURIComponent(API_URL + q);
+  const url=`https://pythbots.com/api/xatprofile.php?u=${u}`;
+  const proxy=`https://api.allorigins.win/raw?url=${encodeURIComponent(url)}`;
 
   try{
+    let res=await fetch(proxy);
+    let d=await res.json();
 
-    const res = await fetch(url);
-
-    if(!res.ok){
-      throw new Error("Network error");
+    if(!d){
+      throw new Error("Empty response");
     }
 
-    const text = await res.text();
+    document.getElementById('fullName').innerText = d.name || 'N/A';
+    document.getElementById('id').innerText = d.id || 'N/A';
+    document.getElementById('username').innerText = d.nick || d.username || 'N/A';
+    document.getElementById('imgLink').innerText = d.avatar || 'N/A';
+    document.getElementById('avatar').src = d.avatar || '';
 
-    let d;
-    try{
-      d = JSON.parse(text);
-    }catch{
-      throw new Error("Invalid JSON");
-    }
+    toast("Loaded");
+  }
+  catch(err){
+    console.log(err);
 
-    document.getElementById("name").innerText = d.name || "N/A";
-    document.getElementById("uid").innerText = d.id || "N/A";
-    document.getElementById("nick").innerText = d.nick || "N/A";
-    document.getElementById("img").innerText = d.avatar || "N/A";
-    document.getElementById("avatar").src = d.avatar || "";
+    // FALLBACK (حتى لو API وقع)
+    document.getElementById('fullName').innerText = "API Error";
+    document.getElementById('id').innerText = "-";
+    document.getElementById('username').innerText = "Try again";
+    document.getElementById('imgLink').innerText = "-";
 
-    historyList.push(`${d.name || "Unknown"} (${d.id || "0"})`);
-    renderHistory();
-
-    show('info');
-
-  }catch(e){
-    console.log(e);
-    toast("API Error Fixed Mode");
+    toast("API Error");
   }
 }
 
-/* HISTORY */
-function renderHistory(){
-  document.getElementById("history").innerHTML =
-    historyList.map(h=>`<div class="card">${h}</div>`).join("");
-}
+/* ENTER SEARCH */
+userInput.addEventListener('keydown',e=>{
+  if(e.key==='Enter')fetchData();
+});
 
 </script>
 
