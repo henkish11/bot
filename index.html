@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Pharaoh VIP Profile</title>
+<title>Egypt Civilization UI</title>
 
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;800&display=swap');
@@ -15,17 +15,32 @@ body{
     color:#f5d27a;
 }
 
-/* ===== VIDEO BACKGROUND (FIXED) ===== */
-#bgVideo{
+/* =========================
+   🔒 LOGIN BACKGROUND (NIGHT PYRAMIDS)
+========================= */
+#loginBg{
     position:fixed;
     width:100%;
     height:100%;
-    object-fit:cover;
+    background:url('https://images.unsplash.com/photo-1568322445389-f64ac2515020') center/cover no-repeat;
+    filter:brightness(0.35) contrast(1.2);
     z-index:0;
-    filter:brightness(0.40) contrast(1.2) saturate(1.1);
 }
 
-/* DARK OVERLAY FOR READABILITY */
+/* =========================
+   🏛 MAIN BACKGROUND (DAY CIVILIZATION)
+========================= */
+#mainBg{
+    position:fixed;
+    width:100%;
+    height:100%;
+    background:url('https://images.unsplash.com/photo-1548013146-72479768bada') center/cover no-repeat;
+    filter:brightness(0.45) contrast(1.1);
+    display:none;
+    z-index:0;
+}
+
+/* DARK OVERLAY FOR BOTH */
 .overlay{
     position:fixed;
     width:100%;
@@ -34,7 +49,9 @@ body{
     z-index:1;
 }
 
-/* ===== LOGIN ===== */
+/* =========================
+   🔒 LOGIN UI
+========================= */
 #login{
     position:fixed;
     width:100%;
@@ -75,7 +92,9 @@ button{
     border-radius:10px;
 }
 
-/* ===== MAIN CONTENT ===== */
+/* =========================
+   🏛 MAIN CONTENT
+========================= */
 #content{
     display:none;
     position:relative;
@@ -91,16 +110,16 @@ button{
     margin-bottom:20px;
 }
 
-/* CARD */
+/* CARD STYLE */
 .card{
     margin:20px auto;
     width:85%;
     max-width:850px;
     padding:22px;
-    background:rgba(25,18,10,0.75);
+    background:rgba(25,18,10,0.7);
     border:1px solid rgba(255,215,0,0.4);
     border-radius:18px;
-    backdrop-filter:blur(10px);
+    backdrop-filter:blur(12px);
     box-shadow:0 0 30px rgba(255,215,0,0.15);
 }
 
@@ -113,52 +132,37 @@ button{
     border-radius:20px;
     font-size:12px;
 }
-
-/* VIDEOS */
-.videos{
-    display:flex;
-    justify-content:center;
-    gap:10px;
-    flex-wrap:wrap;
-    margin-top:15px;
-}
-
-iframe{
-    width:200px;
-    height:140px;
-    border-radius:12px;
-    border:1px solid gold;
-}
 </style>
 </head>
 
 <body>
 
-<!-- 👑 VIDEO BACKGROUND (KEPT WORKING) -->
-<video autoplay muted loop id="bgVideo">
-    <source src="https://cdn.coverr.co/videos/coverr-desert-pyramids-at-sunset-6541/1080p.mp4">
-</video>
+<!-- 🔒 LOGIN BACKGROUND -->
+<div id="loginBg"></div>
+
+<!-- 🏛 MAIN BACKGROUND -->
+<div id="mainBg"></div>
 
 <div class="overlay"></div>
 
 <!-- LOGIN -->
 <div id="login">
     <div class="box">
-        <h2>⚱ PHARAOH ACCESS ⚱</h2>
-        <input type="password" id="pass" placeholder="Enter Code">
-        <button onclick="login()">ENTER</button>
+        <h2>⚱ EGYPT PORTAL ⚱</h2>
+        <input type="password" id="pass" placeholder="Enter Ancient Code">
+        <button onclick="login()">ENTER KINGDOM</button>
         <p id="msg"></p>
     </div>
 </div>
 
-<!-- CONTENT (YOUR DATA KEPT) -->
+<!-- CONTENT -->
 <div id="content">
 
-<div class="title">👑 RAMY PHARAOH PROFILE</div>
+<div class="title">👑 ANCIENT EGYPT CIVILIZATION</div>
 
 <div class="card">
 
-    <h2>👑 Profile Info</h2>
+    <h2>👑 Ramy Pharaoh Profile</h2>
 
     <p>I'm xats trader and I love trading very much and selling and buying ID's</p>
 
@@ -168,24 +172,11 @@ iframe{
 
     <p>Age: 35</p>
     <p>Status: Online</p>
-    <p>VIP Hacker Profile</p>
 
     <div>
-        <span class="badge">VIP</span>
-        <span class="badge">Trader</span>
+        <span class="badge">VIP Trader</span>
         <span class="badge">Egypt Power</span>
-    </div>
-
-</div>
-
-<div class="card">
-
-    <h2>🎬 Videos</h2>
-
-    <div class="videos">
-        <iframe src="https://www.youtube.com/embed/4ulSR860HyU"></iframe>
-        <iframe src="https://www.youtube.com/embed/b-KFYv7cuxk"></iframe>
-        <iframe src="https://www.youtube.com/embed/OoyK4I3DyJ0"></iframe>
+        <span class="badge">Civilization Mode</span>
     </div>
 
 </div>
@@ -195,11 +186,14 @@ iframe{
 <script>
 function login(){
     let pass=document.getElementById("pass").value;
+
     if(pass==="111991"){
         document.getElementById("login").style.display="none";
+        document.getElementById("loginBg").style.display="none";
+        document.getElementById("mainBg").style.display="block";
         document.getElementById("content").style.display="block";
-    }else{
-        document.getElementById("msg").innerText="❌ Wrong Code";
+    } else {
+        document.getElementById("msg").innerText="❌ Wrong Ancient Code";
     }
 }
 </script>
