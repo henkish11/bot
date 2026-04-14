@@ -82,6 +82,9 @@ body:before{content:'';position:fixed;inset:0;background:radial-gradient(circle 
 .tab:hover{transform:translateY(-3px) scale(1.04);transition:.25s;box-shadow:0 10px 25px rgba(14,165,233,.45)}
 .card:hover{transform:translateY(-6px);transition:.3s;box-shadow:0 15px 35px rgba(0,140,255,.25)}
 .name{text-shadow:0 0 15px rgba(79,195,255,.8)}
+
+html{scroll-behavior:smooth}.card{transition:.35s ease;position:relative;overflow:hidden}.card:before{content:'';position:absolute;inset:-100%;background:linear-gradient(120deg,transparent,rgba(255,255,255,.08),transparent);transform:rotate(25deg)}.card:hover:before{inset:100%;transition:1s}.container{padding:30px}.profile{backdrop-filter:blur(18px);background:linear-gradient(180deg,rgba(255,255,255,.08),rgba(255,255,255,.03))}
+@media(max-width:700px){.top{flex-direction:column;text-align:center}.name{font-size:32px}.tabs{justify-content:center}}
 </style>
 </head>
 <body>
@@ -142,5 +145,8 @@ body:before{content:'';position:fixed;inset:0;background:radial-gradient(circle 
   </div>
 </div>
 
+<script>
+document.querySelectorAll('.tab').forEach(t=>{t.onclick=()=>{document.querySelectorAll('.card').forEach(c=>c.style.opacity='.35');const map={Info:0,Gallery:2,Powers:3,Social:4,Contact:5};let i=map[t.innerText];if(i!==undefined){document.querySelectorAll('.card')[i].style.opacity='1';document.querySelectorAll('.card')[i].scrollIntoView({behavior:'smooth',block:'center'});}}})
+</script>
 </body>
 </html>
