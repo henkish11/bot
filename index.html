@@ -3,27 +3,24 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Ramy VIP Profile</title>
+<title>Egypt VIP Profile</title>
 
 <style>
-@import url("https://fonts.googleapis.com/css?family=Lora:400,700");
-
 body {
     margin: 0;
-    font-family: Lora, serif;
     overflow: hidden;
+    font-family: Arial;
     color: white;
+    background: black;
 }
 
-/* ===== PHARAOH BACKGROUND ONLY ===== */
-#pharaohBG {
+/* ===== CANVAS BACKGROUND ===== */
+#egyptBG {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    z-index: 0;
-    background: black;
 }
 
 /* ===== LOGIN ===== */
@@ -35,192 +32,180 @@ body {
     justify-content: center;
     align-items: center;
     background: rgba(0,0,0,0.8);
-    backdrop-filter: blur(15px);
-    z-index: 999;
+    z-index: 10;
 }
 
-.login-box {
+.box {
+    padding: 20px;
     background: rgba(0,0,0,0.7);
-    border: 1px solid #00fff2;
-    box-shadow: 0 0 30px #00fff2;
-    padding: 30px;
-    border-radius: 15px;
-    text-align: center;
-    width: 340px;
-}
-
-.login-box h2 {
-    color: #00fff2;
-}
-
-.login-box input {
-    width: 90%;
-    padding: 12px;
-    margin-top: 15px;
-    border-radius: 8px;
-    border: none;
+    border: 1px solid gold;
+    border-radius: 10px;
     text-align: center;
 }
 
-.login-box button {
-    margin-top: 15px;
-    width: 100%;
+input {
     padding: 10px;
-    background: #00fff2;
+    width: 200px;
+    text-align: center;
+}
+
+button {
+    margin-top: 10px;
+    padding: 10px;
+    width: 100%;
+    cursor: pointer;
+    background: gold;
     border: none;
     font-weight: bold;
-    border-radius: 8px;
-    cursor: pointer;
 }
 
-/* ===== MAIN CONTENT ===== */
+/* ===== CONTENT ===== */
 #content {
     display: none;
     position: relative;
     z-index: 2;
     text-align: center;
-    padding-top: 50px;
+    padding-top: 40px;
 }
 
-/* ===== CARD ===== */
 .card {
-    background: rgba(0,0,0,0.6);
-    border: 1px solid #00fff2;
-    box-shadow: 0 0 25px #00fff2;
     margin: auto;
     width: 80%;
-    max-width: 800px;
+    max-width: 700px;
     padding: 20px;
+    background: rgba(0,0,0,0.6);
+    border: 1px solid gold;
     border-radius: 15px;
 }
 
-/* ===== VIDEOS ===== */
-.videos {
-    display: flex;
-    justify-content: center;
-    gap: 15px;
-    flex-wrap: wrap;
-    margin-top: 20px;
-}
-
+/* videos */
 iframe {
-    width: 220px;
-    height: 150px;
+    width: 200px;
+    height: 140px;
+    margin: 5px;
     border-radius: 10px;
-    border: 1px solid #00fff2;
 }
 </style>
 </head>
 
 <body>
 
-<!-- 👑 PHARAOH BACKGROUND -->
-<canvas id="pharaohBG"></canvas>
+<canvas id="egyptBG"></canvas>
 
 <!-- LOGIN -->
 <div id="login">
-    <div class="login-box">
-        <h2>VIP ACCESS</h2>
-        <input type="password" id="pass" placeholder="Enter Password">
-        <button onclick="checkPass()">UNLOCK</button>
-        <p id="msg" style="color:red;"></p>
+    <div class="box">
+        <h3>VIP ACCESS</h3>
+        <input type="password" id="pass" placeholder="password">
+        <button onclick="login()">ENTER</button>
+        <p id="msg"></p>
     </div>
 </div>
 
 <!-- CONTENT -->
 <div id="content">
+    <div class="card">
+        <h1>👑 RAMY EGYPT PROFILE</h1>
 
-<div class="card">
+        <p>Pharaoh Trader | VIP User</p>
+        <p>Egyptian Power Activated ⚡</p>
 
-<h1>Hello, ramy</h1>
-<p>I'm xats trader and I love trading</p>
-
-<p>iEgypt (106080) ❤️ DodoLove14 (1541187216)</p>
-
-<p>ramy ❤️ Dodo</p>
-
-<p>Age: 35</p>
-<p>Status: Online</p>
-<p>VIP Pharaoh Profile</p>
-
-<!-- MUSIC -->
-<button onclick="toggleMusic()">Play / Pause Music</button>
-
-<!-- VIDEOS (رجعتهم) -->
-<div class="videos">
-    <iframe src="https://www.youtube.com/embed/4ulSR860HyU"></iframe>
-    <iframe src="https://www.youtube.com/embed/b-KFYv7cuxk"></iframe>
-    <iframe src="https://www.youtube.com/embed/OoyK4I3DyJ0"></iframe>
+        <div>
+            <iframe src="https://www.youtube.com/embed/4ulSR860HyU"></iframe>
+            <iframe src="https://www.youtube.com/embed/b-KFYv7cuxk"></iframe>
+        </div>
+    </div>
 </div>
-
-</div>
-</div>
-
-<!-- MUSIC -->
-<iframe id="music" width="0" height="0"
-src="https://www.youtube.com/embed/4ulSR860HyU?enablejsapi=1"
-allow="autoplay"></iframe>
 
 <script>
-const correctPass = "111991";
+const canvas = document.getElementById("egyptBG");
+const ctx = canvas.getContext("2d");
 
-/* LOGIN */
-function checkPass() {
-    let input = document.getElementById("pass").value;
-    if(input === correctPass){
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+
+let pharaohX = -200;
+let mummyX = canvas.width + 200;
+
+/* ===== LOGIN ===== */
+function login(){
+    let pass = document.getElementById("pass").value;
+    if(pass === "111991"){
         document.getElementById("login").style.display = "none";
         document.getElementById("content").style.display = "block";
-        startPharaoh();
+        animate();
     } else {
-        document.getElementById("msg").innerText = "Access Denied!";
+        document.getElementById("msg").innerText = "Wrong password";
     }
 }
 
-/* MUSIC */
-function toggleMusic(){
-    let frame = document.getElementById("music");
-    frame.src = frame.src + "&autoplay=1";
+/* ===== DRAW BACKGROUND ===== */
+function drawBackground(){
+    let grd = ctx.createLinearGradient(0,0,0,canvas.height);
+    grd.addColorStop(0,"#000");
+    grd.addColorStop(0.5,"#1a1200");
+    grd.addColorStop(1,"#000");
+
+    ctx.fillStyle = grd;
+    ctx.fillRect(0,0,canvas.width,canvas.height);
+
+    // pyramids
+    ctx.fillStyle = "#3b2a14";
+    ctx.beginPath();
+    ctx.moveTo(200,500);
+    ctx.lineTo(400,200);
+    ctx.lineTo(600,500);
+    ctx.fill();
+
+    ctx.beginPath();
+    ctx.moveTo(500,520);
+    ctx.lineTo(700,250);
+    ctx.lineTo(900,520);
+    ctx.fill();
 }
 
-/* PHARAOH ANIMATION */
-function startPharaoh(){
-    const canvas = document.getElementById("pharaohBG");
-    const ctx = canvas.getContext("2d");
+/* ===== PHARAOH ===== */
+function drawPharaoh(){
+    ctx.fillStyle = "#d4af37";
+    ctx.fillRect(pharaohX, canvas.height/2, 60, 120);
 
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
+    ctx.fillRect(pharaohX+15, canvas.height/2-40, 30, 40);
 
-    let x = -200;
+    ctx.fillStyle = "red";
+    ctx.fillRect(pharaohX+20, canvas.height/2-25, 5, 5);
+}
 
-    function draw(){
-        ctx.fillStyle = "rgba(0,0,0,0.12)";
-        ctx.fillRect(0,0,canvas.width,canvas.height);
+/* ===== MUMMY ===== */
+function drawMummy(){
+    ctx.fillStyle = "#d9d9d9";
+    ctx.fillRect(mummyX, canvas.height/2+50, 50, 100);
 
-        ctx.shadowBlur = 40;
-        ctx.shadowColor = "#d4af37";
+    ctx.fillStyle = "black";
+    ctx.fillRect(mummyX+10, canvas.height/2+70, 8, 8);
+    ctx.fillRect(mummyX+30, canvas.height/2+70, 8, 8);
+}
 
-        // body
-        ctx.fillStyle = "#d4af37";
-        ctx.fillRect(x, canvas.height/2 - 100, 80, 160);
+/* ===== ANIMATION LOOP ===== */
+function animate(){
+    ctx.clearRect(0,0,canvas.width,canvas.height);
 
-        // head
-        ctx.fillRect(x+20, canvas.height/2 - 150, 40, 50);
+    drawBackground();
 
-        // eyes scary
-        ctx.fillStyle = "red";
-        ctx.fillRect(x+25, canvas.height/2 - 130, 5, 5);
-        ctx.fillRect(x+45, canvas.height/2 - 130, 5, 5);
+    drawPharaoh();
+    drawMummy();
 
-        x += 2;
+    pharaohX += 2;
+    mummyX -= 2;
 
-        if(x > canvas.width + 100){
-            x = -200;
-        }
-
-        requestAnimationFrame(draw);
+    if(pharaohX > canvas.width + 100){
+        pharaohX = -200;
     }
 
-    draw();
+    if(mummyX < -200){
+        mummyX = canvas.width + 200;
+    }
+
+    requestAnimationFrame(animate);
 }
 </script>
 
