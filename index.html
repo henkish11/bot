@@ -8,19 +8,21 @@
 <style>
 body {
     margin: 0;
+    font-family: Arial, sans-serif;
     overflow: hidden;
-    font-family: Arial;
     color: white;
     background: black;
 }
 
-/* ===== CANVAS BACKGROUND ===== */
+/* ===== BACKGROUND ===== */
 #egyptBG {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
+    z-index: 0;
+    background: linear-gradient(to bottom, #000000, #1a1208, #000000);
 }
 
 /* ===== LOGIN ===== */
@@ -31,13 +33,13 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    background: rgba(0,0,0,0.8);
+    background: rgba(0,0,0,0.85);
     z-index: 10;
 }
 
 .box {
-    padding: 20px;
     background: rgba(0,0,0,0.7);
+    padding: 20px;
     border: 1px solid gold;
     border-radius: 10px;
     text-align: center;
@@ -47,15 +49,16 @@ input {
     padding: 10px;
     width: 200px;
     text-align: center;
+    margin-top: 10px;
 }
 
 button {
     margin-top: 10px;
     padding: 10px;
     width: 100%;
-    cursor: pointer;
     background: gold;
     border: none;
+    cursor: pointer;
     font-weight: bold;
 }
 
@@ -71,18 +74,24 @@ button {
 .card {
     margin: auto;
     width: 80%;
-    max-width: 700px;
+    max-width: 800px;
     padding: 20px;
     background: rgba(0,0,0,0.6);
     border: 1px solid gold;
     border-radius: 15px;
 }
 
-/* videos */
+/* VIDEOS */
+.videos {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
 iframe {
     width: 200px;
     height: 140px;
-    margin: 5px;
     border-radius: 10px;
 }
 </style>
@@ -90,14 +99,15 @@ iframe {
 
 <body>
 
+<!-- BACKGROUND -->
 <canvas id="egyptBG"></canvas>
 
 <!-- LOGIN -->
 <div id="login">
     <div class="box">
         <h3>VIP ACCESS</h3>
-        <input type="password" id="pass" placeholder="password">
-        <button onclick="login()">ENTER</button>
+        <input type="password" id="pass" placeholder="Enter Password">
+        <button onclick="login()">LOGIN</button>
         <p id="msg"></p>
     </div>
 </div>
@@ -107,12 +117,13 @@ iframe {
     <div class="card">
         <h1>👑 RAMY EGYPT PROFILE</h1>
 
-        <p>Pharaoh Trader | VIP User</p>
-        <p>Egyptian Power Activated ⚡</p>
+        <p>Pharaoh Trader VIP</p>
+        <p>Egypt Power Activated ⚡</p>
 
-        <div>
+        <div class="videos">
             <iframe src="https://www.youtube.com/embed/4ulSR860HyU"></iframe>
             <iframe src="https://www.youtube.com/embed/b-KFYv7cuxk"></iframe>
+            <iframe src="https://www.youtube.com/embed/OoyK4I3DyJ0"></iframe>
         </div>
     </div>
 </div>
@@ -124,10 +135,9 @@ const ctx = canvas.getContext("2d");
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
 
-let pharaohX = -200;
-let mummyX = canvas.width + 200;
+let mummyX = canvas.width + 100;
 
-/* ===== LOGIN ===== */
+/* LOGIN */
 function login(){
     let pass = document.getElementById("pass").value;
     if(pass === "111991"){
@@ -139,71 +149,57 @@ function login(){
     }
 }
 
-/* ===== DRAW BACKGROUND ===== */
-function drawBackground(){
-    let grd = ctx.createLinearGradient(0,0,0,canvas.height);
-    grd.addColorStop(0,"#000");
-    grd.addColorStop(0.5,"#1a1200");
-    grd.addColorStop(1,"#000");
+/* DRAW PYRAMIDS */
+function drawPyramids(){
+    ctx.fillStyle = "#3b2f1b";
 
-    ctx.fillStyle = grd;
-    ctx.fillRect(0,0,canvas.width,canvas.height);
-
-    // pyramids
-    ctx.fillStyle = "#3b2a14";
+    // pyramid 1
     ctx.beginPath();
-    ctx.moveTo(200,500);
-    ctx.lineTo(400,200);
-    ctx.lineTo(600,500);
+    ctx.moveTo(200, canvas.height-150);
+    ctx.lineTo(400, 200);
+    ctx.lineTo(600, canvas.height-150);
     ctx.fill();
 
+    // pyramid 2
     ctx.beginPath();
-    ctx.moveTo(500,520);
-    ctx.lineTo(700,250);
-    ctx.lineTo(900,520);
+    ctx.moveTo(500, canvas.height-150);
+    ctx.lineTo(700, 250);
+    ctx.lineTo(900, canvas.height-150);
     ctx.fill();
 }
 
-/* ===== PHARAOH ===== */
-function drawPharaoh(){
-    ctx.fillStyle = "#d4af37";
-    ctx.fillRect(pharaohX, canvas.height/2, 60, 120);
+/* SAND */
+function drawSand(){
+    ctx.fillStyle = "#1a1208";
+    ctx.fillRect(0, canvas.height-150, canvas.width, 150);
+}
 
-    ctx.fillRect(pharaohX+15, canvas.height/2-40, 30, 40);
+/* MUMMY */
+function drawMummy(){
+    ctx.fillStyle = "#dcdcdc";
+
+    ctx.fillRect(mummyX, canvas.height-220, 50, 100);
+
+    ctx.fillRect(mummyX+10, canvas.height-260, 30, 40);
 
     ctx.fillStyle = "red";
-    ctx.fillRect(pharaohX+20, canvas.height/2-25, 5, 5);
+    ctx.fillRect(mummyX+15, canvas.height-245, 5, 5);
+    ctx.fillRect(mummyX+30, canvas.height-245, 5, 5);
+
+    mummyX -= 2;
+
+    if(mummyX < -100){
+        mummyX = canvas.width + 100;
+    }
 }
 
-/* ===== MUMMY ===== */
-function drawMummy(){
-    ctx.fillStyle = "#d9d9d9";
-    ctx.fillRect(mummyX, canvas.height/2+50, 50, 100);
-
-    ctx.fillStyle = "black";
-    ctx.fillRect(mummyX+10, canvas.height/2+70, 8, 8);
-    ctx.fillRect(mummyX+30, canvas.height/2+70, 8, 8);
-}
-
-/* ===== ANIMATION LOOP ===== */
+/* MAIN ANIMATION */
 function animate(){
     ctx.clearRect(0,0,canvas.width,canvas.height);
 
-    drawBackground();
-
-    drawPharaoh();
+    drawSand();
+    drawPyramids();
     drawMummy();
-
-    pharaohX += 2;
-    mummyX -= 2;
-
-    if(pharaohX > canvas.width + 100){
-        pharaohX = -200;
-    }
-
-    if(mummyX < -200){
-        mummyX = canvas.width + 200;
-    }
 
     requestAnimationFrame(animate);
 }
