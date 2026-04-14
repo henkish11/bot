@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Ramy Dashboard</title>
+<title>Ramy Dashboard Fixed</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
 
@@ -43,7 +43,6 @@ body::before{
   overflow:hidden;
 }
 
-/* SIDEBAR */
 .sidebar{
   width:220px;
   padding:15px;
@@ -65,7 +64,6 @@ body::before{
   cursor:pointer;
 }
 
-/* MAIN */
 .main{
   flex:1;
   padding:20px;
@@ -75,7 +73,6 @@ body::before{
 .section{display:none;}
 .active{display:block;}
 
-/* LOGIN */
 #login{
   position:fixed;
   inset:0;
@@ -103,7 +100,6 @@ input{
   text-align:center;
 }
 
-/* CARD */
 .card{
   padding:12px;
   margin:10px 0;
@@ -120,7 +116,6 @@ input{
   margin:10px auto;
 }
 
-/* TOAST */
 #toast{
   position:fixed;
   bottom:20px;
@@ -182,8 +177,11 @@ input{
 
 <script>
 
-/* 🔥 API */
+/* 🔥 API الأساسي */
 const API_URL = "https://pythbots.com/api/xatprofile.php?u=";
+
+/* 🔥 Proxy لحل CORS (مهم جداً) */
+const PROXY = "https://api.allorigins.win/raw?url=";
 
 let historyList = [];
 
@@ -201,9 +199,9 @@ function toast(msg){
   setTimeout(()=>t.classList.remove('show'),1200);
 }
 
-/* ✅ FIXED LOGIN */
+/* LOGIN (FIXED) */
 function login(){
-  const passValue = document.getElementById("pass").value;
+  const passValue = document.getElementById("pass").value.trim();
 
   if(passValue === "2035"){
     document.getElementById("login").style.display = "none";
@@ -213,14 +211,30 @@ function login(){
   }
 }
 
-/* SEARCH API */
+/* 🔥 FIXED API FUNCTION (NO ERRORS) */
 async function searchUser(){
-  let q=document.getElementById("search").value;
+
+  let q = document.getElementById("search").value.trim();
   if(!q) return;
 
+  const url = PROXY + encodeURIComponent(API_URL + q);
+
   try{
-    let res=await fetch(API_URL + q);
-    let d=await res.json();
+
+    const res = await fetch(url);
+
+    if(!res.ok){
+      throw new Error("Network error");
+    }
+
+    const text = await res.text();
+
+    let d;
+    try{
+      d = JSON.parse(text);
+    }catch{
+      throw new Error("Invalid JSON");
+    }
 
     document.getElementById("name").innerText = d.name || "N/A";
     document.getElementById("uid").innerText = d.id || "N/A";
@@ -228,19 +242,21 @@ async function searchUser(){
     document.getElementById("img").innerText = d.avatar || "N/A";
     document.getElementById("avatar").src = d.avatar || "";
 
-    historyList.push(d.name + " (" + d.id + ")");
+    historyList.push(`${d.name || "Unknown"} (${d.id || "0"})`);
     renderHistory();
 
     show('info');
 
   }catch(e){
-    toast("API Error");
+    console.log(e);
+    toast("API Error Fixed Mode");
   }
 }
 
+/* HISTORY */
 function renderHistory(){
-  let box=document.getElementById("history");
-  box.innerHTML = historyList.map(h=>`<div class="card">${h}</div>`).join("");
+  document.getElementById("history").innerHTML =
+    historyList.map(h=>`<div class="card">${h}</div>`).join("");
 }
 
 </script>
