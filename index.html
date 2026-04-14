@@ -3,26 +3,36 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Egypt VIP Profile</title>
+<title>Pharaoh Kingdom</title>
 
 <style>
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;800&display=swap');
+
 body {
     margin: 0;
-    font-family: Arial, sans-serif;
+    font-family: 'Cinzel', serif;
     overflow: hidden;
-    color: white;
+    color: #f5d27a;
     background: black;
 }
 
-/* ===== BACKGROUND ===== */
-#egyptBG {
+/* ===== BACKGROUND VIDEO ===== */
+#bgVideo {
     position: fixed;
-    top: 0;
-    left: 0;
     width: 100%;
     height: 100%;
+    object-fit: cover;
     z-index: 0;
-    background: linear-gradient(to bottom, #000000, #1a1208, #000000);
+    filter: brightness(0.35) contrast(1.2);
+}
+
+/* dark overlay */
+.overlay {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle, rgba(0,0,0,0.3), rgba(0,0,0,0.9));
+    z-index: 1;
 }
 
 /* ===== LOGIN ===== */
@@ -33,175 +43,163 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    background: rgba(0,0,0,0.85);
     z-index: 10;
 }
 
-.box {
-    background: rgba(0,0,0,0.7);
-    padding: 20px;
-    border: 1px solid gold;
-    border-radius: 10px;
+.login-box {
+    background: rgba(10,10,10,0.8);
+    border: 2px solid gold;
+    padding: 30px;
+    border-radius: 20px;
     text-align: center;
+    box-shadow: 0 0 40px rgba(255,215,0,0.4);
+}
+
+.login-box h2 {
+    margin-bottom: 10px;
+    letter-spacing: 3px;
+    color: gold;
 }
 
 input {
-    padding: 10px;
-    width: 200px;
+    padding: 12px;
+    width: 220px;
     text-align: center;
+    border: none;
+    border-radius: 10px;
     margin-top: 10px;
 }
 
 button {
-    margin-top: 10px;
-    padding: 10px;
+    margin-top: 15px;
+    padding: 12px;
     width: 100%;
     background: gold;
     border: none;
-    cursor: pointer;
     font-weight: bold;
+    cursor: pointer;
+    border-radius: 10px;
 }
 
-/* ===== CONTENT ===== */
+/* ===== MAIN CONTENT ===== */
 #content {
     display: none;
     position: relative;
     z-index: 2;
     text-align: center;
-    padding-top: 40px;
+    padding-top: 30px;
 }
 
+/* HEADER */
+.header {
+    font-size: 32px;
+    color: gold;
+    text-shadow: 0 0 20px gold;
+    margin-bottom: 20px;
+}
+
+/* CARD STYLE */
 .card {
     margin: auto;
-    width: 80%;
-    max-width: 800px;
-    padding: 20px;
-    background: rgba(0,0,0,0.6);
+    width: 85%;
+    max-width: 900px;
+    padding: 25px;
+    background: rgba(20,15,10,0.7);
+    border: 1px solid rgba(255,215,0,0.5);
+    border-radius: 20px;
+    box-shadow: 0 0 30px rgba(255,215,0,0.2);
+    backdrop-filter: blur(10px);
+}
+
+.badges {
+    margin: 10px 0;
+}
+
+.badge {
+    display: inline-block;
+    padding: 6px 12px;
+    margin: 5px;
     border: 1px solid gold;
-    border-radius: 15px;
+    border-radius: 30px;
+    font-size: 12px;
 }
 
 /* VIDEOS */
 .videos {
     display: flex;
     justify-content: center;
-    gap: 10px;
     flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 20px;
 }
 
 iframe {
     width: 200px;
     height: 140px;
-    border-radius: 10px;
+    border-radius: 12px;
+    border: 1px solid gold;
 }
 </style>
 </head>
 
 <body>
 
-<!-- BACKGROUND -->
-<canvas id="egyptBG"></canvas>
+<!-- BACKGROUND VIDEO -->
+<video autoplay muted loop id="bgVideo">
+    <source src="https://cdn.coverr.co/videos/coverr-desert-pyramids-at-sunset-6541/1080p.mp4" type="video/mp4">
+</video>
+
+<div class="overlay"></div>
 
 <!-- LOGIN -->
 <div id="login">
-    <div class="box">
-        <h3>VIP ACCESS</h3>
-        <input type="password" id="pass" placeholder="Enter Password">
-        <button onclick="login()">LOGIN</button>
+    <div class="login-box">
+        <h2>👑 PHARAOH KINGDOM</h2>
+        <input type="password" id="pass" placeholder="Enter Royal Code">
+        <button onclick="login()">ENTER KINGDOM</button>
         <p id="msg"></p>
     </div>
 </div>
 
 <!-- CONTENT -->
 <div id="content">
-    <div class="card">
-        <h1>👑 RAMY EGYPT PROFILE</h1>
 
-        <p>Pharaoh Trader VIP</p>
-        <p>Egypt Power Activated ⚡</p>
+<div class="header">⚱️ ANCIENT EGYPT PROFILE ⚱️</div>
 
-        <div class="videos">
-            <iframe src="https://www.youtube.com/embed/4ulSR860HyU"></iframe>
-            <iframe src="https://www.youtube.com/embed/b-KFYv7cuxk"></iframe>
-            <iframe src="https://www.youtube.com/embed/OoyK4I3DyJ0"></iframe>
-        </div>
+<div class="card">
+    <h2>👑 RAMY PHARAOH</h2>
+
+    <div class="badges">
+        <span class="badge">VIP Trader</span>
+        <span class="badge">Egyptian Blood</span>
+        <span class="badge">Royal Status</span>
+    </div>
+
+    <p>💰 Xat Trading Expert</p>
+    <p>⚡ Status: Online in Kingdom</p>
+</div>
+
+<div class="card">
+    <h2>🎬 Royal Gallery</h2>
+
+    <div class="videos">
+        <iframe src="https://www.youtube.com/embed/4ulSR860HyU"></iframe>
+        <iframe src="https://www.youtube.com/embed/b-KFYv7cuxk"></iframe>
+        <iframe src="https://www.youtube.com/embed/OoyK4I3DyJ0"></iframe>
     </div>
 </div>
 
+</div>
+
 <script>
-const canvas = document.getElementById("egyptBG");
-const ctx = canvas.getContext("2d");
-
-canvas.width = window.innerWidth;
-canvas.height = window.innerHeight;
-
-let mummyX = canvas.width + 100;
-
-/* LOGIN */
 function login(){
     let pass = document.getElementById("pass").value;
     if(pass === "111991"){
         document.getElementById("login").style.display = "none";
         document.getElementById("content").style.display = "block";
-        animate();
     } else {
-        document.getElementById("msg").innerText = "Wrong password";
+        document.getElementById("msg").innerText = "❌ Wrong Royal Code";
     }
-}
-
-/* DRAW PYRAMIDS */
-function drawPyramids(){
-    ctx.fillStyle = "#3b2f1b";
-
-    // pyramid 1
-    ctx.beginPath();
-    ctx.moveTo(200, canvas.height-150);
-    ctx.lineTo(400, 200);
-    ctx.lineTo(600, canvas.height-150);
-    ctx.fill();
-
-    // pyramid 2
-    ctx.beginPath();
-    ctx.moveTo(500, canvas.height-150);
-    ctx.lineTo(700, 250);
-    ctx.lineTo(900, canvas.height-150);
-    ctx.fill();
-}
-
-/* SAND */
-function drawSand(){
-    ctx.fillStyle = "#1a1208";
-    ctx.fillRect(0, canvas.height-150, canvas.width, 150);
-}
-
-/* MUMMY */
-function drawMummy(){
-    ctx.fillStyle = "#dcdcdc";
-
-    ctx.fillRect(mummyX, canvas.height-220, 50, 100);
-
-    ctx.fillRect(mummyX+10, canvas.height-260, 30, 40);
-
-    ctx.fillStyle = "red";
-    ctx.fillRect(mummyX+15, canvas.height-245, 5, 5);
-    ctx.fillRect(mummyX+30, canvas.height-245, 5, 5);
-
-    mummyX -= 2;
-
-    if(mummyX < -100){
-        mummyX = canvas.width + 100;
-    }
-}
-
-/* MAIN ANIMATION */
-function animate(){
-    ctx.clearRect(0,0,canvas.width,canvas.height);
-
-    drawSand();
-    drawPyramids();
-    drawMummy();
-
-    requestAnimationFrame(animate);
 }
 </script>
 
