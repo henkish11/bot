@@ -199,9 +199,7 @@ button{
 
     </div>
 
-    <div id="history" class="section">
-      <div id="historyBox"></div>
-    </div>
+    <div id="history" class="section"></div>
 
     <div id="settings" class="section">
       <div class="card">System Ready ✔</div>
@@ -211,8 +209,6 @@ button{
 </div>
 
 <script>
-
-let history = [];
 
 function login(){
   const pass = document.getElementById("passInput").value;
@@ -228,35 +224,27 @@ function show(id){
  document.getElementById(id).classList.add('active');
 }
 
+// ===== API (نفس القديم تمامًا) =====
 async function fetchData(){
  let u=document.getElementById('userInput').value.trim();
- if(!u)return;
+ if(!u) return;
 
- let url=`https://pythbots.com/api/xatprofile.php?u=${u}`;
- let proxy=`https://api.codetabs.com/v1/proxy?quest=${encodeURIComponent(url)}`;
+ let url = `https://pythbots.com/api/xatprofile.php?u=${u}`;
+ let proxy = `https://api.codetabs.com/v1/proxy?quest=${encodeURIComponent(url)}`;
 
  try{
-   let res=await fetch(proxy);
-   let d=await res.json();
+   let res = await fetch(proxy);
+   let d = await res.json();
 
-   fullName.innerText=d.name||'N/A';
-   id.innerText=d.id||'N/A';
-   username.innerText=d.nick||d.username||'N/A';
-   imgLink.innerText=d.avatar||'N/A';
-   avatar.src=d.avatar||'';
-
-   history.push(u);
-   renderHistory();
+   fullName.innerText = d.name || 'N/A';
+   id.innerText = d.id || 'N/A';
+   username.innerText = d.nick || d.username || 'N/A';
+   imgLink.innerText = d.avatar || 'N/A';
+   avatar.src = d.avatar || '';
 
  }catch(e){
-   alert("Error loading data");
+   alert("API Error");
  }
-}
-
-function renderHistory(){
-  historyBox.innerHTML = history.map(h=>`
-    <div class="card">${h}</div>
-  `).join('');
 }
 
 </script>
