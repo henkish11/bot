@@ -2,255 +2,153 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Ultra Dashboard</title>
 
 <style>
-body {
-  margin: 0;
-  font-family: Arial;
-  background: #0f0f1a;
-  color: white;
-  display: flex;
+body{
+  margin:0;
+  font-family:Arial;
+  background:#0b1220;
+  color:white;
 }
 
-/* SIDEBAR */
-.sidebar {
-  width: 240px;
-  background: #15152a;
-  height: 100vh;
-  padding: 15px;
+/* LOGIN */
+.login-box{
+  width:320px;
+  margin:120px auto;
+  background:#111827;
+  padding:25px;
+  border-radius:12px;
+  text-align:center;
 }
 
-.sidebar h2 {
-  color: #7c5cff;
-  margin-top: 0;
-}
-
-/* USER BOX */
-.user-box{
-  display:flex;
-  align-items:center;
-  gap:10px;
+input{
+  width:90%;
   padding:10px;
-  background:#22224a;
+  margin:10px 0;
+  border:none;
+  border-radius:8px;
+}
+
+button{
+  width:95%;
+  padding:10px;
+  border:none;
+  border-radius:8px;
+  cursor:pointer;
+  background:#4f46e5;
+  color:white;
+}
+
+/* DASHBOARD */
+.sidebar{
+  width:200px;
+  height:100vh;
+  background:#111827;
+  position:fixed;
+  padding:20px;
+  display:none;
+}
+
+.main{
+  margin-left:220px;
+  padding:20px;
+  display:none;
+}
+
+.card{
+  background:#1f2937;
+  padding:15px;
   border-radius:10px;
-  margin-bottom:15px;
+  margin-top:20px;
 }
 
-.user-box img{
-  width:45px;
-  height:45px;
-  border-radius:50%;
-  border:2px solid #7c5cff;
-}
-
-.menu button {
-  width: 100%;
-  margin: 5px 0;
-  padding: 10px;
-  background: #22224a;
-  border: none;
-  color: white;
-  cursor: pointer;
-  border-radius: 6px;
-}
-
-.menu button:hover {
-  background: #7c5cff;
-}
-
-/* MAIN */
-.main {
-  flex: 1;
-  padding: 20px;
-}
-
-input {
-  width: 100%;
-  padding: 10px;
-  margin-bottom: 15px;
-  border-radius: 6px;
-  border: none;
-}
-
-/* GRID */
-.grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-  gap: 10px;
-}
-
-/* CARD */
-.card {
-  background: #1c1c35;
-  padding: 10px;
-  border-radius: 10px;
-  text-align: center;
-  cursor: pointer;
-  transition: 0.2s;
-  position: relative;
-}
-
-.card:hover {
-  transform: scale(1.05);
-  background: #2a2a55;
-}
-
-.card img {
-  width: 30px;
-  height: 30px;
-}
-
-/* STAR */
-.star {
-  position: absolute;
-  top: 5px;
-  right: 8px;
-  cursor: pointer;
-  color: gold;
+.logout{
+  background:red;
+  margin-top:20px;
 }
 </style>
 </head>
 
 <body>
 
-<!-- SIDEBAR -->
-<div class="sidebar">
-
-  <h2>⚡ Dashboard</h2>
-
-  <!-- USER INFO -->
-  <div class="user-box">
-    <img id="userAvatar">
-    <div>
-      <div id="userName">User</div>
-      <small id="userRole">Role</small>
-    </div>
-  </div>
-
-  <div class="menu">
-    <button onclick="showTab('powers')">Powers</button>
-    <button onclick="showTab('chats')">Chats</button>
-    <button onclick="showTab('fav')">Favorites</button>
-  </div>
+<!-- LOGIN -->
+<div class="login-box" id="loginBox">
+  <h2>Login</h2>
+  <input id="user" placeholder="username">
+  <input id="pass" type="password" placeholder="password">
+  <button onclick="login()">Login</button>
 </div>
 
-<!-- MAIN -->
-<div class="main">
+<!-- DASHBOARD -->
+<div class="sidebar" id="sidebar">
+  <h3>Panel</h3>
+  <p>Dashboard</p>
+  <p>User Info</p>
+</div>
 
-  <h2 id="title">Powers</h2>
-  <input id="search" placeholder="Search..." oninput="render()">
+<div class="main" id="main">
+  <h1>Dashboard</h1>
 
-  <div id="content" class="grid"></div>
+  <div class="card" id="userinfo"></div>
 
+  <button class="logout" onclick="logout()">Logout</button>
 </div>
 
 <script>
-/* USER INFO */
-const userInfo = {
-  name: "Ramy",
-  role: "Owner",
-  avatar: "https://xat.com/images/smw/gamer.png"
+// ===== FAKE USER DATABASE =====
+const userDB = {
+  username: "ramy",
+  password: "1234",
+  role: "admin",
+  powers: 120,
+  chats: 9
 };
 
-/* DATA */
-const data = {
-  powers: [
-    {name:"medical", img:"https://xat.com/images/smw/medical.png"},
-    {name:"matryoshka", img:"https://xat.com/images/smw/matryoshka.png"},
-    {name:"teddi", img:"https://xat.com/images/smw/teddi.png"},
-    {name:"jaws", img:"https://xat.com/images/smw/jaws.png"},
-    {name:"rainbows", img:"https://xat.com/images/smw/rainbows.png"},
-    {name:"gamer", img:"https://xat.com/images/smw/gamer.png"},
-    {name:"tropical", img:"https://xat.com/images/smw/tropical.png"}
-  ],
+// ===== LOGIN =====
+function login(){
+  const u = document.getElementById("user").value;
+  const p = document.getElementById("pass").value;
 
-  chats: [
-    {name:"Malsore", id:"220461356", role:"Guest"},
-    {name:"7reqa", id:"212575183", role:"Owner"},
-    {name:"Matt", id:"2232629", role:"Guest"},
-    {name:"Trade", id:"5633523", role:"Guest"}
-  ]
-};
+  if(u === userDB.username && p === userDB.password){
 
-let currentTab = "powers";
+    localStorage.setItem("user", JSON.stringify(userDB));
 
-/* FAVORITES */
-let fav = JSON.parse(localStorage.getItem("fav")) || [];
+    showDashboard();
 
-function saveFav(){
-  localStorage.setItem("fav", JSON.stringify(fav));
-}
-
-/* USER INIT */
-document.addEventListener("DOMContentLoaded", () => {
-  document.getElementById("userName").innerText = userInfo.name;
-  document.getElementById("userRole").innerText = userInfo.role;
-  document.getElementById("userAvatar").src = userInfo.avatar;
-
-  render();
-});
-
-/* SWITCH TAB */
-function showTab(tab){
-  currentTab = tab;
-  document.getElementById("title").innerText = tab.toUpperCase();
-  render();
-}
-
-/* RENDER SYSTEM */
-function render(){
-  const box = document.getElementById("content");
-  const search = document.getElementById("search").value.toLowerCase();
-
-  if(currentTab === "fav"){
-    const favItems = data.powers.filter(p => fav.includes(p.name));
-    box.innerHTML = favItems.map(p => cardPower(p)).join("");
-    return;
-  }
-
-  let list = data[currentTab] || [];
-  list = list.filter(i => (i.name || "").toLowerCase().includes(search));
-
-  box.innerHTML = list.map(item => {
-    if(currentTab === "powers") return cardPower(item);
-    if(currentTab === "chats") return cardChat(item);
-  }).join("");
-}
-
-/* POWER CARD */
-function cardPower(p){
-  const isFav = fav.includes(p.name);
-
-  return `
-  <div class="card">
-    <div class="star" onclick="toggleFav('${p.name}')">
-      ${isFav ? "⭐" : "☆"}
-    </div>
-    <img src="${p.img}">
-    <div>${p.name}</div>
-  </div>`;
-}
-
-/* CHAT CARD */
-function cardChat(c){
-  return `
-  <div class="card">
-    <div>${c.name}</div>
-    <small>${c.id} • ${c.role}</small>
-  </div>`;
-}
-
-/* FAVORITE TOGGLE */
-function toggleFav(name){
-  if(fav.includes(name)){
-    fav = fav.filter(f => f !== name);
   } else {
-    fav.push(name);
+    alert("Wrong login ❌");
   }
-  saveFav();
-  render();
+}
+
+// ===== SHOW DASHBOARD =====
+function showDashboard(){
+  document.getElementById("loginBox").style.display = "none";
+  document.getElementById("sidebar").style.display = "block";
+  document.getElementById("main").style.display = "block";
+
+  const user = JSON.parse(localStorage.getItem("user"));
+
+  document.getElementById("userinfo").innerHTML = `
+    <h3>User Info</h3>
+    <p>Username: ${user.username}</p>
+    <p>Role: ${user.role}</p>
+    <p>Powers: ${user.powers}</p>
+    <p>Chats: ${user.chats}</p>
+  `;
+}
+
+// ===== LOGOUT =====
+function logout(){
+  localStorage.removeItem("user");
+  location.reload();
+}
+
+// ===== AUTO LOGIN IF EXISTS =====
+window.onload = function(){
+  if(localStorage.getItem("user")){
+    showDashboard();
+  }
 }
 </script>
 
