@@ -1,150 +1,258 @@
-import express from "express";
-import cors from "cors";
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ultra Dashboard</title>
 
-const app = express();
-app.use(cors());
-app.use(express.json());
-
-/* 🔐 API KEY */
-const API_KEY = "RAMY_SECRET_2026";
-
-/* 🗄️ DATABASE (يمكن تطويرها لاحقًا MongoDB) */
-let users = [
-  {
-    id: "1001",
-    username: "ramy",
-    name: "Ramy Developer",
-    avatar: "https://xatimg.com/image/NTKWfOtODi9Z.jpg",
-    status: "online",
-    country: "EG"
-  },
-  {
-    id: "1002",
-    username: "ahmed",
-    name: "Ahmed Ali",
-    avatar: "https://xatimg.com/image/NTKWfOtODi9Z.jpg",
-    status: "offline",
-    country: "EG"
-  },
-  {
-    id: "1003",
-    username: "sara",
-    name: "Sara Mohamed",
-    avatar: "https://xatimg.com/image/NTKWfOtODi9Z.jpg",
-    status: "online",
-    country: "SA"
-  }
-];
-
-/* 🔐 AUTH MIDDLEWARE */
-function auth(req, res, next){
-  const key = req.query.key;
-
-  if(!key || key !== API_KEY){
-    return res.status(401).json({
-      success: false,
-      message: "Invalid or missing API Key"
-    });
-  }
-
-  next();
+<style>
+body {
+  margin: 0;
+  font-family: Arial;
+  background: #0f0f1a;
+  color: white;
+  display: flex;
 }
 
-/* 🏠 ROOT */
-app.get("/", (req, res) => {
-  res.json({
-    system: "RAMY API SYSTEM",
-    status: "ACTIVE",
-    endpoints: {
-      search: "/api/search?q=&key=",
-      user: "/api/user/:id?key=",
-      users: "/api/users?key="
-    }
-  });
+/* SIDEBAR */
+.sidebar {
+  width: 240px;
+  background: #15152a;
+  height: 100vh;
+  padding: 15px;
+}
+
+.sidebar h2 {
+  color: #7c5cff;
+  margin-top: 0;
+}
+
+/* USER BOX */
+.user-box{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  padding:10px;
+  background:#22224a;
+  border-radius:10px;
+  margin-bottom:15px;
+}
+
+.user-box img{
+  width:45px;
+  height:45px;
+  border-radius:50%;
+  border:2px solid #7c5cff;
+}
+
+.menu button {
+  width: 100%;
+  margin: 5px 0;
+  padding: 10px;
+  background: #22224a;
+  border: none;
+  color: white;
+  cursor: pointer;
+  border-radius: 6px;
+}
+
+.menu button:hover {
+  background: #7c5cff;
+}
+
+/* MAIN */
+.main {
+  flex: 1;
+  padding: 20px;
+}
+
+input {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  border-radius: 6px;
+  border: none;
+}
+
+/* GRID */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 10px;
+}
+
+/* CARD */
+.card {
+  background: #1c1c35;
+  padding: 10px;
+  border-radius: 10px;
+  text-align: center;
+  cursor: pointer;
+  transition: 0.2s;
+  position: relative;
+}
+
+.card:hover {
+  transform: scale(1.05);
+  background: #2a2a55;
+}
+
+.card img {
+  width: 30px;
+  height: 30px;
+}
+
+/* STAR */
+.star {
+  position: absolute;
+  top: 5px;
+  right: 8px;
+  cursor: pointer;
+  color: gold;
+}
+</style>
+</head>
+
+<body>
+
+<!-- SIDEBAR -->
+<div class="sidebar">
+
+  <h2>⚡ Dashboard</h2>
+
+  <!-- USER INFO -->
+  <div class="user-box">
+    <img id="userAvatar">
+    <div>
+      <div id="userName">User</div>
+      <small id="userRole">Role</small>
+    </div>
+  </div>
+
+  <div class="menu">
+    <button onclick="showTab('powers')">Powers</button>
+    <button onclick="showTab('chats')">Chats</button>
+    <button onclick="showTab('fav')">Favorites</button>
+  </div>
+</div>
+
+<!-- MAIN -->
+<div class="main">
+
+  <h2 id="title">Powers</h2>
+  <input id="search" placeholder="Search..." oninput="render()">
+
+  <div id="content" class="grid"></div>
+
+</div>
+
+<script>
+/* USER INFO */
+const userInfo = {
+  name: "Ramy",
+  role: "Owner",
+  avatar: "https://xat.com/images/smw/gamer.png"
+};
+
+/* DATA */
+const data = {
+  powers: [
+    {name:"medical", img:"https://xat.com/images/smw/medical.png"},
+    {name:"matryoshka", img:"https://xat.com/images/smw/matryoshka.png"},
+    {name:"teddi", img:"https://xat.com/images/smw/teddi.png"},
+    {name:"jaws", img:"https://xat.com/images/smw/jaws.png"},
+    {name:"rainbows", img:"https://xat.com/images/smw/rainbows.png"},
+    {name:"gamer", img:"https://xat.com/images/smw/gamer.png"},
+    {name:"tropical", img:"https://xat.com/images/smw/tropical.png"}
+  ],
+
+  chats: [
+    {name:"Malsore", id:"220461356", role:"Guest"},
+    {name:"7reqa", id:"212575183", role:"Owner"},
+    {name:"Matt", id:"2232629", role:"Guest"},
+    {name:"Trade", id:"5633523", role:"Guest"}
+  ]
+};
+
+let currentTab = "powers";
+
+/* FAVORITES */
+let fav = JSON.parse(localStorage.getItem("fav")) || [];
+
+function saveFav(){
+  localStorage.setItem("fav", JSON.stringify(fav));
+}
+
+/* USER INIT */
+document.addEventListener("DOMContentLoaded", () => {
+  document.getElementById("userName").innerText = userInfo.name;
+  document.getElementById("userRole").innerText = userInfo.role;
+  document.getElementById("userAvatar").src = userInfo.avatar;
+
+  render();
 });
 
-/* 🔍 SEARCH (ID + USERNAME + NAME) */
-app.get("/api/search", auth, (req, res) => {
-  const q = (req.query.q || "").toLowerCase();
+/* SWITCH TAB */
+function showTab(tab){
+  currentTab = tab;
+  document.getElementById("title").innerText = tab.toUpperCase();
+  render();
+}
 
-  const result = users.filter(u =>
-    u.id.includes(q) ||
-    u.username.toLowerCase().includes(q) ||
-    u.name.toLowerCase().includes(q)
-  );
+/* RENDER SYSTEM */
+function render(){
+  const box = document.getElementById("content");
+  const search = document.getElementById("search").value.toLowerCase();
 
-  res.json({
-    success: true,
-    query: q,
-    count: result.length,
-    data: result
-  });
-});
-
-/* 👤 GET USER BY ID */
-app.get("/api/user/:id", auth, (req, res) => {
-  const user = users.find(u => u.id === req.params.id);
-
-  if(!user){
-    return res.status(404).json({
-      success: false,
-      message: "User not found"
-    });
+  if(currentTab === "fav"){
+    const favItems = data.powers.filter(p => fav.includes(p.name));
+    box.innerHTML = favItems.map(p => cardPower(p)).join("");
+    return;
   }
 
-  res.json({
-    success: true,
-    data: user
-  });
-});
+  let list = data[currentTab] || [];
+  list = list.filter(i => (i.name || "").toLowerCase().includes(search));
 
-/* 📦 GET ALL USERS */
-app.get("/api/users", auth, (req, res) => {
-  res.json({
-    success: true,
-    count: users.length,
-    data: users
-  });
-});
+  box.innerHTML = list.map(item => {
+    if(currentTab === "powers") return cardPower(item);
+    if(currentTab === "chats") return cardChat(item);
+  }).join("");
+}
 
-/* ➕ ADD USER */
-app.post("/api/add", auth, (req, res) => {
-  const { id, username, name, avatar, status, country } = req.body;
+/* POWER CARD */
+function cardPower(p){
+  const isFav = fav.includes(p.name);
 
-  if(!id || !username){
-    return res.status(400).json({
-      success: false,
-      message: "id and username required"
-    });
+  return `
+  <div class="card">
+    <div class="star" onclick="toggleFav('${p.name}')">
+      ${isFav ? "⭐" : "☆"}
+    </div>
+    <img src="${p.img}">
+    <div>${p.name}</div>
+  </div>`;
+}
+
+/* CHAT CARD */
+function cardChat(c){
+  return `
+  <div class="card">
+    <div>${c.name}</div>
+    <small>${c.id} • ${c.role}</small>
+  </div>`;
+}
+
+/* FAVORITE TOGGLE */
+function toggleFav(name){
+  if(fav.includes(name)){
+    fav = fav.filter(f => f !== name);
+  } else {
+    fav.push(name);
   }
+  saveFav();
+  render();
+}
+</script>
 
-  users.push({
-    id,
-    username,
-    name: name || "Unknown",
-    avatar: avatar || "",
-    status: status || "offline",
-    country: country || "N/A"
-  });
-
-  res.json({
-    success: true,
-    message: "User added successfully",
-    data: users[users.length - 1]
-  });
-});
-
-/* ❌ NOT FOUND */
-app.use((req, res) => {
-  res.status(404).json({
-    success: false,
-    message: "Route not found"
-  });
-});
-
-/* 🚀 START SERVER */
-const PORT = 5000;
-
-app.listen(PORT, () => {
-  console.log(`🚀 RAMY API RUNNING ON http://localhost:${PORT}`);
-});
+</body>
+</html>
