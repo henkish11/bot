@@ -3,170 +3,222 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>XAT Ultra God Profile System</title>
+<title>OMEGA GOD SYSTEM - XAT MULTIVERSE</title>
 
 <style>
 body{
     margin:0;
     font-family:Arial, Helvetica, sans-serif;
-    background:#0b0b0f;
-    color:white;
+    background: radial-gradient(circle at top,#0a0a12,#000);
+    color:#fff;
+    overflow-x:hidden;
 }
-.header{
-    padding:20px;
+header{
     text-align:center;
+    padding:25px;
     background:linear-gradient(90deg,#000,#111,#000);
     border-bottom:1px solid #222;
 }
-.profile-card{
-    max-width:900px;
-    margin:20px auto;
-    padding:20px;
-    background:#12121a;
-    border-radius:12px;
-    box-shadow:0 0 30px rgba(0,0,0,0.6);
+header h1{
+    font-size:28px;
+    letter-spacing:2px;
 }
-.avatar{
-    width:120px;
-    height:120px;
-    border-radius:50%;
-    border:3px solid #444;
+.container{
+    max-width:1100px;
+    margin:auto;
+    padding:20px;
+}
+.card{
+    background:#12121a;
+    padding:20px;
+    border-radius:14px;
+    box-shadow:0 0 30px rgba(0,0,0,0.6);
+    margin-bottom:20px;
 }
 .tabs{
     display:flex;
-    justify-content:center;
-    margin-top:20px;
     gap:10px;
+    justify-content:center;
+    flex-wrap:wrap;
 }
 .tab{
     padding:10px 15px;
     background:#1a1a25;
     border-radius:8px;
     cursor:pointer;
+    transition:.3s;
 }
 .tab.active{
-    background:#2b2b40;
+    background:#2a2a40;
     box-shadow:0 0 10px #00f;
 }
-.section{
-    display:none;
-    margin-top:20px;
-}
-.section.active{
-    display:block;
-}
-input, select{
-    padding:8px;
-    margin:5px;
-    border-radius:6px;
+.section{display:none;margin-top:20px;}
+.section.active{display:block;}
+input,button{
+    padding:10px;
+    border-radius:8px;
     border:none;
+    margin:5px;
 }
 button{
-    padding:10px 15px;
     background:#0066ff;
-    border:none;
-    color:white;
-    border-radius:8px;
+    color:#fff;
     cursor:pointer;
 }
-button:hover{
-    background:#0051cc;
+button:hover{background:#004fcc;}
+.avatar{
+    width:120px;
+    height:120px;
+    border-radius:50%;
+    border:3px solid #444;
 }
-.preview{
-    margin-top:15px;
-    padding:15px;
-    background:#000;
-    border-radius:8px;
-    font-weight:bold;
-}
-.glow{
-    text-shadow:0 0 5px #00f,0 0 10px #00f;
-}
-.gradient-text{
+.gradient{
     background:linear-gradient(45deg,#ff0000,#00ffcc,#0066ff);
     -webkit-background-clip:text;
     -webkit-text-fill-color:transparent;
+}
+.preview{
+    padding:15px;
+    background:#000;
+    border-radius:10px;
+    margin-top:10px;
+}
+.console{
+    background:#050505;
+    padding:10px;
+    height:180px;
+    overflow:auto;
+    font-family:monospace;
+    border-radius:10px;
+    border:1px solid #222;
+}
+.small{
+    font-size:12px;
+    opacity:.8;
 }
 </style>
 
 </head>
 <body>
 
-<div class="header">
-    <h1>👑 XAT ULTRA GOD SYSTEM</h1>
-    <p>Full Profile + Namegrad Engine</p>
+<header>
+<h1>👑 OMEGA GOD SYSTEM</h1>
+<p>MultiVerse • API Engine • Cloud Save • XAT Evolution</p>
+</header>
+
+<div class="container">
+
+<div class="card">
+<img class="avatar" src="https://xatimg.com/image/RKP5IrStF45l.png">
+<h2 class="gradient">ramy</h2>
+<p>ID: 106080 | User: iegypt</p>
 </div>
 
-<div class="profile-card">
+<div class="card">
 
-    <img class="avatar" src="https://xatimg.com/image/RKP5IrStF45l.png">
+<div class="tabs">
+<div class="tab active" onclick="show('info')">Info</div>
+<div class="tab" onclick="show('namegrad')">Namegrad</div>
+<div class="tab" onclick="show('api')">API</div>
+<div class="tab" onclick="show('cloud')">Cloud Save</div>
+<div class="tab" onclick="show('multiverse')">Multiverse</div>
+</div>
 
-    <h2 class="gradient-text">ramy</h2>
-    <p>ID: 106080 | User: iegypt</p>
+<!-- INFO -->
+<div id="info" class="section active">
+<h3>System Status</h3>
+<p>⚡ Omega Core Active</p>
+<p>🌌 Multiverse Engine: ONLINE</p>
+<p>☁ Cloud Sync: READY</p>
+</div>
 
-    <div class="tabs">
-        <div class="tab active" onclick="showTab('info')">Info</div>
-        <div class="tab" onclick="showTab('namegrad')">Namegrad</div>
-        <div class="tab" onclick="showTab('powers')">Powers</div>
-    </div>
+<!-- NAMEGRAD -->
+<div id="namegrad" class="section">
+<h3>Namegrad Engine</h3>
+<input id="text" value="FEXBots">
+<input id="c1" type="color" value="#000000">
+<input id="c2" type="color" value="#ffffff">
+<input id="glow" type="color" value="#0066ff">
+<br>
+<button onclick="generate()">Generate</button>
+<div class="preview" id="preview"></div>
+<input id="output" style="width:100%" readonly>
+</div>
 
-    <!-- INFO -->
-    <div id="info" class="section active">
-        <h3>Profile Info</h3>
-        <p>Status: 👑 Ultra God Mode Active</p>
-    </div>
+<!-- API -->
+<div id="api" class="section">
+<h3>Local API Engine</h3>
+<button onclick="callAPI()">Test API</button>
+<div class="console" id="console"></div>
+</div>
 
-    <!-- NAMEGRAD -->
-    <div id="namegrad" class="section">
-        <h3>Namegrad Generator</h3>
+<!-- CLOUD -->
+<div id="cloud" class="section">
+<h3>Cloud Save System</h3>
+<input id="saveKey" placeholder="Key">
+<input id="saveValue" placeholder="Value">
+<button onclick="saveCloud()">Save</button>
+<button onclick="loadCloud()">Load</button>
+<div class="console" id="cloudlog"></div>
+</div>
 
-        <input id="text" value="FEXBots">
-        <input id="c1" type="color" value="#000000">
-        <input id="c2" type="color" value="#ffffff">
-        <input id="glow" type="color" value="#0000ff">
+<!-- MULTIVERSE -->
+<div id="multiverse" class="section">
+<h3>Multiverse Profiles</h3>
+<button onclick="createUniverse()">Create Universe</button>
+<div class="console" id="multi"></div>
+</div>
 
-        <button onclick="generate()">Generate</button>
-
-        <div class="preview" id="preview">Preview Here</div>
-        <input id="output" style="width:100%" readonly>
-    </div>
-
-    <!-- POWERS -->
-    <div id="powers" class="section">
-        <h3>Ultra Powers</h3>
-        <ul>
-            <li>⚡ Name Gradient Engine</li>
-            <li>🔥 Glow Text System</li>
-            <li>🌌 Animated Namewave (Lite)</li>
-        </ul>
-    </div>
-
+</div>
 </div>
 
 <script>
-function showTab(id){
-    document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
-    document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+function show(id){
+    document.querySelectorAll('.section').forEach(e=>e.classList.remove('active'));
+    document.querySelectorAll('.tab').forEach(e=>e.classList.remove('active'));
     document.getElementById(id).classList.add('active');
     event.target.classList.add('active');
 }
 
+// NAMEGRAD
 function generate(){
-    let text = document.getElementById('text').value;
-    let c1 = document.getElementById('c1').value;
-    let c2 = document.getElementById('c2').value;
-    let glow = document.getElementById('glow').value;
+    let t=document.getElementById('text').value;
+    let c1=document.getElementById('c1').value;
+    let c2=document.getElementById('c2').value;
+    let glow=document.getElementById('glow').value;
 
-    let gradient = `linear-gradient(45deg, ${c1}, ${c2})`;
+    let html=`<span style="background:linear-gradient(45deg,${c1},${c2});-webkit-background-clip:text;-webkit-text-fill-color:transparent;">${t}</span>`;
+    document.getElementById('preview').innerHTML=html;
 
-    let html = `<span style="background:${gradient};-webkit-background-clip:text;-webkit-text-fill-color:transparent;">${text}</span>`;
+    document.getElementById('output').value=`(glow#${glow.replace('#','')}#grad#r45#${c1.replace('#','')}#${c2.replace('#','')})`;
+}
 
-    document.getElementById('preview').innerHTML = html;
+// API SIMULATION
+function callAPI(){
+    let log=document.getElementById('console');
+    log.innerHTML+="\n[API] Connecting...";
+    setTimeout(()=>log.innerHTML+="\n[API] Response: {status:'OK', power:9999}",1000);
+}
 
-    let code = `(glow#${glow.replace('#','')}#grad#r45#${c1.replace('#','')}#${c2.replace('#','')})`;
-    document.getElementById('output').value = code;
+// CLOUD SAVE
+function saveCloud(){
+    let k=document.getElementById('saveKey').value;
+    let v=document.getElementById('saveValue').value;
+    localStorage.setItem(k,v);
+    document.getElementById('cloudlog').innerHTML+="\nSaved: "+k;
+}
+function loadCloud(){
+    let k=document.getElementById('saveKey').value;
+    let v=localStorage.getItem(k);
+    document.getElementById('cloudlog').innerHTML+="\nLoaded: "+v;
+}
+
+// MULTIVERSE
+function createUniverse(){
+    let id=Math.floor(Math.random()*99999);
+    document.getElementById('multi').innerHTML+="\nUniverse Created: XAT-"+id;
 }
 </script>
 
 </body>
-</html>
+</
