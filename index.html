@@ -2,140 +2,177 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Visible Gradient Name</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>XAT Name Color Engine</title>
 
 <style>
 body{
-  background:#0b0b10;
-  color:#fff;
-  font-family:Arial;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  height:100vh;
+margin:0;
+padding:0;
+font-family:Arial;
+background:linear-gradient(135deg,#0f0f0f,#1c1c1c);
+display:flex;
+justify-content:center;
+align-items:center;
+height:100vh;
+color:white;
 }
 
-.box{
-  width:450px;
-  padding:20px;
-  background:#151522;
-  border-radius:15px;
+.panel{
+width:700px;
+padding:30px;
+border-radius:25px;
+background:rgba(255,255,255,0.06);
+backdrop-filter:blur(18px);
+box-shadow:0 0 40px rgba(0,0,0,0.6);
+text-align:center;
+}
+
+h1{
+margin-bottom:20px;
+font-size:32px;
 }
 
 input{
-  width:100%;
-  padding:8px;
-  margin:5px 0;
-  border-radius:8px;
-  border:none;
+width:90%;
+padding:12px;
+margin:8px;
+border:none;
+border-radius:12px;
+font-size:16px;
+outline:none;
+text-align:center;
 }
 
-.colorRow{
-  display:flex;
-  justify-content:space-between;
-  margin:5px 0;
+.colors{
+display:grid;
+grid-template-columns:repeat(5,1fr);
+gap:10px;
+margin-top:15px;
 }
 
-input[type="color"]{
-  width:60px;
-  height:35px;
-  cursor:pointer;
+.colors input{
+height:55px;
+padding:0;
+cursor:pointer;
 }
 
-/* 👑 الاسم ظاهر + عليه تدرج بدون اختفاء */
-.name{
-  font-size:28px;
-  font-weight:bold;
-  text-align:center;
-  margin-top:15px;
-  position:relative;
+.previewBox{
+margin-top:35px;
+padding:25px;
+border-radius:20px;
+background:#111;
+box-shadow:inset 0 0 20px rgba(255,255,255,0.08);
 }
 
-/* overlay gradient فوق النص */
-.name::after{
-  content:attr(data-text);
-  position:absolute;
-  left:0;
-  top:0;
-  width:100%;
-  height:100%;
-
-  background:var(--grad);
-  -webkit-background-clip:text;
-  color:transparent;
+#previewName{
+font-size:52px;
+font-weight:bold;
+background-size:400% 400%;
+-webkit-background-clip:text;
+-webkit-text-fill-color:transparent;
+display:inline-block;
+animation:gradientMove 4s ease infinite,waveMove 1.2s ease-in-out infinite;
 }
 
-/* output */
 .output{
-  margin-top:10px;
-  background:#0d0d14;
-  padding:10px;
-  border-radius:8px;
-  font-family:monospace;
-  word-break:break-all;
+margin-top:25px;
+background:#000;
+color:#00ffcc;
+font-size:16px;
+padding:15px;
+border-radius:12px;
+word-break:break-all;
 }
 
 button{
-  width:100%;
-  padding:10px;
-  margin-top:10px;
-  border:none;
-  border-radius:8px;
-  background:#6c5ce7;
-  color:#fff;
-  font-weight:bold;
-  cursor:pointer;
+margin-top:20px;
+padding:14px 30px;
+font-size:16px;
+border:none;
+border-radius:14px;
+cursor:pointer;
+background:linear-gradient(90deg,#00c6ff,#0072ff);
+color:white;
+font-weight:bold;
+}
+
+button:hover{
+transform:scale(1.05);
+}
+
+@keyframes gradientMove{
+0%{background-position:0% 50%;}
+50%{background-position:100% 50%;}
+100%{background-position:0% 50%;}
+}
+
+@keyframes waveMove{
+0%{transform:translateY(0px);}
+25%{transform:translateY(-6px);}
+50%{transform:translateY(0px);}
+75%{transform:translateY(6px);}
+100%{transform:translateY(0px);}
 }
 </style>
 </head>
-
 <body>
 
-<div class="box">
+<div class="panel">
+<h1>👑 XAT COLOR ENGINE</h1>
 
-<h2>🌈 XAT Visible Gradient Name</h2>
+<input type="text" id="nameInput" placeholder="Enter Name" value="Ramy">
 
-<input id="name" placeholder="Enter Name">
+<div class="colors">
+<input type="color" value="#7B7CA3">
+<input type="color" value="#999acb">
+<input type="color" value="#999acb">
+<input type="color" value="#B7B8F2">
+<input type="color" value="#fcfcf0">
+</div>
 
-<div class="colorRow">C1 <input type="color" id="c1"></div>
-<div class="colorRow">C2 <input type="color" id="c2"></div>
-<div class="colorRow">C3 <input type="color" id="c3"></div>
-<div class="colorRow">C4 <input type="color" id="c4"></div>
-<div class="colorRow">C5 <input type="color" id="c5"></div>
+<input type="color" id="glowColor" value="#000000">
 
-<button onclick="generate()">Apply</button>
+<div class="previewBox">
+<div id="previewName">Ramy</div>
+</div>
 
-<div id="preview"></div>
+<div class="output" id="codeOutput"></div>
 
-<div class="output" id="code"></div>
-
+<button onclick="copyCode()">📋 Copy Code</button>
 </div>
 
 <script>
-function generate(){
+const nameInput=document.getElementById("nameInput");
+const preview=document.getElementById("previewName");
+const glow=document.getElementById("glowColor");
+const colorInputs=document.querySelectorAll(".colors input");
+const output=document.getElementById("codeOutput");
 
-  const name = document.getElementById("name").value || "USER";
+function updatePreview(){
+let name=nameInput.value || "Ramy";
+preview.textContent=name;
 
-  const colors = [
-    document.getElementById("c1").value || "#7B7CA3",
-    document.getElementById("c2").value || "#999acb",
-    document.getElementById("c3").value || "#999acb",
-    document.getElementById("c4").value || "#B7B8F2",
-    document.getElementById("c5").value || "#fcfcf0"
-  ];
+let colors=[...colorInputs].map(c=>c.value);
+let gradient=`linear-gradient(90deg,${colors.join(",")})`;
 
-  const gradient = `linear-gradient(to right, ${colors.join(",")})`;
+preview.style.background=gradient;
+preview.style.textShadow=`0 0 8px ${glow.value},0 0 15px ${glow.value},0 0 25px ${glow.value}`;
 
-  document.getElementById("preview").innerHTML =
-    `<div class="name" data-text="${name}" style="--grad:${gradient}">
-      ${name}
-    </div>`;
-
-  const code =
-    `glow#${colors[0]}#grad#r50#o1#` + colors.join("#");
-
-  document.getElementById("code").innerText = code;
+let code=`glow#${glow.value.replace("#","")}#grad#r50#o1#${colors.map(c=>c.replace("#","")).join("#")}#namewave`;
+output.textContent=code;
 }
+
+function copyCode(){
+navigator.clipboard.writeText(output.textContent);
+alert("Copied 👑");
+}
+
+nameInput.addEventListener("input",updatePreview);
+glow.addEventListener("input",updatePreview);
+colorInputs.forEach(c=>c.addEventListener("input",updatePreview));
+
+updatePreview();
 </script>
 
 </body>
