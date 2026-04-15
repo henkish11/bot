@@ -1,219 +1,44 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang='ar' dir='rtl'>
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>BEYOND REALITY - GOD UNIVERSE ONLINE</title>
-
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
-
+<meta charset='UTF-8'><meta name='viewport' content='width=device-width,initial-scale=1'>
+<title>Ramy - Cosmic Supreme</title>
 <style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif}
-body{background:radial-gradient(circle at top,#010014,#020617);color:#fff;overflow:hidden}
-canvas{position:fixed;inset:0;z-index:-3}
-
-/* BOOT */
-.boot{
-  position:fixed;inset:0;
-  display:flex;flex-direction:column;
-  align-items:center;justify-content:center;
-  background:rgba(0,0,0,0.92);
-  z-index:100;
-}
-.boot h1{color:#38bdf8;text-shadow:0 0 20px #38bdf8}
-.boot p{opacity:.7}
-.boot button{margin-top:20px;padding:10px 20px;border:none;border-radius:10px;background:linear-gradient(45deg,#0ea5e9,#1e3a8a);color:#fff;cursor:pointer}
-
-.topbar{
-  position:fixed;top:0;left:0;right:0;
-  display:flex;justify-content:space-between;
-  padding:10px 20px;
-  background:rgba(0,0,0,0.4);
-  backdrop-filter:blur(12px);
-  z-index:10;
-}
-.status{font-size:12px;color:#38bdf8;text-shadow:0 0 10px #38bdf8}
-
-.container{max-width:1200px;margin:80px auto;padding:20px}
-
-.profile{
-  background:linear-gradient(180deg,rgba(255,255,255,0.08),rgba(255,255,255,0.03));
-  border-radius:25px;
-  padding:25px;
-  border:1px solid rgba(255,255,255,0.1);
-  backdrop-filter:blur(18px);
-  box-shadow:0 0 120px rgba(0,140,255,0.25);
-}
-
-.top{display:flex;gap:20px;align-items:center}
-.top img{width:120px;height:120px;border-radius:50%;border:3px solid #00c3ff;animation:float 3s infinite}
-.name{font-size:42px;color:#4fc3ff;text-shadow:0 0 25px #4fc3ff}
-
-.tabs{display:flex;gap:10px;margin-top:20px;flex-wrap:wrap}
-.tab{padding:10px 16px;border-radius:10px;background:#0ea5e9;cursor:pointer;transition:.2s}
-.tab:hover{transform:scale(1.05)}
-.tab.active{box-shadow:0 0 20px #38bdf8}
-
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:20px;margin-top:20px}
-.card{background:rgba(255,255,255,0.05);padding:15px;border-radius:15px;border:1px solid rgba(255,255,255,0.1)}
-
-/* WORLDS */
-.worlds,.arena,.ai,.multiplayer{display:none}
-.world{padding:15px;border-radius:12px;background:rgba(0,195,255,0.12);cursor:pointer}
-.world:hover{box-shadow:0 0 25px #38bdf8}
-
-/* HUD */
-.hud{
-  position:fixed;left:10px;top:70px;width:220px;
-  background:rgba(0,0,0,0.4);
-  padding:10px;border-radius:12px;font-size:12px
-}
-.bar{height:6px;background:#0f172a;border-radius:10px;margin:6px 0}
-.fill{height:100%;background:linear-gradient(90deg,#38bdf8,#2563eb)}
-
-/* CHAT */
-.chat{
-  position:fixed;bottom:15px;right:15px;width:260px;
-  background:rgba(0,0,0,0.55);border-radius:12px;overflow:hidden
-}
-.chat-header{padding:8px;background:#0ea5e9}
-.chat-msgs{height:140px;overflow-y:auto;padding:10px;font-size:12px}
-.chat-input{display:flex}
-.chat-input input{flex:1;padding:6px;background:#0f172a;border:none;color:#fff}
-.chat-input button{background:#38bdf8;border:none;padding:6px}
-
-/* AI PANEL */
-.ai-box{
-  padding:15px;
-  border-radius:12px;
-  background:rgba(255,255,255,0.05);
-}
-
-@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
-</style>
-</head>
+*{margin:0;padding:0;box-sizing:border-box}body{font-family:Segoe UI,Tahoma,sans-serif;background:#000;overflow:hidden;color:#fff;min-height:100vh}.space,.space:before,.space:after{position:fixed;inset:0;content:'';background-image:radial-gradient(#fff 1px,transparent 1px);background-size:26px 26px}.space{opacity:.22;animation:move 120s linear infinite}.space:before{transform:scale(1.7);opacity:.1}.space:after{transform:scale(.8);opacity:.15}@keyframes move{to{transform:translateY(-60px)}}.nebula{position:fixed;inset:-30%;background:conic-gradient(#7c3aed,#00eaff,#ff0080,#ffd700,#7c3aed);filter:blur(120px);opacity:.25;animation:spin 20s linear infinite}@keyframes spin{to{transform:rotate(360deg)}}.wrap{position:relative;z-index:2;display:grid;place-items:center;min-height:100vh;padding:20px}.panel{width:480px;max-width:100%;padding:34px;border-radius:36px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.18);backdrop-filter:blur(24px);box-shadow:0 30px 100px rgba(0,0,0,.65)}.top{text-align:center}.title{font-size:46px;font-weight:800;letter-spacing:1px}.sub{opacity:.8;margin-top:6px}.avatarWrap{width:190px;height:190px;margin:14px auto;padding:6px;border-radius:50%;background:conic-gradient(#fff,#ffd700,#00eaff,#7c3aed,#fff);animation:spin 4s linear infinite;box-shadow:0 0 45px rgba(255,255,255,.25)}.avatar{width:100%;height:100%;border-radius:50%;object-fit:cover;border:4px solid #050505}.pill{display:inline-block;padding:10px 18px;border-radius:999px;margin-top:10px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15)}.stats{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin:22px 0}.box{padding:16px;border-radius:20px;background:rgba(255,255,255,.05)}.box b{font-size:24px;display:block;color:#ffd700}.links a{display:block;text-decoration:none;color:#fff;padding:15px;border-radius:18px;margin:10px 0;background:linear-gradient(90deg,rgba(124,58,237,.55),rgba(0,234,255,.30),rgba(255,215,0,.25));transition:.35s}.links a:hover{transform:scale(1.03) translateY(-3px)}.footer{text-align:center;margin-top:12px;font-size:12px;opacity:.7}
+</style></head>
 <body>
-
-<canvas id="bg"></canvas>
-
-<div class="boot" id="boot">
-  <h1>BEYOND REALITY</h1>
-  <p>GOD UNIVERSE ONLINE INITIALIZING...</p>
-  <button onclick="start()">ENTER UNIVERSE</button>
+<div class='space'></div><div class='nebula'></div>
+<div class='wrap'><div class='panel'>
+<div class='top'>
+<div style='font-size:30px'>🚀👑🌌</div>
+<div class='avatarWrap'><img class='avatar' src='https://xatimg.com/image/RKP5IrStF45l.png'></div>
+<div class='title'>RAMY</div>
+<div class='sub'>@iegypt • ID: 106080</div>
+<div class='pill'>أقصى نسخة في الكون</div>
 </div>
-
-<div class="topbar">
-  <div class="status" id="status">⚡ OFFLINE UNIVERSE</div>
-  <div>GOD UNIVERSE ONLINE</div>
+<div class='stats'>
+<div class='box'><b>∞</b>Power Level</div>
+<div class='box'><b>9999+</b>Universe Score</div>
+<div class='box'><b>24/7</b>Active</div>
+<div class='box'><b>GOD</b>Status</div>
 </div>
-
-<div class="hud">
-  HP <div class="bar"><div class="fill" id="hp" style="width:100%"></div></div>
-  ENERGY <div class="bar"><div class="fill" id="en" style="width:80%"></div></div>
-  XP: <span id="xp">0</span>
-  <br>PLAYERS: <span id="players">0</span>
+<div class='links'>
+<a href='#'>👤 البروفايل المطلق</a>
+<a href='#'>⚡ القوى اللانهائية</a>
+<a href='#'>💬 مركز المحادثات</a>
+<a href='#'>🌍 البوابة العالمية</a>
+<a href='#'>🏆 قاعة الأساطير</a>
+<a href='#'>🛸 السفر بين الأكوان</a>
 </div>
-
-<div class="container">
-  <div class="profile">
-
-    <div class="top">
-      <img src="https://xatimg.com/image/RKP5IrStF45l.png">
-      <div>
-        <div class="name">Ramy</div>
-        <div>@iegypt • GOD NODE ACTIVE</div>
-      </div>
-    </div>
-
-    <div class="tabs">
-      <div class="tab" onclick="show('worlds')">Worlds</div>
-      <div class="tab" onclick="show('arena')">Arena</div>
-      <div class="tab" onclick="show('ai')">AI Core</div>
-      <div class="tab" onclick="show('multi')">Multiplayer</div>
-    </div>
-
-    <div class="grid worlds" id="worlds">
-      <div class="world" onclick="enter('Earth-X')">Earth-X</div>
-      <div class="world" onclick="enter('Neo Cairo')">Neo Cairo</div>
-      <div class="world" onclick="enter('Void Sector')">Void Sector</div>
-    </div>
-
-    <div class="arena" id="arena">
-      <div class="card">⚔ Boss: GOD NULL <button onclick="fight()">Fight</button></div>
-    </div>
-
-    <div class="ai" id="ai">
-      <div class="ai-box">
-        <h3>AI CORE</h3>
-        <p id="aiText">System ready...</p>
-        <button onclick="askAI()">Ask AI</button>
-      </div>
-    </div>
-
-    <div class="multiplayer" id="multi">
-      <div class="card">Simulated Players: <span id="mp"></span></div>
-    </div>
-
-  </div>
+<div class='footer'>Ramy Cosmic Supreme • No Limits</div>
+<section style='margin-top:18px;padding-top:14px;border-top:1px solid rgba(255,255,255,.12)'>
+<h3 style='text-align:center;margin-bottom:12px'>🛠️ لوحة التحكم الحقيقية</h3>
+<div style='display:grid;grid-template-columns:1fr 1fr;gap:10px'>
+<button onclick="alert('فتح تعديل الملف الشخصي')" style='padding:12px;border:none;border-radius:14px;background:#7c3aed;color:#fff;cursor:pointer'>تعديل الاسم</button>
+<button onclick="alert('فتح تغيير الصورة')" style='padding:12px;border:none;border-radius:14px;background:#00bcd4;color:#fff;cursor:pointer'>تغيير الصورة</button>
+<button onclick="alert('فتح إدارة الأقسام')" style='padding:12px;border:none;border-radius:14px;background:#ff9800;color:#fff;cursor:pointer'>إدارة الأقسام</button>
+<button onclick="alert('فتح الإحصائيات')" style='padding:12px;border:none;border-radius:14px;background:#4caf50;color:#fff;cursor:pointer'>الإحصائيات</button>
 </div>
-
-<div class="chat">
-  <div class="chat-header">UNIVERSE CHAT</div>
-  <div class="chat-msgs" id="msgs"></div>
-  <div class="chat-input">
-    <input id="msg">
-    <button onclick="send()">></button>
-  </div>
-</div>
-
-<script>
-let xp=0,hp=100,en=80;
-
-function start(){
-  document.getElementById('boot').style.display='none';
-  document.getElementById('status').innerText='⚡ ONLINE UNIVERSE';
-  simulate();
-}
-
-function show(id){
-  document.querySelectorAll('.worlds,.arena,.ai,.multiplayer').forEach(e=>e.style.display='none');
-  document.getElementById(id).style.display='grid';
-}
-
-function enter(w){xp+=20;update();alert('Entering '+w)}
-
-function fight(){xp+=50;hp-=20;update();alert('GOD NULL HIT')}
-
-function update(){
-  document.getElementById('xp').innerText=xp;
-  document.getElementById('hp').style.width=hp+'%';
-  document.getElementById('en').style.width=en+'%';
-}
-
-function simulate(){
-  setInterval(()=>{
-    document.getElementById('players').innerText=Math.floor(Math.random()*99999);
-    document.getElementById('mp').innerText=Math.floor(Math.random()*5000);
-  },1000);
-}
-
-function send(){
-  let m=document.getElementById('msg');if(!m.value)return;
-  let d=document.createElement('div');d.textContent='You: '+m.value;
-  document.getElementById('msgs').appendChild(d);
-  m.value='';
-}
-
-function askAI(){
-  let r=['Reality expanding...','You are beyond system limits','Multiverse unstable...','God node active'];
-  document.getElementById('aiText').innerText=r[Math.floor(Math.random()*r.length)];
-}
-
-// particles
-const c=document.getElementById('bg');const x=c.getContext('2d');c.width=innerWidth;c.height=innerHeight;
-let p=[];for(let i=0;i<100;i++)p.push({x:Math.random()*c.width,y:Math.random()*c.height,r:Math.random()*2});
-function a(){x.clearRect(0,0,c.width,c.height);x.fillStyle="#38bdf8";p.forEach(o=>{x.beginPath();x.arc(o.x,o.y,o.r,0,6.28);x.fill();});requestAnimationFrame(a)}a();
-</script>
-
-</body>
-</html>
+</section>
+</div></div>
+</body></html>
