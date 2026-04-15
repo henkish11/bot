@@ -1,191 +1,129 @@
-// ==============================================
-// 👑 ASCENSION AI OVERLORD MODE
-// OMEGA GOD SERVER + AI CORE + MULTIVERSE EVOLUTION
-// Node.js + Express + JWT + AI ENGINE (RULE-BASED + EXTENSIBLE)
-// ==============================================
-
-const express = require('express');
-const fs = require('fs');
-const jwt = require('jsonwebtoken');
-const cors = require('cors');
-
-const app = express();
-const PORT = process.env.PORT || 3000;
-const SECRET = process.env.SECRET || "OMEGA_AI_OVERLORD_SECRET";
-
-app.use(cors());
-app.use(express.json());
-
-const DB_FILE = './cloud.json';
-
-function readDB(){
-    if(!fs.existsSync(DB_FILE)) return {};
-    return JSON.parse(fs.readFileSync(DB_FILE,'utf8'));
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>OMEGA GOD XAT SYSTEM</title>
+<style>
+body{
+margin:0;
+font-family:Arial;
+background:black;
+overflow:hidden;
 }
 
-function writeDB(data){
-    fs.writeFileSync(DB_FILE, JSON.stringify(data,null,2));
+/* GOD OVERLAY */
+#godPanel{
+position:fixed;
+top:20px;
+left:20px;
+width:320px;
+padding:15px;
+background:rgba(0,0,0,0.85);
+border:1px solid #0ff;
+border-radius:12px;
+color:#0ff;
+z-index:999999;
+box-shadow:0 0 20px #0ff;
 }
 
-// ==============================================
-// AUTH SYSTEM
-// ==============================================
-app.post('/auth/login',(req,res)=>{
-    const {username} = req.body;
-    if(!username) return res.json({error:"Username required"});
-
-    const token = jwt.sign({username},SECRET,{expiresIn:'7d'});
-
-    res.json({status:"success",token});
-});
-
-function verify(req,res,next){
-    const token = req.headers['authorization'];
-    if(!token) return res.json({error:"No token"});
-
-    try{
-        req.user = jwt.verify(token,SECRET);
-        next();
-    }catch{
-        res.json({error:"Invalid token"});
-    }
+/* TITLE */
+h1{
+font-size:16px;
+text-align:center;
+color:#fff;
+text-shadow:0 0 10px #0ff;
 }
 
-// ==============================================
-// CLOUD SYSTEM
-// ==============================================
-app.post('/cloud/save',verify,(req,res)=>{
-    const {key,value} = req.body;
-    const db = readDB();
-
-    if(!db[req.user.username]) db[req.user.username] = {};
-
-    db[req.user.username][key]=value;
-    writeDB(db);
-
-    res.json({status:"saved",key,value});
-});
-
-app.get('/cloud/load/:key',verify,(req,res)=>{
-    const db = readDB();
-    const user = db[req.user.username] || {};
-
-    res.json({key:req.params.key,value:user[req.params.key]||null});
-});
-
-// ==============================================
-// MULTIVERSE ENGINE
-// ==============================================
-app.post('/multiverse/create',verify,(req,res)=>{
-    const db = readDB();
-    if(!db.universes) db.universes=[];
-
-    const universe = {
-        id:"XAT-"+Math.floor(Math.random()*999999999),
-        owner:req.user.username,
-        created:Date.now()
-    };
-
-    db.universes.push(universe);
-    writeDB(db);
-
-    res.json(universe);
-});
-
-app.get('/multiverse/list',verify,(req,res)=>{
-    const db = readDB();
-    res.json(db.universes||[]);
-});
-
-// ==============================================
-// 🔥 AI OVERLORD ENGINE (CORE)
-// ==============================================
-
-function aiCore(input){
-    const text = input.toLowerCase();
-
-    // GOD PROFILE GENERATION
-    if(text.includes("create profile")){
-        return {
-            type:"profile",
-            result:{
-                power: Math.floor(Math.random()*999999),
-                rank:"OMEGA USER",
-                abilities:["Glow Control","Multiverse Jump","AI Sync"],
-                status:"ACTIVE"
-            }
-        };
-    }
-
-    // NAMEGRAD AI
-    if(text.includes("namegrad")){
-        return {
-            type:"namegrad",
-            result:{
-                gradient:"linear(45deg,#ff0000,#00ffcc,#0066ff)",
-                glow:"#00f",
-                code:"(glow#AI#grad#r45#auto#auto)"
-            }
-        };
-    }
-
-    // MULTIVERSE QUERY
-    if(text.includes("universe")){
-        return {
-            type:"multiverse",
-            result:{
-                worlds: Math.floor(Math.random()*9999),
-                status:"EXPANDING",
-                energy:"INFINITE"
-            }
-        };
-    }
-
-    // DEFAULT AI RESPONSE
-    return {
-        type:"ai",
-        result:{
-            message:"I am OMEGA AI OVERLORD. Command not fully recognized but processed.",
-            suggestion:"Try: create profile / namegrad / universe"
-        }
-    };
+/* INPUT */
+input{
+width:100%;
+padding:8px;
+margin-top:5px;
+background:black;
+border:1px solid #0ff;
+color:#0ff;
+outline:none;
 }
 
-// ==============================================
-// AI ENDPOINT
-// ==============================================
-app.post('/ai/query',verify,(req,res)=>{
-    const {input} = req.body;
+/* BUTTON */
+button{
+width:100%;
+margin-top:8px;
+padding:8px;
+background:#0ff;
+border:none;
+cursor:pointer;
+font-weight:bold;
+}
 
-    if(!input) return res.json({error:"No input provided"});
+/* OUTPUT */
+#output{
+margin-top:10px;
+font-size:12px;
+white-space:pre-wrap;
+color:#0f0;
+}
 
-    const response = aiCore(input);
+/* XAT OVERLAY EFFECT */
+.xatGlow{
+text-shadow:0 0 10px #0ff,0 0 20px #0ff;
+}
+</style>
+</head>
 
-    res.json({
-        user:req.user.username,
-        input,
-        response
-    });
+<body>
+
+<!-- GOD PANEL -->
+<div id="godPanel">
+<h1>👑 OMEGA GOD SYSTEM</h1>
+
+<input id="name" placeholder="Enter Name">
+<input id="color1" placeholder="Color 1 (hex)">
+<input id="color2" placeholder="Color 2 (hex)">
+
+<button onclick="generate()">GENERATE NAMEGRAD</button>
+<button onclick="ai()">ASK AI</button>
+
+<div id="output"></div>
+</div>
+
+<script>
+function generate(){
+let name=document.getElementById("name").value;
+let c1=document.getElementById("color1").value;
+let c2=document.getElementById("color2").value;
+
+let code=`(glow#${c1}#grad#r45#${c1}#${c2})${name}`;
+
+document.getElementById("output").innerText=
+"🔥 XAT CODE:\n"+code;
+}
+
+function ai(){
+let name=document.getElementById("name").value;
+
+let responses=[
+"👑 OMEGA ENTITY ACTIVE",
+"⚡ POWER LEVEL MAXIMUM",
+"🌌 MULTIVERSE LINKED",
+"🧠 AI CORE RESPONDING",
+"🔥 "+name+" IS NOW ASCENDED"
+];
+
+document.getElementById("output").innerText =
+responses[Math.floor(Math.random()*responses.length)];
+}
+
+/* AUTO INJECT INTO XAT PAGE */
+setInterval(()=>{
+document.querySelectorAll("b,span,div").forEach(el=>{
+if(el.innerText && el.innerText.length<20){
+el.classList.add("xatGlow");
+}
 });
+},2000);
 
-// ==============================================
-// STATUS
-// ==============================================
-app.get('/api/status',(req,res)=>{
-    res.json({
-        system:"ASCENSION AI OVERLORD",
-        status:"ONLINE",
-        mode:"GOD + AI + MULTIVERSE",
-        power:999999999999
-    });
-});
+</script>
 
-// ==============================================
-// START SERVER
-// ==============================================
-app.listen(PORT,()=>{
-    console.log("====================================");
-    console.log("👑 ASCENSION AI OVERLORD MODE ACTIVE");
-    console.log("PORT:",PORT);
-    console.log("====================================");
-});
+</body>
+</html>
