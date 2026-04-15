@@ -2,207 +2,129 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>XAT Clean Name Preview</title>
+<title>XAT COLOR ENGINE</title>
 
 <style>
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-}
-
 body{
-height:100vh;
-display:flex;
-justify-content:center;
-align-items:center;
-background:#0b0b0b;
-font-family:Arial,sans-serif;
-color:#fff;
-padding:20px;
+  background:#111;
+  color:#fff;
+  font-family:Arial;
+  padding:20px;
 }
 
 .panel{
-width:920px;
-max-width:100%;
-padding:30px;
-border-radius:26px;
-background:rgba(255,255,255,0.04);
-backdrop-filter:blur(12px);
-box-shadow:0 0 35px rgba(0,0,0,.55);
-text-align:center;
+  max-width:700px;
+  margin:auto;
 }
 
-h1{
-font-size:34px;
-margin-bottom:25px;
-}
-
-label{
-display:block;
-margin:12px 0 8px;
-font-size:18px;
-font-weight:bold;
-}
-
-input[type=text]{
-width:100%;
-padding:14px;
-border:none;
-border-radius:14px;
-font-size:18px;
-text-align:center;
-outline:none;
-}
-
-#glow,
-.colors input{
-width:100%;
-height:58px;
-border:none;
-border-radius:14px;
-cursor:pointer;
-background:none;
-}
-
-.colors{
-display:grid;
-grid-template-columns:repeat(5,1fr);
-gap:12px;
-margin-top:10px;
+input{
+  width:100%;
+  padding:10px;
+  margin:5px 0;
+  border-radius:8px;
+  border:none;
 }
 
 button{
-margin-top:20px;
-padding:14px 28px;
-border:none;
-border-radius:14px;
-font-size:18px;
-font-weight:bold;
-cursor:pointer;
-background:linear-gradient(90deg,#00c6ff,#0072ff);
-color:#fff;
-transition:.3s;
+  padding:10px;
+  margin-top:10px;
+  width:100%;
+  cursor:pointer;
+  border:none;
+  border-radius:8px;
+  background:#6c5ce7;
+  color:#fff;
+  font-weight:bold;
 }
 
-button:hover{
-transform:scale(1.05);
+#preview{
+  font-size:40px;
+  text-align:center;
+  margin:20px 0;
+  font-weight:bold;
 }
 
-.preview{
-margin-top:30px;
-padding:35px;
-border-radius:20px;
-min-height:160px;
-display:flex;
-justify-content:center;
-align-items:center;
-background:transparent;
+/* 🌈 Wave Animation */
+.wave span{
+  display:inline-block;
+  animation:wave 1.2s infinite ease-in-out;
 }
 
-#namePreview{
-font-size:78px;
-font-weight:900;
-letter-spacing:2px;
-display:inline-block;
-background-size:300% auto;
--webkit-background-clip:text;
--webkit-text-fill-color:transparent;
-background-clip:text;
-color:transparent;
-animation:
-gradientMove 3s linear infinite,
-floatMove 2s ease-in-out infinite;
-}
-
-#codeBox{
-margin-top:25px;
-background:#111;
-padding:18px;
-border-radius:14px;
-font-size:18px;
-color:#00ffcc;
-word-break:break-all;
-min-height:60px;
-display:flex;
-justify-content:center;
-align-items:center;
-}
-
-@keyframes gradientMove{
-0%{background-position:0% 50%;}
-100%{background-position:300% 50%;}
-}
-
-@keyframes floatMove{
-0%,100%{transform:translateY(0);}
-50%{transform:translateY(-8px);}
+@keyframes wave{
+  0%,100%{ transform:translateY(0); }
+  50%{ transform:translateY(-10px); }
 }
 </style>
 </head>
+
 <body>
 
 <div class="panel">
-<h1>👑 XAT CLEAN PREVIEW</h1>
 
-<label>Your Name</label>
-<input type="text" id="username" value="Ramy">
+<h2>⚡ XAT COLOR ENGINE V3</h2>
 
-<label>Glow Color (for code only)</label>
-<input type="color" id="glow" value="#000000">
+<input id="name" placeholder="Enter Name">
 
-<label>Choose 5 Gradient Colors</label>
-<div class="colors">
-<input type="color" value="#7B7CA3">
-<input type="color" value="#999acb">
-<input type="color" value="#999acb">
-<input type="color" value="#B7B8F2">
-<input type="color" value="#fcfcf0">
-</div>
+<input id="glow" placeholder="Glow Color (#000000)">
+<input id="g1" placeholder="Gradient 1">
+<input id="g2" placeholder="Gradient 2">
+<input id="g3" placeholder="Gradient 3">
+<input id="g4" placeholder="Gradient 4">
+<input id="g5" placeholder="Gradient 5">
 
-<button onclick="generate()">🚀 Show Result</button>
-<button onclick="copyCode()">📋 Copy Code</button>
+<button onclick="apply()">Apply Preview</button>
+<button onclick="generate()">Generate XAT Code</button>
 
-<div class="preview">
-<div id="namePreview">Ramy</div>
-</div>
+<div id="preview"></div>
 
-<div id="codeBox"></div>
+<textarea id="output" rows="4" style="width:100%;margin-top:10px;"></textarea>
+
 </div>
 
 <script>
-const nameInput = document.getElementById("username");
-const glowInput = document.getElementById("glow");
-const colorInputs = document.querySelectorAll(".colors input");
-const preview = document.getElementById("namePreview");
-const codeBox = document.getElementById("codeBox");
+
+function apply(){
+  let name = document.getElementById("name").value;
+
+  let preview = document.getElementById("preview");
+  preview.innerHTML = "";
+
+  for(let i=0;i<name.length;i++){
+    let span = document.createElement("span");
+    span.textContent = name[i];
+
+    // gradient effect per letter
+    let colors = [
+      document.getElementById("g1").value,
+      document.getElementById("g2").value,
+      document.getElementById("g3").value,
+      document.getElementById("g4").value,
+      document.getElementById("g5").value
+    ];
+
+    span.style.color = colors[i % colors.length];
+
+    preview.appendChild(span);
+  }
+
+  preview.classList.add("wave");
+}
 
 function generate(){
-let username = nameInput.value.trim() || "Ramy";
-let glow = glowInput.value.replace("#","");
-let colors = [...colorInputs].map(c => c.value.replace("#",""));
+  let glow = document.getElementById("glow").value || "#000000";
 
-preview.textContent = username;
-preview.style.background = `linear-gradient(90deg,#${colors.join(",#")})`;
+  let g1 = document.getElementById("g1").value;
+  let g2 = document.getElementById("g2").value;
+  let g3 = document.getElementById("g3").value;
+  let g4 = document.getElementById("g4").value;
+  let g5 = document.getElementById("g5").value;
 
-codeBox.textContent = `glow#${glow}#grad#r50#o1#${colors.join("#")}`;
+  let code =
+`glow#${glow}#grad#r50#o1#${g1}#${g2}#${g3}#${g4}#${g5}`;
+
+  document.getElementById("output").value = code;
 }
 
-function copyCode(){
-navigator.clipboard.writeText(codeBox.textContent);
-alert("Copied 👑");
-}
-
-nameInput.addEventListener("keypress",e=>{
-if(e.key==="Enter") generate();
-});
-
-[nameInput, glowInput, ...colorInputs].forEach(el=>{
-el.addEventListener("input",generate);
-});
-
-generate();
 </script>
 
 </body>
