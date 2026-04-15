@@ -304,3 +304,139 @@ function generateCode(){
 
 document.body.insertAdjacentHTML('beforeend', adminPanelHTML);
 
+
+/* ===============================
+   ✨ NAME EFFECTS ENGINE V2
+   Wave + Glow + Advanced Animations (XAT STYLE)
+   =============================== */
+
+const nameEffectsEngineV2 = `
+<style>
+
+@keyframes glowPulse {
+  0% { text-shadow: 0 0 5px #00ffd5, 0 0 10px #00ffd5; }
+  50% { text-shadow: 0 0 15px #00ffd5, 0 0 30px #00ffd5; }
+  100% { text-shadow: 0 0 5px #00ffd5, 0 0 10px #00ffd5; }
+}
+
+@keyframes waveMove {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+@keyframes floatText {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-6px); }
+  100% { transform: translateY(0px); }
+}
+
+.name-glow {
+  animation: glowPulse 2s infinite ease-in-out;
+}
+
+.name-wave {
+  background: linear-gradient(90deg, #00ffd5, #ff00aa, #00aaff, #00ffd5);
+  background-size: 300% 300%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: waveMove 4s infinite linear;
+}
+
+.name-float {
+  display: inline-block;
+  animation: floatText 3s infinite ease-in-out;
+}
+
+</style>
+
+<script>
+function applyNameEffectsV2(){
+  const nameEl = document.getElementById('previewName');
+  if(!nameEl) return;
+
+  const wave = document.getElementById('nameWave')?.value;
+  const glow = document.getElementById('glowColor')?.value;
+
+  // Reset classes
+  nameEl.className = '';
+
+  // Base name
+  nameEl.classList.add('name-float');
+
+  // Glow effect
+  if(glow){
+    nameEl.style.textShadow = '0 0 10px ' + glow + ', 0 0 20px ' + glow;
+    nameEl.classList.add('name-glow');
+  }
+
+  // Wave effect (always active if gradient exists)
+  const grad = document.getElementById('nameGrad')?.value;
+  if(grad){
+    nameEl.style.background = grad;
+    nameEl.style.webkitBackgroundClip = 'text';
+    nameEl.style.webkitTextFillColor = 'transparent';
+    nameEl.classList.add('name-wave');
+  }
+
+  // Intensity control (future use)
+  if(wave && wave > 5){
+    nameEl.style.letterSpacing = '2px';
+  }
+}
+
+// Auto hook into admin panel if exists
+setInterval(()=>{
+  applyNameEffectsV2();
+}, 800);
+</script>
+`;
+
+document.body.insertAdjacentHTML('beforeend', nameEffectsEngineV2);
+
+
+
+/* ===============================
+   🔥 XAT COLOR CODE FORMATTER
+   OUTPUT STYLE: glow#...#grad#r50#o1#... 
+   =============================== */
+
+function formatXATColors(){
+  const glow = document.getElementById('glowColor')?.value || "#000000";
+  const gradInput = document.getElementById('nameGrad')?.value || "";
+
+  const r = 50;
+  const o = 1;
+
+  // extract hex colors from gradient input
+  let colors = gradInput.match(/#[a-fA-F0-9]{3,6}/g);
+
+  if(!colors || colors.length < 5){
+    colors = [
+      "#7B7CA3",
+      "#999acb",
+      "#999acb",
+      "#B7B8F2",
+      "#fcfcf0"
+    ];
+  }
+
+  const finalCode =
+    `glow#${glow}` +
+    `#grad#r${r}#o${o}` +
+    `#${colors.join("#")}`;
+
+  // show output
+  const outputBox = document.getElementById('finalCodeOutput');
+  if(outputBox){
+    outputBox.value = finalCode;
+  }
+
+  console.log("XAT FORMAT CODE:", finalCode);
+  return finalCode;
+}
+
+/* OPTIONAL AUTO HOOK */
+document.addEventListener('input', () => {
+  try { formatXATColors(); } catch(e) {}
+});
