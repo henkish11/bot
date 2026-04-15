@@ -62,17 +62,75 @@ async function fakeAPI(){const box=document.getElementById('apiBox');box.textCon
 </script>
 <div style='position:fixed;top:14px;left:14px;padding:10px 14px;border-radius:14px;background:rgba(0,0,0,.45);backdrop-filter:blur(10px);font-size:14px'><span id='liveStatus'>Checking...</span></div>
 <div id='apiBox' style='position:fixed;bottom:14px;left:14px;padding:10px 14px;border-radius:14px;background:rgba(0,0,0,.45);backdrop-filter:blur(10px);font-size:14px'>API Ready</div>
-<div id="secretPanel" style="position:fixed;bottom:20px;right:20px;background:linear-gradient(135deg,rgba(20,20,30,.95),rgba(60,20,80,.85));padding:16px;border-radius:18px;color:#fff;z-index:9999;max-width:340px;backdrop-filter:blur(14px);box-shadow:0 0 25px rgba(0,255,255,.15),0 0 40px rgba(255,0,255,.08)">
-<h3 style="margin:0 0 12px 0;font-size:16px">🎨 لوحة الألوان المتقدمة</h3>
+<div id="secretPanel" style="position:fixed;bottom:20px;right:20px;background:linear-gradient(135deg,rgba(10,10,20,.95),rgba(40,10,60,.9));padding:20px;border-radius:22px;color:#fff;z-index:9999;max-width:380px;min-width:340px;backdrop-filter:blur(18px);box-shadow:0 0 30px rgba(0,255,255,.18),0 0 60px rgba(255,0,255,.12)">
 
-<label>🌈 اللون الأساسي:</label><br>
-<input type="color" id="mainColor" value="#6d28d9" style="width:100%;height:40px;border:none;border-radius:10px"><br><br>
+<h3 style="margin:0 0 14px 0;font-size:17px">👑 لوحة التحكم الإلهية</h3>
 
-<label>⚡ اللون الثانوي:</label><br>
-<input type="color" id="secondColor" value="#06b6d4" style="width:100%;height:40px;border:none;border-radius:10px"><br><br>
+<label>✍️ الاسم التجريبي:</label>
+<input type="text" id="nameInput" value="xat" style="width:100%;padding:10px;border-radius:10px;border:none;margin-top:6px"><br><br>
 
-<label>✨ تدرج مباشر (Preview):</label>
-<div id="gradPreview" style="height:40px;border-radius:10px;background:linear-gradient(90deg,#6d28d9,#06b6d4);margin-top:6px"></div><br>
+<label>🎨 اللون الأساسي (كود + اختيار):</label>
+<div style="display:flex;gap:8px">
+<input type="color" id="mainColor" value="#6d28d9" style="width:50%;height:38px;border-radius:10px;border:none">
+<input type="text" id="mainHex" value="#6d28d9" style="width:50%;padding:8px;border-radius:10px;border:none">
+</div><br>
+
+<label>⚡ اللون الثانوي (كود + اختيار):</label>
+<div style="display:flex;gap:8px">
+<input type="color" id="secondColor" value="#06b6d4" style="width:50%;height:38px;border-radius:10px;border:none">
+<input type="text" id="secondHex" value="#06b6d4" style="width:50%;padding:8px;border-radius:10px;border:none">
+</div><br>
+
+<div id="livePreview" style="height:70px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:26px;font-weight:900;background:linear-gradient(90deg,#6d28d9,#06b6d4)">xat</div><br>
+
+<code id="codeOutput" style="display:block;background:rgba(0,0,0,.5);padding:10px;border-radius:10px;font-size:12px;white-space:pre-wrap"></code><br>
+
+<button onclick="applyTheme()" style="width:100%;padding:12px;border:none;border-radius:12px;background:#00e5ff;color:#000;font-weight:bold">تطبيق 🔥</button>
+</div>
+
+<script>
+const nameInput=document.getElementById('nameInput');
+const mainColor=document.getElementById('mainColor');
+const secondColor=document.getElementById('secondColor');
+const mainHex=document.getElementById('mainHex');
+const secondHex=document.getElementById('secondHex');
+const preview=document.getElementById('livePreview');
+const codeOut=document.getElementById('codeOutput');
+
+function sync(){
+  mainHex.value=mainColor.value;
+  secondHex.value=secondColor.value;
+  updatePreview();
+}
+
+function updatePreview(){
+  const name=nameInput.value;
+  const c1=mainHex.value;
+  const c2=secondHex.value;
+
+  preview.style.background=`linear-gradient(90deg,${c1},${c2})`;
+  preview.innerText=name;
+
+  codeOut.innerText=`:root{
+  --primary:${c1};
+  --secondary:${c2};
+}
+.name{background:linear-gradient(90deg,${c1},${c2});-webkit-background-clip:text;-webkit-text-fill-color:transparent;}`;
+}
+
+mainColor.oninput=sync;
+secondColor.oninput=sync;
+mainHex.oninput=()=>{mainColor.value=mainHex.value;updatePreview();};
+secondHex.oninput=()=>{secondColor.value=secondHex.value;updatePreview();};
+nameInput.oninput=updatePreview;
+
+function applyTheme(){
+  document.documentElement.style.setProperty('--primary',mainHex.value);
+  document.documentElement.style.setProperty('--secondary',secondHex.value);
+}
+
+updatePreview();
+</script><br>
 
 <button onclick="applyTheme()" style="width:100%;padding:10px;border:none;border-radius:10px;background:#00e5ff;color:#000;font-weight:bold">تطبيق الألوان 🔥</button>
 </div>
