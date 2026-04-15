@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>XAT Color Engine</title>
+<title>XAT Engine VIP</title>
 
 <style>
 body{
@@ -25,8 +25,8 @@ body{
 
 input{
   width:100%;
-  padding:10px;
-  margin:8px 0;
+  padding:8px;
+  margin:5px 0;
   border-radius:8px;
   border:none;
   outline:none;
@@ -45,7 +45,7 @@ button{
 }
 
 .output{
-  margin-top:15px;
+  margin-top:10px;
   background:#0d0d14;
   padding:10px;
   border-radius:8px;
@@ -53,25 +53,25 @@ button{
   word-break:break-all;
 }
 
-/* ✨ Glow */
-.glowText{
+/* Glow */
+.glow{
   text-shadow:0 0 10px #6c5ce7, 0 0 20px #6c5ce7;
 }
 
-/* 🌊 Wave Animation */
+/* Wave */
 .wave span{
   display:inline-block;
   animation:wave 1.2s infinite ease-in-out;
 }
 
-.wave span:nth-child(2){ animation-delay:0.1s }
-.wave span:nth-child(3){ animation-delay:0.2s }
-.wave span:nth-child(4){ animation-delay:0.3s }
-.wave span:nth-child(5){ animation-delay:0.4s }
+.wave span:nth-child(2){animation-delay:0.1s}
+.wave span:nth-child(3){animation-delay:0.2s}
+.wave span:nth-child(4){animation-delay:0.3s}
+.wave span:nth-child(5){animation-delay:0.4s}
 
 @keyframes wave{
-  0%,100%{ transform:translateY(0); }
-  50%{ transform:translateY(-8px); }
+  0%,100%{transform:translateY(0);}
+  50%{transform:translateY(-8px);}
 }
 </style>
 </head>
@@ -80,17 +80,20 @@ button{
 
 <div class="box">
 
-<h2>🎨 XAT ENGINE</h2>
+<h2>🔥 XAT ENGINE</h2>
 
-<input id="name" placeholder="Enter Name">
-
+<input id="name" placeholder="Name">
 <input id="glow" placeholder="Glow Color (#000000)">
-<input id="grad" placeholder="5 Colors Gradient (#...#...#...#...#...)">
 
-<button onclick="generate()">Generate Code</button>
+<input id="c1" placeholder="Color 1">
+<input id="c2" placeholder="Color 2">
+<input id="c3" placeholder="Color 3">
+<input id="c4" placeholder="Color 4">
+<input id="c5" placeholder="Color 5">
+
+<button onclick="generate()">Generate</button>
 
 <div id="preview" class="output"></div>
-
 <div id="result" class="output"></div>
 
 </div>
@@ -105,19 +108,21 @@ function waveText(text){
 function generate(){
   const name = document.getElementById("name").value || "USER";
   const glow = document.getElementById("glow").value || "#000000";
-  let grad = document.getElementById("grad").value;
 
-  let colors = grad.match(/#[a-fA-F0-9]{3,6}/g);
+  let colors = [
+    document.getElementById("c1").value,
+    document.getElementById("c2").value,
+    document.getElementById("c3").value,
+    document.getElementById("c4").value,
+    document.getElementById("c5").value
+  ];
 
-  if(!colors || colors.length < 5){
-    colors = ["#7B7CA3","#999acb","#999acb","#B7B8F2","#fcfcf0"];
-  }
+  colors = colors.map(c => c || "#999999");
 
-  const code =
-    `glow#${glow}#grad#r50#o1#` + colors.join("#");
+  const code = `glow#${glow}#grad#r50#o1#` + colors.join("#");
 
   document.getElementById("preview").innerHTML =
-    `<div class="glowText">${waveText(name)}</div>`;
+    `<div class="glow">${waveText(name)}</div>`;
 
   document.getElementById("result").innerText = code;
 }
