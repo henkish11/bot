@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>XAT Gradient Name Preview</title>
+<title>Visible Gradient Name</title>
 
 <style>
 body{
@@ -22,7 +22,7 @@ body{
   border-radius:15px;
 }
 
-input[type="text"]{
+input{
   width:100%;
   padding:8px;
   margin:5px 0;
@@ -39,20 +39,30 @@ input[type="text"]{
 input[type="color"]{
   width:60px;
   height:35px;
-  border:none;
   cursor:pointer;
 }
 
-/* 🌈 Gradient Text (IMPORTANT PART) */
-.gradientText{
-  font-size:26px;
+/* 👑 الاسم ظاهر + عليه تدرج بدون اختفاء */
+.name{
+  font-size:28px;
   font-weight:bold;
   text-align:center;
   margin-top:15px;
+  position:relative;
+}
 
-  background-size:100%;
+/* overlay gradient فوق النص */
+.name::after{
+  content:attr(data-text);
+  position:absolute;
+  left:0;
+  top:0;
+  width:100%;
+  height:100%;
+
+  background:var(--grad);
   -webkit-background-clip:text;
-  -webkit-text-fill-color:transparent;
+  color:transparent;
 }
 
 /* output */
@@ -83,9 +93,9 @@ button{
 
 <div class="box">
 
-<h2>🌈 XAT Gradient Name Preview</h2>
+<h2>🌈 XAT Visible Gradient Name</h2>
 
-<input id="name" type="text" placeholder="Enter Name">
+<input id="name" placeholder="Enter Name">
 
 <div class="colorRow">C1 <input type="color" id="c1"></div>
 <div class="colorRow">C2 <input type="color" id="c2"></div>
@@ -93,7 +103,7 @@ button{
 <div class="colorRow">C4 <input type="color" id="c4"></div>
 <div class="colorRow">C5 <input type="color" id="c5"></div>
 
-<button onclick="generate()">Preview</button>
+<button onclick="generate()">Apply</button>
 
 <div id="preview"></div>
 
@@ -114,15 +124,13 @@ function generate(){
     document.getElementById("c5").value || "#fcfcf0"
   ];
 
-  // 🎨 Gradient Text (REAL DISPLAY)
   const gradient = `linear-gradient(to right, ${colors.join(",")})`;
 
   document.getElementById("preview").innerHTML =
-    `<div class="gradientText" style="background:${gradient}">
+    `<div class="name" data-text="${name}" style="--grad:${gradient}">
       ${name}
     </div>`;
 
-  // 🔥 XAT Code Output
   const code =
     `glow#${colors[0]}#grad#r50#o1#` + colors.join("#");
 
