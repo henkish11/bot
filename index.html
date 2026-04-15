@@ -3,46 +3,59 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>OUTSIDE WEB LIMITS 👑</title>
+<title>NO LIMIT ENGINE 👑</title>
 <style>
 body{
   margin:0;
   font-family:Arial;
-  background:radial-gradient(circle at top,#0b1020,#05070f);
+  background:radial-gradient(circle at top,#050814,#000);
   color:#fff;
   overflow-x:hidden;
 }
+
+canvas{
+  position:fixed;
+  top:0;
+  left:0;
+  z-index:-1;
+}
+
 .container{
   max-width:1200px;
-  margin:40px auto;
+  margin:30px auto;
   padding:20px;
 }
+
 .title{
-  font-size:34px;
+  font-size:36px;
   text-align:center;
   font-weight:bold;
   background:linear-gradient(90deg,#00f5ff,#ff00ff,#00ff85,#ffd000);
   -webkit-background-clip:text;
   -webkit-text-fill-color:transparent;
-  animation:shine 3s infinite linear;
+  animation:shine 4s infinite linear;
 }
+
 @keyframes shine{
   0%{filter:hue-rotate(0deg)}
   100%{filter:hue-rotate(360deg)}
 }
+
 .panel{
   display:grid;
   grid-template-columns:1fr 1fr;
   gap:20px;
   margin-top:20px;
 }
+
 .card{
-  background:rgba(18,24,40,0.9);
+  background:rgba(15,20,40,0.85);
   padding:20px;
-  border-radius:16px;
-  box-shadow:0 0 30px rgba(0,255,255,0.15);
-  backdrop-filter:blur(10px);
+  border-radius:18px;
+  box-shadow:0 0 35px rgba(0,255,255,0.15);
+  backdrop-filter:blur(12px);
 }
+
 input, select, textarea{
   width:100%;
   padding:12px;
@@ -53,6 +66,7 @@ input, select, textarea{
   color:#fff;
   outline:none;
 }
+
 button{
   margin-top:10px;
   padding:12px;
@@ -65,15 +79,16 @@ button{
   cursor:pointer;
   transition:0.3s;
 }
-button:hover{
-  transform:scale(1.03);
-}
+
+button:hover{transform:scale(1.04)}
+
 .preview{
-  font-size:34px;
+  font-size:38px;
   text-align:center;
   margin-top:20px;
-  min-height:70px;
+  min-height:80px;
 }
+
 .codebox{
   background:#0a0f1c;
   padding:12px;
@@ -83,78 +98,124 @@ button:hover{
   font-size:12px;
   white-space:pre-wrap;
 }
+
 .glow{
-  text-shadow:0 0 10px #00f5ff,0 0 20px #ff00ff;
+  text-shadow:0 0 10px #00f5ff,0 0 25px #ff00ff;
 }
 
-/* NAME WAVE PRO 👑 */
+/* WAVE PRO */
 .wave span{
   display:inline-block;
-  animation:wave 1.2s infinite ease-in-out;
+  animation:wave 1.1s infinite ease-in-out;
 }
 .wave span:nth-child(odd){animation-delay:0.1s}
 .wave span:nth-child(even){animation-delay:0.2s}
 @keyframes wave{
   0%,100%{transform:translateY(0)}
-  50%{transform:translateY(-10px)}
+  50%{transform:translateY(-12px)}
 }
 
-.vault{
-  margin-top:10px;
-  padding:10px;
-  background:#070b14;
-  border-radius:10px;
+/* GLITCH */
+.glitch{
+  position:relative;
+  animation:glitch 1s infinite;
 }
+@keyframes glitch{
+  0%{transform:translate(0)}
+  20%{transform:translate(-2px,2px)}
+  40%{transform:translate(2px,-2px)}
+  60%{transform:translate(-1px,1px)}
+  80%{transform:translate(1px,-1px)}
+  100%{transform:translate(0)}
+}
+
+.online{
+  display:inline-block;
+  padding:5px 10px;
+  background:green;
+  border-radius:20px;
+  font-size:12px;
+  margin-left:10px;
+}
+
 </style>
 </head>
 <body>
 
+<canvas id="bg"></canvas>
+
 <div class="container">
-  <div class="title">OUTSIDE WEB LIMITS 👑</div>
+  <div class="title">NO LIMIT ENGINE 👑</div>
 
   <div class="panel">
 
     <div class="card">
       <h3>⚙️ CONTROL CORE</h3>
+
       <input id="name" placeholder="XAT Name" />
+
       <input id="color1" type="color" value="#00f5ff" />
       <input id="color2" type="color" value="#ff00ff" />
 
       <select id="effect">
-        <option value="none">No Effect</option>
-        <option value="glow">Glow</option>
-        <option value="wave">NameWave PRO</option>
-        <option value="combo">GOD Combo</option>
+        <option value="none">NONE</option>
+        <option value="glow">GLOW</option>
+        <option value="wave">NAME WAVE PRO</option>
+        <option value="glitch">GLITCH MODE</option>
+        <option value="combo">GOD COMBO</option>
       </select>
 
-      <h4>🔐 Password Vault (local)</h4>
-      <input id="vault" placeholder="اكتب أسرارك هنا" />
+      <select id="preset">
+        <option value="custom">CUSTOM</option>
+        <option value="cyber">CYBER</option>
+        <option value="pharaoh">PHARAOH</option>
+        <option value="neon">NEON</option>
+        <option value="fire">FIRE</option>
+      </select>
 
-      <button onclick="generate()">🚀 RUN OUTSIDE LIMITS</button>
+      <h4>🔐 VAULT</h4>
+      <input id="vault" placeholder="secret data" />
+
+      <button onclick="generate()">🚀 EXECUTE ENGINE</button>
+      <button onclick="saveVault()">💾 SAVE VAULT</button>
+      <button onclick="exportData()">📤 EXPORT</button>
     </div>
 
     <div class="card">
-      <h3>⚡ REALITY OUTPUT</h3>
+      <h3>⚡ OUTPUT <span class="online">ONLINE</span></h3>
+
       <div id="preview" class="preview"></div>
       <div id="code" class="codebox"></div>
-      <div class="vault" id="vaultOut"></div>
-      <button onclick="copyCode()">📋 COPY CODE</button>
+      <div id="vaultOut" class="codebox"></div>
+
+      <button onclick="copyCode()">📋 COPY</button>
     </div>
 
   </div>
 </div>
 
 <script>
+let vaultData = "";
+
 function wrapWave(text){
   return text.split('').map(c=>`<span>${c}</span>`).join('');
 }
 
+function presetColors(p){
+  if(p==='cyber') return ['#00f5ff','#0066ff'];
+  if(p==='pharaoh') return ['#ffd700','#ff8c00'];
+  if(p==='neon') return ['#39ff14','#00ffff'];
+  if(p==='fire') return ['#ff0000','#ff9900'];
+  return [document.getElementById('color1').value,document.getElementById('color2').value];
+}
+
 function generate(){
   let name=document.getElementById('name').value;
-  let c1=document.getElementById('color1').value;
-  let c2=document.getElementById('color2').value;
   let effect=document.getElementById('effect').value;
+  let preset=document.getElementById('preset').value;
   let vault=document.getElementById('vault').value;
+
+  let [c1,c2]=presetColors(preset);
 
   let preview=document.getElementById('preview');
   let code=document.getElementById('code');
@@ -164,33 +225,66 @@ function generate(){
 
   preview.className='preview';
 
-  if(effect==='glow'){
-    preview.classList.add('glow');
-    preview.innerHTML=name;
-  }
-  else if(effect==='wave'){
+  if(effect==='glow') preview.classList.add('glow');
+  if(effect==='glitch') preview.classList.add('glitch');
+
+  if(effect==='wave'||effect==='combo'){
     preview.classList.add('wave');
     preview.innerHTML=wrapWave(name);
-  }
-  else if(effect==='combo'){
-    preview.classList.add('glow','wave');
-    preview.innerHTML=wrapWave(name);
-  }
-  else{
+  } else {
     preview.innerHTML=name;
   }
+
+  if(effect==='combo') preview.classList.add('glow');
 
   preview.style=style;
 
-  code.textContent = `<span style=\"${style}\">${name}</span>`;
+  code.textContent=`<span style=\"${style}\">${name}</span>`;
 
-  vaultOut.innerHTML = vault ? `🔐 Vault Saved: ${vault}` : '';
+  vaultData = btoa(vault);
+  vaultOut.textContent = vault ? "VAULT ENCRYPTED ✔" : "";
+}
+
+function saveVault(){
+  localStorage.setItem('vault',vaultData);
+  alert('SAVED 👑');
+}
+
+function exportData(){
+  let data={vault:vaultData};
+  navigator.clipboard.writeText(JSON.stringify(data));
+  alert('EXPORTED 🚀');
 }
 
 function copyCode(){
   navigator.clipboard.writeText(document.getElementById('code').textContent);
   alert('COPIED 👑');
 }
+
+/* PARTICLE ENGINE */
+const canvas=document.getElementById('bg');
+const ctx=canvas.getContext('2d');
+canvas.width=window.innerWidth;
+canvas.height=window.innerHeight;
+
+let particles=[];
+for(let i=0;i<80;i++){
+  particles.push({x:Math.random()*canvas.width,y:Math.random()*canvas.height,r:Math.random()*3});
+}
+
+function draw(){
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+  ctx.fillStyle="#00f5ff";
+  particles.forEach(p=>{
+    ctx.beginPath();
+    ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+    ctx.fill();
+    p.y+=0.5;
+    if(p.y>canvas.height)p.y=0;
+  });
+  requestAnimationFrame(draw);
+}
+draw();
 </script>
 
 </body>
