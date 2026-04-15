@@ -2,52 +2,88 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>XAT Namegrad Generator - STAGE 1</title>
-
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<title>XAT Namegrad Generator - GOD MODE</title>
 
 <style>
 body{
 font-family:Arial;
-background:#f2f2f2;
+background:#111;
 margin:0;
 padding:20px;
+color:#fff;
 }
 
 .container{
-max-width:1000px;
+max-width:900px;
 margin:auto;
-background:#fff;
+background:#1b1b1b;
 padding:20px;
-border-radius:10px;
-box-shadow:0 0 10px rgba(0,0,0,0.2);
+border-radius:12px;
+box-shadow:0 0 20px rgba(0,255,255,0.2);
 }
 
 h1{
 text-align:center;
+color:#0ff;
+text-shadow:0 0 10px #0ff;
 }
 
 table{
 width:100%;
 border-collapse:collapse;
+margin-top:10px;
 }
 
 td{
 padding:10px;
-border:1px solid #ddd;
+border:1px solid #333;
 }
 
-input, select{
+input{
 width:100%;
-padding:6px;
+padding:8px;
+background:#000;
+border:1px solid #0ff;
+color:#0ff;
+outline:none;
 }
 
-.preview{
+button{
+width:100%;
+margin-top:10px;
+padding:10px;
+background:#0ff;
+border:none;
+cursor:pointer;
+font-weight:bold;
+}
+
+#output{
 margin-top:20px;
 padding:15px;
-background:#eee;
+background:#000;
+border:1px solid #0ff;
+white-space:pre-wrap;
+}
+
+.name{
+margin-top:20px;
 text-align:center;
+font-size:28px;
 font-weight:bold;
+position:relative;
+}
+
+.layer1{
+background-clip:text;
+-webkit-background-clip:text;
+color:transparent;
+position:absolute;
+width:100%;
+}
+
+.layer2{
+text-shadow:0 0 10px #00f,0 0 20px #00f;
 }
 </style>
 </head>
@@ -56,50 +92,64 @@ font-weight:bold;
 
 <div class="container">
 
-<h1>👑 XAT Namegrad Generator (STAGE 1)</h1>
+<h1>👑 XAT NAMEGRAD GOD SYSTEM</h1>
 
 <table>
 <tr>
-<td>Text:</td>
+<td>Text</td>
 <td><input id="text" value="FEXBots"></td>
 </tr>
 
 <tr>
-<td>Color 1:</td>
+<td>Color 1</td>
 <td><input id="c1" value="000000"></td>
 </tr>
 
 <tr>
-<td>Color 2:</td>
+<td>Color 2</td>
 <td><input id="c2" value="ffffff"></td>
 </tr>
 
 <tr>
-<td>Rotation:</td>
+<td>Rotation</td>
 <td><input id="rot" value="-45"></td>
 </tr>
 </table>
 
-<button onclick="nextStage()">⚡ Generate Stage 2</button>
+<button onclick="generate()">⚡ GENERATE NAMEGRAD</button>
 
-<div class="preview">
-PREVIEW WILL APPEAR HERE IN STAGE 2
-</div>
+<div id="output"></div>
+
+<div id="preview"></div>
 
 </div>
 
 <script>
-function nextStage(){
-let data={
-text:document.getElementById("text").value,
-c1:document.getElementById("c1").value,
-c2:document.getElementById("c2").value,
-rot:document.getElementById("rot").value
-};
+function generate(){
 
-localStorage.setItem("xat_data",JSON.stringify(data));
+let text=document.getElementById("text").value;
+let c1=document.getElementById("c1").value;
+let c2=document.getElementById("c2").value;
+let rot=document.getElementById("rot").value;
 
-window.location.href="stage2.html";
+let code=`(glow#0000ff#grad#r${Math.abs(rot)}#${c1}#${c2})`;
+
+document.getElementById("output").innerHTML=
+"🔥 XAT CODE:\n"+code;
+
+let gradient=`repeating-linear-gradient(${rot}deg,#${c1},#${c2})`;
+
+document.getElementById("preview").innerHTML=`
+<div class="name">
+<div class="layer1" style="background-image:${gradient}">
+${text}
+</div>
+
+<div class="layer2">
+${text}
+</div>
+</div>
+`;
 }
 </script>
 
