@@ -2,53 +2,44 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>XAT GOD ENGINE</title>
+<title>GOD ENGINE V2</title>
 
 <style>
 body{
-  background:#0d0d0d;
+  background:#0b0b0b;
   color:#fff;
   font-family:Arial;
   text-align:center;
   padding:20px;
 }
 
-h2{
-  color:#fff;
-}
-
-.panel{
-  max-width:800px;
+.container{
+  max-width:900px;
   margin:auto;
 }
 
-input{
-  width:90%;
+input, button{
+  width:95%;
   padding:10px;
   margin:5px;
-  border-radius:10px;
   border:none;
+  border-radius:10px;
 }
 
 button{
-  width:90%;
-  padding:12px;
-  margin:5px;
-  border-radius:10px;
-  border:none;
-  cursor:pointer;
-  font-weight:bold;
   background:#6c5ce7;
-  color:white;
+  color:#fff;
+  font-weight:bold;
+  cursor:pointer;
 }
 
-#preview{
-  font-size:55px;
-  margin:30px 0;
+#namePreview{
+  font-size:60px;
+  margin:25px 0;
   font-weight:bold;
 }
 
-/* 🎭 Wave animation */
+/* Wave */
 .wave span{
   display:inline-block;
   animation:wave 1.2s infinite ease-in-out;
@@ -58,18 +49,26 @@ button{
   0%,100%{transform:translateY(0);}
   50%{transform:translateY(-12px);}
 }
+
+.panel{
+  background:#151515;
+  padding:15px;
+  border-radius:15px;
+}
 </style>
 </head>
 
 <body>
 
-<div class="panel">
+<div class="container">
 
-<h2>👑 XAT GOD ENGINE V1</h2>
+<h2>👑 GOD ENGINE V2</h2>
+
+<div class="panel">
 
 <input id="name" placeholder="Enter Name">
 
-<input id="glow" placeholder="Glow Color (optional)">
+<input id="glow" placeholder="Glow Color (#000000)">
 
 <input id="c1" placeholder="Color 1">
 <input id="c2" placeholder="Color 2">
@@ -77,32 +76,44 @@ button{
 <input id="c4" placeholder="Color 4">
 <input id="c5" placeholder="Color 5">
 
-<button onclick="preview()">⚡ Preview Name</button>
-<button onclick="generate()">💎 Generate XAT Code</button>
+<button onclick="preview()">⚡ LIVE PREVIEW</button>
+<button onclick="generate()">💎 GENERATE XAT CODE</button>
+<button onclick="save()">💾 SAVE PROFILE</button>
 
-<div id="preview"></div>
+</div>
 
-<textarea id="output" rows="4" style="width:90%;margin-top:10px;"></textarea>
+<div id="namePreview"></div>
+
+<textarea id="output" rows="4" style="width:95%;margin-top:10px;"></textarea>
+
+<h3>📦 Saved Profiles</h3>
+<div id="saved"></div>
 
 </div>
 
 <script>
 
+function colors(){
+  return [
+    v("c1"),v("c2"),v("c3"),v("c4"),v("c5")
+  ];
+}
+
+function v(id){
+  return document.getElementById(id).value || "#ffffff";
+}
+
 function preview(){
   let name = document.getElementById("name").value;
-
-  let colors = getColors();
-
-  let box = document.getElementById("preview");
+  let box = document.getElementById("namePreview");
   box.innerHTML = "";
+
+  let cols = colors();
 
   for(let i=0;i<name.length;i++){
     let s = document.createElement("span");
     s.textContent = name[i];
-
-    // 🎨 color per letter
-    s.style.color = colors[i % colors.length];
-
+    s.style.color = cols[i % cols.length];
     box.appendChild(s);
   }
 
@@ -110,30 +121,48 @@ function preview(){
 }
 
 function generate(){
-
   let glow = document.getElementById("glow").value || "#000000";
-
-  let colors = getColors();
+  let cols = colors();
 
   let code =
-`glow#${glow}#grad#r50#o1#${colors.join("#")}`;
+`glow#${glow}#grad#r50#o1#${cols.join("#")}`;
 
   document.getElementById("output").value = code;
 }
 
-function getColors(){
-  return [
-    val("c1"),
-    val("c2"),
-    val("c3"),
-    val("c4"),
-    val("c5")
-  ];
+function save(){
+  let name = document.getElementById("name").value;
+  let code = document.getElementById("output").value;
+
+  if(!name || !code) return;
+
+  let data = JSON.parse(localStorage.getItem("profiles") || "[]");
+
+  data.push({name, code});
+
+  localStorage.setItem("profiles", JSON.stringify(data));
+
+  load();
 }
 
-function val(id){
-  return document.getElementById(id).value || "#ffffff";
+function load(){
+  let data = JSON.parse(localStorage.getItem("profiles") || "[]");
+
+  let box = document.getElementById("saved");
+  box.innerHTML = "";
+
+  data.forEach((p,i)=>{
+    let div = document.createElement("div");
+    div.style.padding="10px";
+    div.style.margin="5px";
+    div.style.background="#222";
+    div.style.borderRadius="10px";
+    div.innerHTML = `<b>${p.name}</b><br>${p.code}`;
+    box.appendChild(div);
+  });
 }
+
+load();
 
 </script>
 
