@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Ramy Profile - GOD SYSTEM V2</title>
+<title>Ramy Profile - GOD SYSTEM V4 FINAL ASCENSION</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
 
@@ -11,7 +11,7 @@
 *{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif}
 
 body{
-  background: radial-gradient(circle at top,#010514,#020617);
+  background: radial-gradient(circle at top,#01010a,#020617);
   color:#fff;
   overflow:hidden;
 }
@@ -22,54 +22,13 @@ canvas{
   z-index:-3;
 }
 
-/* LOGIN OVERLAY */
-.login{
-  position:fixed;
-  inset:0;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  background:rgba(0,0,0,0.7);
-  backdrop-filter:blur(12px);
-  z-index:50;
-}
-.login-box{
-  width:320px;
-  padding:20px;
-  border-radius:15px;
-  background:rgba(255,255,255,0.05);
-  border:1px solid rgba(255,255,255,0.1);
-}
-.login-box input{
-  width:100%;
-  margin:10px 0;
-  padding:10px;
-  background:#0f172a;
-  border:none;
-  color:#fff;
-  border-radius:8px;
-}
-.login-box button{
-  width:100%;
-  padding:10px;
-  background:linear-gradient(45deg,#0ea5e9,#1e3a8a);
-  border:none;
-  color:#fff;
-  cursor:pointer;
-  border-radius:8px;
-}
-
-/* TOP STATUS BAR */
 .topbar{
   position:fixed;
-  top:0;
-  left:0;
-  right:0;
-  padding:10px 20px;
+  top:0;left:0;right:0;
   display:flex;
   justify-content:space-between;
-  align-items:center;
-  background:rgba(0,0,0,0.4);
+  padding:10px 20px;
+  background:rgba(0,0,0,0.45);
   backdrop-filter:blur(12px);
   border-bottom:1px solid rgba(255,255,255,0.08);
   z-index:10;
@@ -81,129 +40,82 @@ canvas{
   text-shadow:0 0 10px #38bdf8;
 }
 
-.container{
-  max-width:1100px;
-  margin:80px auto;
-  padding:20px;
-}
+.container{max-width:1150px;margin:80px auto;padding:20px}
 
 .profile{
   background:linear-gradient(180deg,rgba(255,255,255,0.08),rgba(255,255,255,0.03));
-  border-radius:25px;
   border:1px solid rgba(255,255,255,0.1);
+  border-radius:25px;
   padding:25px;
   backdrop-filter:blur(18px);
-  box-shadow:0 0 70px rgba(0,140,255,0.25);
+  box-shadow:0 0 90px rgba(0,140,255,0.25);
 }
 
-.top{
-  display:flex;
-  gap:20px;
-  align-items:center;
-}
-
+.top{display:flex;gap:20px;align-items:center}
 .top img{
-  width:130px;
-  height:130px;
-  border-radius:50%;
-  border:3px solid #00c3ff;
+  width:130px;height:130px;border-radius:50%;border:3px solid #00c3ff;
   animation:float 3s infinite ease-in-out;
 }
 
-.name{
-  font-size:42px;
-  font-weight:700;
-  color:#4fc3ff;
-  text-shadow:0 0 20px rgba(79,195,255,0.8);
-}
+.name{font-size:42px;color:#4fc3ff;text-shadow:0 0 20px rgba(79,195,255,0.8)}
 
-.tabs{
-  display:flex;
-  gap:10px;
-  margin-top:25px;
-  flex-wrap:wrap;
-}
-
-.tab{
-  padding:10px 18px;
-  border-radius:10px;
-  background:linear-gradient(45deg,#0ea5e9,#1e3a8a);
-  cursor:pointer;
-  transition:.3s;
-}
-
+.tabs{display:flex;gap:10px;margin-top:25px;flex-wrap:wrap}
+.tab{padding:10px 18px;border-radius:10px;background:linear-gradient(45deg,#0ea5e9,#1e3a8a);cursor:pointer;transition:.3s}
 .tab:hover{transform:scale(1.05);box-shadow:0 0 20px #38bdf8}
 .tab.active{box-shadow:0 0 25px #38bdf8}
 
-.grid{
-  margin-top:20px;
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
-  gap:20px;
-}
-
-.card{
-  background:rgba(255,255,255,0.05);
-  padding:20px;
-  border-radius:20px;
-  border:1px solid rgba(255,255,255,0.1);
-  transition:.3s;
-}
+.grid{margin-top:20px;display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:20px}
+.card{background:rgba(255,255,255,0.05);padding:20px;border-radius:20px;border:1px solid rgba(255,255,255,0.1);transition:.3s}
 .card:hover{transform:translateY(-6px);box-shadow:0 0 25px rgba(0,140,255,0.3)}
 
-/* UNIVERSE MAP */
-.universe{
-  display:none;
-  grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
-}
-
-.world{
-  padding:20px;
-  border-radius:15px;
-  background:linear-gradient(135deg,rgba(0,195,255,0.1),rgba(0,0,0,0.2));
-  border:1px solid rgba(255,255,255,0.1);
-  cursor:pointer;
-  transition:.3s;
-}
-.world:hover{transform:scale(1.05);box-shadow:0 0 25px #00c3ff}
-
-/* CHAT PANEL */
-.chat{
+/* HUD */
+.hud{
   position:fixed;
-  bottom:20px;
-  right:20px;
-  width:280px;
+  top:50px;
+  left:20px;
+  width:220px;
   background:rgba(0,0,0,0.5);
   border:1px solid rgba(255,255,255,0.1);
-  border-radius:15px;
-  overflow:hidden;
-}
-.chat-header{
-  padding:10px;
-  background:linear-gradient(45deg,#0ea5e9,#1e3a8a);
-  font-size:12px;
-}
-.chat-msgs{
-  height:160px;
-  overflow-y:auto;
+  border-radius:12px;
   padding:10px;
   font-size:12px;
 }
-.chat-input{
-  display:flex;
+
+.bar{
+  width:100%;height:8px;background:#0f172a;border-radius:10px;margin:5px 0
 }
-.chat-input input{
-  flex:1;
-  padding:8px;
-  border:none;
-  background:#0f172a;
-  color:#fff;
+.fill{
+  height:100%;background:linear-gradient(90deg,#38bdf8,#2563eb);width:50%
 }
-.chat-input button{
-  padding:8px;
-  border:none;
-  background:#38bdf8;
+
+/* SKILL TREE */
+.skills{
+  display:none;
+  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+}
+.skill{
+  padding:15px;
+  border-radius:12px;
+  background:rgba(0,195,255,0.08);
+  border:1px solid rgba(255,255,255,0.1);
   cursor:pointer;
+}
+.skill:hover{box-shadow:0 0 25px #38bdf8}
+
+/* BOSS */
+.boss{
+  display:none;
+}
+.boss-card{
+  padding:20px;
+  border-radius:15px;
+  background:rgba(255,0,80,0.08);
+  border:1px solid rgba(255,0,80,0.3);
+}
+
+.btn{
+  padding:8px 12px;border:none;border-radius:10px;cursor:pointer;
+  background:linear-gradient(45deg,#0ea5e9,#1e3a8a);color:#fff
 }
 
 @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
@@ -214,99 +126,99 @@ canvas{
 
 <canvas id="bg"></canvas>
 
-<!-- LOGIN -->
-<div class="login" id="login">
-  <div class="login-box">
-    <h3>ACCESS GOD SYSTEM</h3>
-    <input id="u" placeholder="Username">
-    <input id="p" placeholder="Password" type="password">
-    <button onclick="enter()">Enter Universe</button>
-  </div>
+<div class="topbar">
+  <div class="status" id="status">⚡ ASCENSION CORE: STABLE</div>
+  <div>GOD SYSTEM V4</div>
 </div>
 
-<div class="topbar">
-  <div class="status" id="status">⚡ Universe Sync: OFFLINE</div>
-  <div>GOD SYSTEM V2</div>
+<div class="hud">
+  <div>HP</div>
+  <div class="bar"><div class="fill" id="hp" style="width:100%"></div></div>
+  <div>ENERGY</div>
+  <div class="bar"><div class="fill" id="en" style="width:70%"></div></div>
+  <div>XP: <span id="xp">0</span></div>
 </div>
 
 <div class="container">
-
   <div class="profile">
 
     <div class="top">
       <img src="https://xatimg.com/image/RKP5IrStF45l.png">
       <div>
         <div class="name">Ramy</div>
-        <div>@iegypt • ID: 106080</div>
+        <div>@iegypt • ID: 106080 • ASCENDED</div>
       </div>
     </div>
 
     <div class="tabs">
-      <div class="tab active" onclick="tab('info')">Info</div>
-      <div class="tab" onclick="tab('worlds')">Universe</div>
-      <div class="tab" onclick="tab('chat')">Chat</div>
+      <div class="tab active" onclick="show('main')">Core</div>
+      <div class="tab" onclick="show('skills')">Skills</div>
+      <div class="tab" onclick="show('boss')">Boss</div>
     </div>
 
-    <div class="grid" id="info">
-      <div class="card">⚡ GOD MODE ACTIVE</div>
-      <div class="card">🌌 SYSTEM LINK READY</div>
+    <div class="grid" id="main">
+      <div class="card">🌌 MULTIVERSE CORE ACTIVE</div>
+      <div class="card"><button class="btn" onclick="gainXP(10)">Gain XP</button></div>
     </div>
 
-    <div class="grid universe" id="worlds">
-      <div class="world" onclick="enterWorld('Earth-X')">Earth-X</div>
-      <div class="world" onclick="enterWorld('Neo Cairo')">Neo Cairo</div>
-      <div class="world" onclick="enterWorld('Cyber Void')">Cyber Void</div>
-      <div class="world" onclick="enterWorld('Dark Grid')">Dark Grid</div>
+    <div class="skills" id="skills">
+      <div class="skill" onclick="unlock('Time Control')">⏳ Time Control</div>
+      <div class="skill" onclick="unlock('Reality Shift')">🌌 Reality Shift</div>
+      <div class="skill" onclick="unlock('Energy Burst')">⚡ Energy Burst</div>
     </div>
 
-    <div class="grid" id="chat" style="display:none">
-      <div class="card">Live Universe Chat</div>
+    <div class="boss" id="boss">
+      <div class="boss-card">
+        <h3>FINAL BOSS: VOID KING</h3>
+        <p>Power: 9999</p>
+        <button class="btn" onclick="fightBoss()">Fight</button>
+      </div>
     </div>
 
-  </div>
-
-</div>
-
-<div class="chat">
-  <div class="chat-header">Live Chat</div>
-  <div class="chat-msgs" id="msgs"></div>
-  <div class="chat-input">
-    <input id="msg">
-    <button onclick="send()">Send</button>
   </div>
 </div>
 
 <script>
-function enter(){
-  document.getElementById('login').style.display='none';
-  document.getElementById('status').innerText='⚡ Universe Sync: ONLINE';
+let xp=0,hp=100,en=70;
+let skills=[];
+
+function show(id){
+  document.querySelectorAll('.grid,.skills,.boss').forEach(e=>e.style.display='none');
+  document.getElementById(id).style.display=(id==='main')?'grid':'grid';
+  if(id==='boss')document.getElementById(id).style.display='block';
 }
 
-function tab(id){
-  document.querySelectorAll('.grid').forEach(g=>g.style.display='none');
-  document.getElementById(id).style.display='grid';
+function gainXP(v){
+  xp+=v;
+  document.getElementById('xp').innerText=xp;
+  en=Math.min(100,en+5);
+  document.getElementById('en').style.width=en+'%';
+  document.getElementById('status').innerText="⚡ ASCENSION XP: "+xp;
 }
 
-function enterWorld(w){
-  alert('Entering '+w+'...');
+function unlock(s){
+  if(!skills.includes(s)){
+    skills.push(s);
+    alert('Unlocked '+s);
+  }
 }
 
-function send(){
-  let m=document.getElementById('msg');
-  if(!m.value)return;
-  let d=document.createElement('div');
-  d.textContent='You: '+m.value;
-  document.getElementById('msgs').appendChild(d);
-  m.value='';
+function fightBoss(){
+  if(xp>50){
+    alert('VOID KING DEFEATED - ASCENSION COMPLETE');
+    document.getElementById('hp').style.width='0%';
+  }else{
+    alert('Not strong enough');
+    hp-=20;
+    document.getElementById('hp').style.width=hp+'%';
+  }
 }
 
-// background particles
-const c=document.getElementById('bg');
-const x=c.getContext('2d');
-c.width=innerWidth;c.height=innerHeight;
+// particles
+const c=document.getElementById('bg');const x=c.getContext('2d');c.width=innerWidth;c.height=innerHeight;
 let p=[];
-for(let i=0;i<70;i++)p.push({x:Math.random()*c.width,y:Math.random()*c.height,r:Math.random()*2});
-function a(){x.clearRect(0,0,c.width,c.height);x.fillStyle="#38bdf8";p.forEach(o=>{x.beginPath();x.arc(o.x,o.y,o.r,0,6.28);x.fill()});requestAnimationFrame(a)}a();
+for(let i=0;i<80;i++)p.push({x:Math.random()*c.width,y:Math.random()*c.height,r:Math.random()*2,dx:(Math.random()-0.5),dy:(Math.random()-0.5)});
+function a(){x.clearRect(0,0,c.width,c.height);x.fillStyle="#38bdf8";p.forEach(o=>{x.beginPath();x.arc(o.x,o.y,o.r,0,6.28);x.fill();o.x+=o.dx;o.y+=o.dy;if(o.x<0||o.x>c.width)o.dx*=-1;if(o.y<0||o.y>c.height)o.dy*=-1});requestAnimationFrame(a)}a();
 </script>
 
 </body>
