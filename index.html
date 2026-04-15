@@ -1,653 +1,127 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>FINAL FORM 👑⚡</title>
+<meta charset="UTF-8">
+<title>XAT Color Engine</title>
+
 <style>
 body{
-  margin:0;
-  font-family:Arial;
-  background:radial-gradient(circle at top,#02030a,#000);
+  background:#0b0b10;
   color:#fff;
-  overflow-x:hidden;
+  font-family:Arial;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  height:100vh;
 }
-canvas{
-  position:fixed;
-  top:0;
-  left:0;
-  z-index:-1;
-}
-.container{
-  max-width:1300px;
-  margin:20px auto;
+
+.box{
+  width:420px;
   padding:20px;
+  background:#151522;
+  border-radius:15px;
+  box-shadow:0 0 25px rgba(0,0,0,0.6);
 }
-.title{
-  text-align:center;
-  font-size:40px;
-  font-weight:bold;
-  background:linear-gradient(90deg,#00f5ff,#ff00ff,#00ff85,#ffd000,#ff0040);
-  -webkit-background-clip:text;
-  -webkit-text-fill-color:transparent;
-  animation:hue 3s infinite linear;
-}
-@keyframes hue{
-  0%{filter:hue-rotate(0deg)}
-  100%{filter:hue-rotate(360deg)}
-}
-.panel{
-  display:grid;
-  grid-template-columns:1fr 1fr 1fr;
-  gap:15px;
-  margin-top:20px;
-}
-.card{
-  background:rgba(10,15,30,0.85);
-  padding:18px;
-  border-radius:18px;
-  box-shadow:0 0 35px rgba(0,255,255,0.15);
-  backdrop-filter:blur(12px);
-}
-input,select{
+
+input{
   width:100%;
   padding:10px;
-  margin-top:8px;
+  margin:8px 0;
+  border-radius:8px;
   border:none;
-  border-radius:10px;
-  background:#0b1220;
-  color:#fff;
+  outline:none;
 }
+
 button{
   width:100%;
-  padding:12px;
+  padding:10px;
   margin-top:10px;
   border:none;
-  border-radius:10px;
-  font-weight:bold;
+  border-radius:8px;
   cursor:pointer;
-  background:linear-gradient(90deg,#00f5ff,#ff00ff);
+  background:#6c5ce7;
+  color:#fff;
+  font-weight:bold;
 }
-.preview{
-  text-align:center;
-  font-size:42px;
-  min-height:80px;
-  margin-top:20px;
+
+.output{
+  margin-top:15px;
+  background:#0d0d14;
+  padding:10px;
+  border-radius:8px;
+  font-family:monospace;
+  word-break:break-all;
 }
-.glow{
-  text-shadow:0 0 10px #00f5ff,0 0 25px #ff00ff;
+
+/* ✨ Glow */
+.glowText{
+  text-shadow:0 0 10px #6c5ce7, 0 0 20px #6c5ce7;
 }
+
+/* 🌊 Wave Animation */
 .wave span{
   display:inline-block;
-  animation:wave 1s infinite ease-in-out;
+  animation:wave 1.2s infinite ease-in-out;
 }
+
+.wave span:nth-child(2){ animation-delay:0.1s }
+.wave span:nth-child(3){ animation-delay:0.2s }
+.wave span:nth-child(4){ animation-delay:0.3s }
+.wave span:nth-child(5){ animation-delay:0.4s }
+
 @keyframes wave{
-  0%,100%{transform:translateY(0)}
-  50%{transform:translateY(-12px)}
+  0%,100%{ transform:translateY(0); }
+  50%{ transform:translateY(-8px); }
 }
-.glitch{
-  animation:glitch 0.8s infinite;
-}
-@keyframes glitch{
-  0%{transform:translate(0)}
-  20%{transform:translate(-2px,2px)}
-  40%{transform:translate(2px,-2px)}
-  60%{transform:translate(-1px,1px)}
-  80%{transform:translate(1px,-1px)}
-  100%{transform:translate(0)}
-}
-.tabs{display:flex;gap:10px;margin-bottom:10px;}
-.tab{flex:1;padding:10px;text-align:center;background:#0b1220;border-radius:10px;cursor:pointer;}
-.tab.active{background:linear-gradient(90deg,#00f5ff,#ff00ff);}
-.section{display:none;}
-.section.active{display:block;}
-.small{font-size:12px;opacity:0.7;}
-.codebox{background:#050814;padding:10px;border-radius:10px;font-family:monospace;font-size:12px;white-space:pre-wrap;margin-top:10px;}
 </style>
 </head>
+
 <body>
 
-<canvas id="bg"></canvas>
+<div class="box">
 
-<div class="container">
-  <div class="title">FINAL FORM 👑⚡</div>
+<h2>🎨 XAT ENGINE</h2>
 
-  <div class="tabs">
-    <div class="tab active" onclick="switchTab(0)">EDITOR</div>
-    <div class="tab" onclick="switchTab(1)">PREVIEW</div>
-    <div class="tab" onclick="switchTab(2)">SYSTEM</div>
-  </div>
+<input id="name" placeholder="Enter Name">
 
-  <div class="panel">
+<input id="glow" placeholder="Glow Color (#000000)">
+<input id="grad" placeholder="5 Colors Gradient (#...#...#...#...#...)">
 
-    <div class="card section active">
-      <h3>🎛 CONTROL CORE</h3>
-      <input id="name" placeholder="XAT Name" />
-      <select id="effect">
-        <option value="none">NONE</option>
-        <option value="glow">GLOW</option>
-        <option value="wave">NAME WAVE</option>
-        <option value="glitch">GLITCH</option>
-        <option value="combo">COMBO GOD</option>
-      </select>
-      <select id="preset">
-        <option value="custom">CUSTOM</option>
-        <option value="cyber">CYBER</option>
-        <option value="pharaoh">PHARAOH</option>
-        <option value="neon">NEON</option>
-        <option value="fire">FIRE</option>
-      </select>
-      <button onclick="generate()">🚀 GENERATE FINAL FORM</button>
-    </div>
+<button onclick="generate()">Generate Code</button>
 
-    <div class="card section">
-      <h3>⚡ LIVE PREVIEW</h3>
-      <div id="preview" class="preview"></div>
-      <div id="code" class="codebox"></div>
-      <button onclick="copy()">📋 COPY</button>
-    </div>
+<div id="preview" class="output"></div>
 
-    <div class="card section">
-      <h3>🧠 SYSTEM CORE</h3>
-      <div class="small">Status: ONLINE 👑</div>
-      <div class="small">Engine: FINAL FORM ACTIVE</div>
-      <div class="small">Mode: UNLIMITED REALITY</div>
-    </div>
+<div id="result" class="output"></div>
 
-  </div>
 </div>
 
 <script>
-let tabs=document.querySelectorAll('.tab');
-let sections=document.querySelectorAll('.section');
-
-function switchTab(i){
-  tabs.forEach(t=>t.classList.remove('active'));
-  sections.forEach(s=>s.classList.remove('active'));
-  tabs[i].classList.add('active');
-  sections[i].classList.add('active');
-}
-
-function presetColors(p){
-  if(p==='cyber') return ['#00f5ff','#0066ff'];
-  if(p==='pharaoh') return ['#ffd700','#ff8c00'];
-  if(p==='neon') return ['#39ff14','#00ffff'];
-  if(p==='fire') return ['#ff0000','#ff9900'];
-  return ['#00f5ff','#ff00ff'];
-}
-
-function wrapWave(t){
-  return t.split('').map(c=>`<span>${c}</span>`).join('');
+function waveText(text){
+  return '<div class="wave">' +
+    text.split('').map(c=>`<span>${c}</span>`).join('') +
+  '</div>';
 }
 
 function generate(){
-  let name=document.getElementById('name').value;
-  let effect=document.getElementById('effect').value;
-  let preset=document.getElementById('preset').value;
+  const name = document.getElementById("name").value || "USER";
+  const glow = document.getElementById("glow").value || "#000000";
+  let grad = document.getElementById("grad").value;
 
-  let [c1,c2]=presetColors(preset);
-  let preview=document.getElementById('preview');
-  let code=document.getElementById('code');
+  let colors = grad.match(/#[a-fA-F0-9]{3,6}/g);
 
-  let style=`background:linear-gradient(90deg,${c1},${c2});-webkit-background-clip:text;-webkit-text-fill-color:transparent;`;
-
-  preview.className='preview';
-
-  if(effect==='glow') preview.classList.add('glow');
-  if(effect==='glitch') preview.classList.add('glitch');
-
-  if(effect==='wave'||effect==='combo'){
-    preview.classList.add('wave');
-    preview.innerHTML=wrapWave(name);
-  } else {
-    preview.innerHTML=name;
-  }
-
-  if(effect==='combo') preview.classList.add('glow');
-
-  preview.style=style;
-
-  code.textContent=`<span style=\"${style}\">${name}</span>`;
-}
-
-function copy(){
-  navigator.clipboard.writeText(document.getElementById('code').textContent);
-  alert('COPIED 👑');
-}
-
-const c=document.getElementById('bg');
-const x=c.getContext('2d');
-c.width=innerWidth;
-c.height=innerHeight;
-let p=[];
-for(let i=0;i<70;i++)p.push({x:Math.random()*c.width,y:Math.random()*c.height,r:Math.random()*2});
-function anim(){
-  x.clearRect(0,0,c.width,c.height);
-  x.fillStyle="#00f5ff";
-  p.forEach(a=>{
-    x.beginPath();
-    x.arc(a.x,a.y,a.r,0,Math.PI*2);
-    x.fill();
-    a.y+=0.4;
-    if(a.y>c.height)a.y=0;
-  });
-  requestAnimationFrame(anim);
-}
-anim();
-</script>
-</body>
-</html>
-
-/* ===============================
-   👑 ADMIN GOD CONTROL V3
-   =============================== */
-
-const adminPanelHTML = `
-<div id="adminPanel" style="position:fixed;top:10px;right:10px;width:320px;height:auto;background:rgba(0,0,0,0.85);color:#fff;border:1px solid #00ffd5;border-radius:15px;padding:15px;z-index:99999;backdrop-filter:blur(10px)">
-
-  <h3 style="margin:0 0 10px 0;color:#00ffd5">⚡ ADMIN GOD CONTROL V3</h3>
-
-  <label>Name</label>
-  <input id="adminName" style="width:100%;margin-bottom:8px;padding:5px" placeholder="Enter Name" />
-
-  <label>Glow Color</label>
-  <input type="color" id="glowColor" style="width:100%;margin-bottom:8px" />
-
-  <label>Name Gradient</label>
-  <input id="nameGrad" style="width:100%;margin-bottom:8px" placeholder="linear-gradient(...)" />
-
-  <label>Name Wave</label>
-  <input id="nameWave" style="width:100%;margin-bottom:8px" placeholder="wave intensity" />
-
-  <label>Password Vault</label>
-  <input type="password" id="vault" style="width:100%;margin-bottom:10px" placeholder="secret notes" />
-
-  <button onclick="applyAdminSettings()" style="width:100%;padding:10px;background:#00ffd5;border:none;border-radius:10px;font-weight:bold;cursor:pointer">
-    APPLY LIVE PREVIEW
-  </button>
-
-  <button onclick="generateCode()" style="width:100%;padding:10px;margin-top:8px;background:#ff00aa;border:none;border-radius:10px;font-weight:bold;cursor:pointer">
-    GENERATE FINAL CODE
-  </button>
-
-</div>
-
-<script>
-function applyAdminSettings(){
-  const name = document.getElementById('adminName').value;
-  const glow = document.getElementById('glowColor').value;
-  const grad = document.getElementById('nameGrad').value;
-
-  const preview = document.getElementById('previewName');
-  if(preview){
-    preview.innerText = name;
-    preview.style.textShadow = '0 0 10px ' + glow;
-    preview.style.background = grad;
-    preview.style.webkitBackgroundClip = 'text';
-    preview.style.webkitTextFillColor = 'transparent';
-  }
-}
-
-function generateCode(){
-  const data = {
-    name: document.getElementById('adminName').value,
-    glow: document.getElementById('glowColor').value,
-    gradient: document.getElementById('nameGrad').value,
-    wave: document.getElementById('nameWave').value
-  };
-
-  alert('FINAL CODE:
-' + JSON.stringify(data, null, 2));
-}
-</script>
-`;
-
-document.body.insertAdjacentHTML('beforeend', adminPanelHTML);
-
-
-/* ===============================
-   ✨ NAME EFFECTS ENGINE V2
-   Wave + Glow + Advanced Animations (XAT STYLE)
-   =============================== */
-
-const nameEffectsEngineV2 = `
-<style>
-
-@keyframes glowPulse {
-  0% { text-shadow: 0 0 5px #00ffd5, 0 0 10px #00ffd5; }
-  50% { text-shadow: 0 0 15px #00ffd5, 0 0 30px #00ffd5; }
-  100% { text-shadow: 0 0 5px #00ffd5, 0 0 10px #00ffd5; }
-}
-
-@keyframes waveMove {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
-}
-
-@keyframes floatText {
-  0% { transform: translateY(0px); }
-  50% { transform: translateY(-6px); }
-  100% { transform: translateY(0px); }
-}
-
-.name-glow {
-  animation: glowPulse 2s infinite ease-in-out;
-}
-
-.name-wave {
-  background: linear-gradient(90deg, #00ffd5, #ff00aa, #00aaff, #00ffd5);
-  background-size: 300% 300%;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  animation: waveMove 4s infinite linear;
-}
-
-.name-float {
-  display: inline-block;
-  animation: floatText 3s infinite ease-in-out;
-}
-
-</style>
-
-<script>
-function applyNameEffectsV2(){
-  const nameEl = document.getElementById('previewName');
-  if(!nameEl) return;
-
-  const wave = document.getElementById('nameWave')?.value;
-  const glow = document.getElementById('glowColor')?.value;
-
-  // Reset classes
-  nameEl.className = '';
-
-  // Base name
-  nameEl.classList.add('name-float');
-
-  // Glow effect
-  if(glow){
-    nameEl.style.textShadow = '0 0 10px ' + glow + ', 0 0 20px ' + glow;
-    nameEl.classList.add('name-glow');
-  }
-
-  // Wave effect (always active if gradient exists)
-  const grad = document.getElementById('nameGrad')?.value;
-  if(grad){
-    nameEl.style.background = grad;
-    nameEl.style.webkitBackgroundClip = 'text';
-    nameEl.style.webkitTextFillColor = 'transparent';
-    nameEl.classList.add('name-wave');
-  }
-
-  // Intensity control (future use)
-  if(wave && wave > 5){
-    nameEl.style.letterSpacing = '2px';
-  }
-}
-
-// Auto hook into admin panel if exists
-setInterval(()=>{
-  applyNameEffectsV2();
-}, 800);
-</script>
-`;
-
-document.body.insertAdjacentHTML('beforeend', nameEffectsEngineV2);
-
-
-/* ===============================
-   🔥 XAT COLOR CODE FORMATTER
-   OUTPUT STYLE: glow#...#grad#r50#o1#... 
-   =============================== */
-
-function formatXATColors(){
-  const glow = document.getElementById('glowColor')?.value || "#000000";
-  const gradInput = document.getElementById('nameGrad')?.value || "";
-
-  const r = 50;
-  const o = 1;
-
-  // extract hex colors from gradient input
-  let colors = gradInput.match(/#[a-fA-F0-9]{3,6}/g);
-
-  if(!colors || colors.length < 5){
-    colors = [
-      "#7B7CA3",
-      "#999acb",
-      "#999acb",
-      "#B7B8F2",
-      "#fcfcf0"
-    ];
-  }
-
-  const finalCode =
-    `glow#${glow}` +
-    `#grad#r${r}#o${o}` +
-    `#${colors.join("#")}`;
-
-  // show output
-  const outputBox = document.getElementById('finalCodeOutput');
-  if(outputBox){
-    outputBox.value = finalCode;
-  }
-
-  console.log("XAT FORMAT CODE:", finalCode);
-  return finalCode;
-}
-
-/* OPTIONAL AUTO HOOK */
-document.addEventListener('input', () => {
-  try { formatXATColors(); } catch(e) {}
-});
-
-
-/* ===============================
-   🚀 REAL XAT EXPORT ENGINE
-   Export Ready File (.txt / .xat format)
-   =============================== */
-
-function exportXATFile(){
-  const glow = document.getElementById('glowColor')?.value || "#000000";
-  const gradInput = document.getElementById('nameGrad')?.value || "";
-  const name = document.getElementById('adminName')?.value || "XAT_USER";
-
-  const r = 50;
-  const o = 1;
-
-  let colors = gradInput.match(/#[a-fA-F0-9]{3,6}/g);
   if(!colors || colors.length < 5){
     colors = ["#7B7CA3","#999acb","#999acb","#B7B8F2","#fcfcf0"];
   }
 
-  const xatCode =
-    `glow#${glow}#grad#r${r}#o${o}#${colors.join("#")}`;
+  const code =
+    `glow#${glow}#grad#r50#o1#` + colors.join("#");
 
-  // build export file content
-  const fileContent =
-`========================
-XAT EXPORT ENGINE FILE
-========================
-NAME: ${name}
-CODE: ${xatCode}
-========================
-GENERATED BY: REAL XAT ENGINE
-`;
+  document.getElementById("preview").innerHTML =
+    `<div class="glowText">${waveText(name)}</div>`;
 
-  // create blob
-  const blob = new Blob([fileContent], { type: "text/plain" });
-  const url = URL.createObjectURL(blob);
-
-  // download link
-  const a = document.createElement("a");
-  a.href = url;
-  a.download = `${name}_xat_export.txt`;
-  document.body.appendChild(a);
-  a.click();
-  document.body.removeChild(a);
-
-  console.log("📦 XAT FILE EXPORTED:", fileContent);
+  document.getElementById("result").innerText = code;
 }
+</script>
 
-/* OPTIONAL BUTTON HOOK */
-// add this button in admin panel:
-// <button onclick="exportXATFile()">EXPORT XAT FILE</button>
-
-
-/* ===============================
-   👑⚡ ULTIMATE CONTROL PANEL V1
-   Full GOD MODE Interface (NO LIMITS)
-   =============================== */
-
-const ultimateControlPanel = `
-<div id="ultimatePanel" style="position:fixed;bottom:10px;left:10px;width:360px;max-height:80vh;overflow:auto;background:rgba(10,10,20,0.92);border:1px solid #00ffd5;border-radius:16px;padding:14px;z-index:999999;backdrop-filter:blur(12px);color:#fff;font-family:Arial">
-
-  <h2 style="margin:0 0 10px 0;color:#00ffd5">👑 ULTIMATE CONTROL PANEL</h2>
-
-  <input id="u_name" placeholder="Name" style="width:100%;margin:5px 0;padding:8px;border-radius:8px" />
-  <input id="u_glow" type="color" style="width:100%;margin:5px 0;height:40px" />
-  <input id="u_grad" placeholder="Gradient (#hex #hex #hex ...)" style="width:100%;margin:5px 0;padding:8px;border-radius:8px" />
-
-  <hr style="border:0;border-top:1px solid #333;margin:10px 0" />
-
-  <button onclick="u_apply()" style="width:100%;padding:10px;margin:5px 0;background:#00ffd5;border:none;border-radius:10px;font-weight:bold;cursor:pointer">⚡ APPLY LIVE</button>
-
-  <button onclick="u_generate()" style="width:100%;padding:10px;margin:5px 0;background:#ff00aa;border:none;border-radius:10px;font-weight:bold;cursor:pointer">💾 GENERATE CODE</button>
-
-  <button onclick="u_export()" style="width:100%;padding:10px;margin:5px 0;background:#ffaa00;border:none;border-radius:10px;font-weight:bold;cursor:pointer">📦 EXPORT FILE</button>
-
-  <button onclick="u_copy()" style="width:100%;padding:10px;margin:5px 0;background:#444;border:none;border-radius:10px;color:#fff">📋 COPY CODE</button>
-
-  <textarea id="u_output" style="width:100%;height:120px;margin-top:10px;border-radius:10px;padding:8px;background:#000;color:#0f0"></textarea>
-
-</div>
-`;
-
-document.body.insertAdjacentHTML('beforeend', ultimateControlPanel);
-
-function u_build(){
-  const name = document.getElementById('u_name')?.value || "USER";
-  const glow = document.getElementById('u_glow')?.value || "#000000";
-  const grad = document.getElementById('u_grad')?.value || "";
-
-  const r = 50;
-  const o = 1;
-
-  let colors = grad.match(/#[a-fA-F0-9]{3,6}/g) || ["#7B7CA3","#999acb","#999acb","#B7B8F2","#fcfcf0"];
-
-  return `glow#${glow}#grad#r${r}#o${o}#${colors.join("#")}`;
-}
-
-function u_apply(){
-  const preview = document.getElementById('previewName');
-  if(preview){
-    preview.innerText = document.getElementById('u_name').value;
-  }
-}
-
-function u_generate(){
-  const code = u_build();
-  document.getElementById('u_output').value = code;
-}
-
-function u_copy(){
-  const txt = document.getElementById('u_output');
-  txt.select();
-  document.execCommand('copy');
-  alert('COPIED ⚡');
-}
-
-function u_export(){
-  const code = u_build();
-  const blob = new Blob([code], {type:"text/plain"});
-  const a = document.createElement('a');
-  a.href = URL.createObjectURL(blob);
-  a.download = "xat_ultimate_export.txt";
-  a.click();
-}
-`;
-
-document.body.insertAdjacentHTML('beforeend', '<script>'+ultimateControlPanel+'</script>');
-
-
-/* ===============================
-   🧠 REAL DATABASE SAVE SYSTEM (LOCAL STORAGE)
-   Multi Profile Storage Engine (NO SERVER)
-   =============================== */
-
-const DB_KEY = "xat_profiles_db_v1";
-
-function db_load(){
-  return JSON.parse(localStorage.getItem(DB_KEY) || "{}");
-}
-
-function db_save(data){
-  localStorage.setItem(DB_KEY, JSON.stringify(data));
-}
-
-function db_createProfile(){
-  const name = document.getElementById('u_name')?.value || "USER";
-  const code = u_build();
-
-  const db = db_load();
-
-  const id = "id_" + Date.now();
-
-  db[id] = {
-    name,
-    code,
-    created: new Date().toISOString()
-  };
-
-  db_save(db);
-  alert("💾 PROFILE SAVED: " + name);
-
-  return id;
-}
-
-function db_getProfiles(){
-  return db_load();
-}
-
-function db_deleteProfile(id){
-  const db = db_load();
-  delete db[id];
-  db_save(db);
-}
-
-function db_renderProfiles(){
-  const db = db_load();
-
-  let html = "<div style='margin-top:10px;color:#0f0'>";
-
-  Object.keys(db).forEach(id => {
-    const p = db[id];
-    html += `
-      <div style="border:1px solid #333;padding:6px;margin:5px 0;border-radius:8px">
-        <b>${p.name}</b><br>
-        <small>${p.code}</small><br>
-        <button onclick="db_deleteProfile('${id}');db_renderProfiles()">Delete</button>
-      </div>
-    `;
-  });
-
-  html += "</div>";
-
-  let panel = document.getElementById('dbPanel');
-  if(!panel){
-    panel = document.createElement('div');
-    panel.id = "dbPanel";
-    panel.style = "position:fixed;right:10px;bottom:10px;width:300px;max-height:300px;overflow:auto;background:#000;color:#0f0;padding:10px;border:1px solid #0f0;z-index:999999";
-    document.body.appendChild(panel);
-  }
-
-  panel.innerHTML = "<h3>🧠 DATABASE</h3>" + html;
-}
-
-/* AUTO LOAD UI */
-setTimeout(()=>{
-  db_renderProfiles();
-}, 1000);
-
-/* HOOK SAVE BUTTON (if exists) */
-// add in UI: onclick="db_createProfile();db_renderProfiles()"
-
+</body>
+</html>
