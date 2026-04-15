@@ -72,22 +72,32 @@ async function fakeAPI(){const box=document.getElementById('apiBox');box.textCon
 }
 </style>
 
-<div style="position:fixed;bottom:20px;left:20px;z-index:9999;background:rgba(0,0,0,.7);padding:10px;border-radius:12px;color:#fff;backdrop-filter:blur(10px)">
-<button onclick="setWave()">🌊 NameWave</button>
-<button onclick="resetEffect()">Reset</button>
-</div>
+</script>
+
+<style>
+.waveText{
+  display:inline-block;
+  animation:waveAnim 1.1s infinite ease-in-out;
+}
+@keyframes waveAnim{
+  0%{transform:translateY(0)}
+  50%{transform:translateY(-8px)}
+  100%{transform:translateY(0)}
+}
+</style>
 
 <script>
 const liveNameEl=document.getElementById('liveName');
 
-function setWave(){
-  liveNameEl.classList.remove('glowText','gradText');
-  liveNameEl.classList.add('waveText');
+// Enable wave effect always with color system
+function applyWaveAuto(){
+  if(liveNameEl){
+    liveNameEl.classList.add('waveText');
+  }
 }
 
-function resetEffect(){
-  liveNameEl.classList.remove('waveText');
-}
+// call once on load
+applyWaveAuto();
 </script>
 </body>
 <div style='position:fixed;top:14px;left:14px;padding:10px 14px;border-radius:14px;background:rgba(0,0,0,.45);backdrop-filter:blur(10px);font-size:14px'><span id='liveStatus'>Checking...</span></div>
