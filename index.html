@@ -568,3 +568,86 @@ function u_export(){
 
 document.body.insertAdjacentHTML('beforeend', '<script>'+ultimateControlPanel+'</script>');
 
+
+/* ===============================
+   🧠 REAL DATABASE SAVE SYSTEM (LOCAL STORAGE)
+   Multi Profile Storage Engine (NO SERVER)
+   =============================== */
+
+const DB_KEY = "xat_profiles_db_v1";
+
+function db_load(){
+  return JSON.parse(localStorage.getItem(DB_KEY) || "{}");
+}
+
+function db_save(data){
+  localStorage.setItem(DB_KEY, JSON.stringify(data));
+}
+
+function db_createProfile(){
+  const name = document.getElementById('u_name')?.value || "USER";
+  const code = u_build();
+
+  const db = db_load();
+
+  const id = "id_" + Date.now();
+
+  db[id] = {
+    name,
+    code,
+    created: new Date().toISOString()
+  };
+
+  db_save(db);
+  alert("💾 PROFILE SAVED: " + name);
+
+  return id;
+}
+
+function db_getProfiles(){
+  return db_load();
+}
+
+function db_deleteProfile(id){
+  const db = db_load();
+  delete db[id];
+  db_save(db);
+}
+
+function db_renderProfiles(){
+  const db = db_load();
+
+  let html = "<div style='margin-top:10px;color:#0f0'>";
+
+  Object.keys(db).forEach(id => {
+    const p = db[id];
+    html += `
+      <div style="border:1px solid #333;padding:6px;margin:5px 0;border-radius:8px">
+        <b>${p.name}</b><br>
+        <small>${p.code}</small><br>
+        <button onclick="db_deleteProfile('${id}');db_renderProfiles()">Delete</button>
+      </div>
+    `;
+  });
+
+  html += "</div>";
+
+  let panel = document.getElementById('dbPanel');
+  if(!panel){
+    panel = document.createElement('div');
+    panel.id = "dbPanel";
+    panel.style = "position:fixed;right:10px;bottom:10px;width:300px;max-height:300px;overflow:auto;background:#000;color:#0f0;padding:10px;border:1px solid #0f0;z-index:999999";
+    document.body.appendChild(panel);
+  }
+
+  panel.innerHTML = "<h3>🧠 DATABASE</h3>" + html;
+}
+
+/* AUTO LOAD UI */
+setTimeout(()=>{
+  db_renderProfiles();
+}, 1000);
+
+/* HOOK SAVE BUTTON (if exists) */
+// add in UI: onclick="db_createProfile();db_renderProfiles()"
+
