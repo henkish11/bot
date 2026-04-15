@@ -2,11 +2,11 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>GOD ENGINE V2</title>
+<title>GOD ENGINE V3</title>
 
 <style>
 body{
-  background:#0b0b0b;
+  background:#0a0a0a;
   color:#fff;
   font-family:Arial;
   text-align:center;
@@ -14,16 +14,16 @@ body{
 }
 
 .container{
-  max-width:900px;
+  max-width:950px;
   margin:auto;
 }
 
-input, button{
+input,button{
   width:95%;
   padding:10px;
   margin:5px;
-  border:none;
   border-radius:10px;
+  border:none;
 }
 
 button{
@@ -33,13 +33,13 @@ button{
   cursor:pointer;
 }
 
-#namePreview{
-  font-size:60px;
+#preview{
+  font-size:65px;
   margin:25px 0;
   font-weight:bold;
 }
 
-/* Wave */
+/* 🌊 Wave */
 .wave span{
   display:inline-block;
   animation:wave 1.2s infinite ease-in-out;
@@ -50,10 +50,9 @@ button{
   50%{transform:translateY(-12px);}
 }
 
-.panel{
-  background:#151515;
-  padding:15px;
-  border-radius:15px;
+/* 🔥 Glow effect */
+.glow{
+  text-shadow:0 0 10px currentColor,0 0 20px currentColor;
 }
 </style>
 </head>
@@ -62,58 +61,62 @@ button{
 
 <div class="container">
 
-<h2>👑 GOD ENGINE V2</h2>
-
-<div class="panel">
+<h2>👑 GOD ENGINE V3</h2>
 
 <input id="name" placeholder="Enter Name">
 
 <input id="glow" placeholder="Glow Color (#000000)">
 
-<input id="c1" placeholder="Color 1">
-<input id="c2" placeholder="Color 2">
-<input id="c3" placeholder="Color 3">
-<input id="c4" placeholder="Color 4">
-<input id="c5" placeholder="Color 5">
+<button onclick="autoColors()">🧠 AUTO AI COLORS</button>
+
+<input id="c1">
+<input id="c2">
+<input id="c3">
+<input id="c4">
+<input id="c5">
 
 <button onclick="preview()">⚡ LIVE PREVIEW</button>
 <button onclick="generate()">💎 GENERATE XAT CODE</button>
-<button onclick="save()">💾 SAVE PROFILE</button>
+<button onclick="exportCode()">📦 EXPORT FILE</button>
 
-</div>
-
-<div id="namePreview"></div>
+<div id="preview"></div>
 
 <textarea id="output" rows="4" style="width:95%;margin-top:10px;"></textarea>
-
-<h3>📦 Saved Profiles</h3>
-<div id="saved"></div>
 
 </div>
 
 <script>
 
-function colors(){
-  return [
-    v("c1"),v("c2"),v("c3"),v("c4"),v("c5")
-  ];
+function cols(){
+  return [v("c1"),v("c2"),v("c3"),v("c4"),v("c5")];
 }
 
 function v(id){
   return document.getElementById(id).value || "#ffffff";
 }
 
+/* 🧠 AI COLOR GENERATOR */
+function autoColors(){
+  let base = ["#7B7CA3","#999acb","#B7B8F2","#fcfcf0","#5f6caf"];
+
+  document.getElementById("c1").value = base[0];
+  document.getElementById("c2").value = base[1];
+  document.getElementById("c3").value = base[2];
+  document.getElementById("c4").value = base[3];
+  document.getElementById("c5").value = base[4];
+}
+
 function preview(){
   let name = document.getElementById("name").value;
-  let box = document.getElementById("namePreview");
+  let box = document.getElementById("preview");
   box.innerHTML = "";
 
-  let cols = colors();
+  let c = cols();
 
   for(let i=0;i<name.length;i++){
     let s = document.createElement("span");
     s.textContent = name[i];
-    s.style.color = cols[i % cols.length];
+    s.style.color = c[i % c.length];
     box.appendChild(s);
   }
 
@@ -122,47 +125,26 @@ function preview(){
 
 function generate(){
   let glow = document.getElementById("glow").value || "#000000";
-  let cols = colors();
+  let c = cols();
 
   let code =
-`glow#${glow}#grad#r50#o1#${cols.join("#")}`;
+`glow#${glow}#grad#r50#o1#${c.join("#")}`;
 
   document.getElementById("output").value = code;
 }
 
-function save(){
-  let name = document.getElementById("name").value;
-  let code = document.getElementById("output").value;
+/* 📦 EXPORT SYSTEM */
+function exportCode(){
+  let data = document.getElementById("output").value;
 
-  if(!name || !code) return;
+  let blob = new Blob([data],{type:"text/plain"});
+  let url = URL.createObjectURL(blob);
 
-  let data = JSON.parse(localStorage.getItem("profiles") || "[]");
-
-  data.push({name, code});
-
-  localStorage.setItem("profiles", JSON.stringify(data));
-
-  load();
+  let a = document.createElement("a");
+  a.href = url;
+  a.download = "xat_god_export.txt";
+  a.click();
 }
-
-function load(){
-  let data = JSON.parse(localStorage.getItem("profiles") || "[]");
-
-  let box = document.getElementById("saved");
-  box.innerHTML = "";
-
-  data.forEach((p,i)=>{
-    let div = document.createElement("div");
-    div.style.padding="10px";
-    div.style.margin="5px";
-    div.style.background="#222";
-    div.style.borderRadius="10px";
-    div.innerHTML = `<b>${p.name}</b><br>${p.code}`;
-    box.appendChild(div);
-  });
-}
-
-load();
 
 </script>
 
