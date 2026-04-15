@@ -3,82 +3,98 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>XAT Name Effects</title>
+<title>XAT Color Generator</title>
 
 <style>
 body{
 margin:0;
-height:100vh;
+padding:0;
+background:#0d0d0d;
+font-family:Arial;
 display:flex;
 justify-content:center;
 align-items:center;
-background:#111;
-font-family:Arial;
+height:100vh;
+color:white;
 }
 
-.box{
-width:750px;
+.panel{
+width:800px;
 padding:30px;
 border-radius:25px;
 background:rgba(255,255,255,0.05);
-backdrop-filter:blur(15px);
+backdrop-filter:blur(14px);
+box-shadow:0 0 40px rgba(0,0,0,.6);
 text-align:center;
-box-shadow:0 0 35px rgba(0,0,0,.5);
-color:white;
 }
 
 h1{
 margin-bottom:20px;
+font-size:32px;
 }
 
 input[type=text]{
 width:90%;
 padding:14px;
+font-size:18px;
 border:none;
 border-radius:12px;
-font-size:18px;
 text-align:center;
 margin-bottom:15px;
+outline:none;
 }
 
 .colors{
 display:grid;
 grid-template-columns:repeat(5,1fr);
 gap:10px;
-margin-bottom:15px;
+margin-bottom:20px;
 }
 
 .colors input{
 height:55px;
 border:none;
 cursor:pointer;
+border-radius:10px;
+}
+
+button{
+padding:14px 30px;
+font-size:18px;
+border:none;
+border-radius:14px;
+cursor:pointer;
+background:linear-gradient(90deg,#00c6ff,#0072ff);
+color:white;
+font-weight:bold;
 }
 
 .preview{
-margin-top:25px;
-padding:30px;
+margin-top:30px;
+padding:25px;
 background:#000;
 border-radius:20px;
+min-height:120px;
+display:flex;
+justify-content:center;
+align-items:center;
+flex-direction:column;
 }
 
-#name{
+#showName{
 font-size:60px;
 font-weight:900;
 display:inline-block;
 background-size:300% auto;
 -webkit-background-clip:text;
 -webkit-text-fill-color:transparent;
-background-clip:text;
-color:transparent;
-animation:move 3s linear infinite,wave 1s ease-in-out infinite;
+animation:move 3s linear infinite;
+margin-bottom:20px;
 }
 
-.output{
-margin-top:20px;
-padding:15px;
-background:#111;
-border-radius:12px;
+#code{
 color:#00ffcc;
+font-size:18px;
 word-break:break-all;
 }
 
@@ -86,19 +102,14 @@ word-break:break-all;
 0%{background-position:0%}
 100%{background-position:300%}
 }
-
-@keyframes wave{
-0%,100%{transform:translateY(0)}
-50%{transform:translateY(-8px)}
-}
 </style>
 </head>
 <body>
 
-<div class="box">
-<h1>👑 XAT NAME ENGINE</h1>
+<div class="panel">
+<h1>👑 XAT NAME COLOR SYSTEM</h1>
 
-<input type="text" id="username" value="Ramy">
+<input type="text" id="username" placeholder="Write your name" value="Ramy">
 
 <div class="colors">
 <input type="color" value="#7B7CA3">
@@ -108,35 +119,41 @@ word-break:break-all;
 <input type="color" value="#fcfcf0">
 </div>
 
+<button onclick="generate()">🚀 Show Result</button>
+
 <div class="preview">
-<div id="name">Ramy</div>
+<div id="showName">Ramy</div>
+<div id="code">Choose colors then press Enter</div>
 </div>
 
-<div class="output" id="code"></div>
 </div>
 
 <script>
 const nameInput=document.getElementById("username");
-const nameText=document.getElementById("name");
-const code=document.getElementById("code");
-const colors=document.querySelectorAll(".colors input");
+const colorInputs=document.querySelectorAll(".colors input");
 
-function update(){
-let txt=nameInput.value || "Ramy";
-nameText.innerText=txt;
+function generate(){
+let name=nameInput.value || "Ramy";
+let colors=[...colorInputs].map(c=>c.value);
 
-let vals=[...colors].map(x=>x.value);
-let grad=`linear-gradient(90deg,${vals.join(",")})`;
+let gradient=`linear-gradient(90deg,${colors.join(",")})`;
 
-nameText.style.background=grad;
+let showName=document.getElementById("showName");
+showName.innerText=name;
+showName.style.background=gradient;
 
-code.innerText=`grad#r50#o1#${vals.map(v=>v.replace("#","")).join("#")}#namewave`;
+let finalCode=`grad#r50#o1#${colors.map(c=>c.replace("#","")).join("#")}`;
+
+document.getElementById("code").innerText=finalCode;
 }
 
-nameInput.addEventListener("input",update);
-colors.forEach(c=>c.addEventListener("input",update));
+nameInput.addEventListener("keypress",function(e){
+if(e.key==="Enter"){
+generate();
+}
+});
 
-update();
+generate();
 </script>
 
 </body>
