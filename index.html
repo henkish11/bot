@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>XAT Proper Color Engine</title>
+<title>XAT Gradient Name Preview</title>
 
 <style>
 body{
@@ -16,7 +16,7 @@ body{
 }
 
 .box{
-  width:480px;
+  width:450px;
   padding:20px;
   background:#151522;
   border-radius:15px;
@@ -32,7 +32,6 @@ input[type="text"]{
 
 .colorRow{
   display:flex;
-  align-items:center;
   justify-content:space-between;
   margin:5px 0;
 }
@@ -44,40 +43,19 @@ input[type="color"]{
   cursor:pointer;
 }
 
-/* 🎨 Gradient Preview */
-.previewBar{
-  width:100%;
-  height:50px;
-  border-radius:10px;
-  margin-top:10px;
-  border:2px solid #333;
-}
-
-/* 👁 Name Preview */
-.namePreview{
-  margin-top:10px;
-  font-size:22px;
+/* 🌈 Gradient Text (IMPORTANT PART) */
+.gradientText{
+  font-size:26px;
   font-weight:bold;
   text-align:center;
+  margin-top:15px;
+
+  background-size:100%;
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
 }
 
-/* ✨ Glow */
-.glow{
-  text-shadow:0 0 10px #fff, 0 0 20px #fff;
-}
-
-button{
-  width:100%;
-  padding:10px;
-  margin-top:10px;
-  border:none;
-  border-radius:8px;
-  cursor:pointer;
-  background:#6c5ce7;
-  color:#fff;
-  font-weight:bold;
-}
-
+/* output */
 .output{
   margin-top:10px;
   background:#0d0d14;
@@ -86,6 +64,18 @@ button{
   font-family:monospace;
   word-break:break-all;
 }
+
+button{
+  width:100%;
+  padding:10px;
+  margin-top:10px;
+  border:none;
+  border-radius:8px;
+  background:#6c5ce7;
+  color:#fff;
+  font-weight:bold;
+  cursor:pointer;
+}
 </style>
 </head>
 
@@ -93,7 +83,7 @@ button{
 
 <div class="box">
 
-<h2>🌈 XAT COLOR ENGINE (FIXED)</h2>
+<h2>🌈 XAT Gradient Name Preview</h2>
 
 <input id="name" type="text" placeholder="Enter Name">
 
@@ -103,13 +93,11 @@ button{
 <div class="colorRow">C4 <input type="color" id="c4"></div>
 <div class="colorRow">C5 <input type="color" id="c5"></div>
 
-<button onclick="generate()">Generate</button>
+<button onclick="generate()">Preview</button>
 
-<div class="previewBar" id="bar"></div>
+<div id="preview"></div>
 
-<div id="namePreview" class="namePreview"></div>
-
-<div class="output" id="codeOut"></div>
+<div class="output" id="code"></div>
 
 </div>
 
@@ -126,19 +114,19 @@ function generate(){
     document.getElementById("c5").value || "#fcfcf0"
   ];
 
-  // 🎨 Live Gradient Preview
-  document.getElementById("bar").style.background =
-    `linear-gradient(to right, ${colors.join(",")})`;
+  // 🎨 Gradient Text (REAL DISPLAY)
+  const gradient = `linear-gradient(to right, ${colors.join(",")})`;
 
-  // 👁 Name Preview (Glow فقط)
-  document.getElementById("namePreview").innerHTML =
-    `<div class="glow">${name}</div>`;
+  document.getElementById("preview").innerHTML =
+    `<div class="gradientText" style="background:${gradient}">
+      ${name}
+    </div>`;
 
-  // 🔥 Correct XAT Code
-  const xatCode =
+  // 🔥 XAT Code Output
+  const code =
     `glow#${colors[0]}#grad#r50#o1#` + colors.join("#");
 
-  document.getElementById("codeOut").innerText = xatCode;
+  document.getElementById("code").innerText = code;
 }
 </script>
 
