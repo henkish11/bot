@@ -41,4 +41,11 @@
 </div>
 </section>
 </div></div>
+<script>
+function updateStatus(){const el=document.getElementById('liveStatus');if(!el)return;const on=navigator.onLine;el.textContent=on?'🟢 Online Now':'🔴 Offline';el.style.color=on?'#5cff95':'#ff6b6b';}
+window.addEventListener('online',updateStatus);window.addEventListener('offline',updateStatus);setInterval(updateStatus,3000);updateStatus();
+async function fakeAPI(){const box=document.getElementById('apiBox');box.textContent='Loading API...';setTimeout(()=>{box.textContent='User: Ramy | Rank: GOD | Powers: 9999+';},1200)}fakeAPI();
+</script>
+<div style='position:fixed;top:14px;left:14px;padding:10px 14px;border-radius:14px;background:rgba(0,0,0,.45);backdrop-filter:blur(10px);font-size:14px'><span id='liveStatus'>Checking...</span></div>
+<div id='apiBox' style='position:fixed;bottom:14px;left:14px;padding:10px 14px;border-radius:14px;background:rgba(0,0,0,.45);backdrop-filter:blur(10px);font-size:14px'>API Ready</div>
 </body></html>
