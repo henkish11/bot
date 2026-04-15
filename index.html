@@ -99,6 +99,62 @@ function applyWaveAuto(){
 // call once on load
 applyWaveAuto();
 </script>
+<!-- VIP CONTROL PANEL -->
+<div id="vipPanel" style="position:fixed;bottom:18px;right:18px;z-index:9999;background:linear-gradient(135deg,rgba(10,10,25,.96),rgba(60,10,90,.9));padding:18px;border-radius:20px;color:#fff;backdrop-filter:blur(16px);box-shadow:0 0 30px rgba(0,255,255,.15)">
+
+<h3 style="margin:0 0 12px 0">👑 VIP SYSTEM</h3>
+
+<label>✍️ الاسم</label>
+<input id="nameInput" value="xat" style="width:100%;padding:10px;border-radius:10px;border:none;margin:6px 0"><br>
+
+<label>🎨 اللون 1</label>
+<input type="color" id="c1" value="#6d28d9" style="width:100%"><br><br>
+
+<label>⚡ اللون 2</label>
+<input type="color" id="c2" value="#06b6d4" style="width:100%"><br><br>
+
+<div style="text-align:center;font-size:28px;font-weight:900;margin:10px 0">
+<span id="liveName">xat</span>
+</div>
+
+<button onclick="toggleWave()" style="width:100%;padding:10px;border:none;border-radius:10px;margin-top:5px">🌊 Wave</button>
+<button onclick="toggleGlow()" style="width:100%;padding:10px;border:none;border-radius:10px;margin-top:5px">✨ Glow</button>
+<button onclick="applyGrad()" style="width:100%;padding:10px;border:none;border-radius:10px;margin-top:5px">🌈 Gradient</button>
+
+<pre id="codeOut" style="background:rgba(0,0,0,.5);padding:10px;border-radius:10px;font-size:11px;margin-top:10px"></pre>
+</div>
+
+<style>
+.wave{animation:wave 1s infinite ease-in-out;display:inline-block}
+@keyframes wave{0%{transform:translateY(0)}50%{transform:translateY(-8px)}100%{transform:translateY(0)}}
+.glow{text-shadow:0 0 10px #00f0ff,0 0 20px #00f0ff}
+.grad{background:linear-gradient(90deg,var(--a),var(--b));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+</style>
+
+<script>
+const nameEl=document.getElementById('liveName');
+const input=document.getElementById('nameInput');
+const c1=document.getElementById('c1');
+const c2=document.getElementById('c2');
+const out=document.getElementById('codeOut');
+
+function update(){
+  nameEl.innerText=input.value;
+  nameEl.style.setProperty('--a',c1.value);
+  nameEl.style.setProperty('--b',c2.value);
+
+  out.innerText=`NAME SYSTEM\n${input.value}\nCOLOR1:${c1.value}\nCOLOR2:${c2.value}`;
+}
+
+function toggleWave(){nameEl.classList.toggle('wave')}
+function toggleGlow(){nameEl.classList.toggle('glow')}
+function applyGrad(){nameEl.classList.toggle('grad')}
+
+input.oninput=update;
+c1.oninput=update;
+c2.oninput=update;
+update();
+</script>
 </body>
 <div style='position:fixed;top:14px;left:14px;padding:10px 14px;border-radius:14px;background:rgba(0,0,0,.45);backdrop-filter:blur(10px);font-size:14px'><span id='liveStatus'>Checking...</span></div>
 <div id='apiBox' style='position:fixed;bottom:14px;left:14px;padding:10px 14px;border-radius:14px;background:rgba(0,0,0,.45);backdrop-filter:blur(10px);font-size:14px'>API Ready</div>
