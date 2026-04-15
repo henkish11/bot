@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>XAT Engine VIP</title>
+<title>XAT Color Picker Engine</title>
 
 <style>
 body{
@@ -16,20 +16,61 @@ body{
 }
 
 .box{
-  width:420px;
+  width:450px;
   padding:20px;
   background:#151522;
   border-radius:15px;
   box-shadow:0 0 25px rgba(0,0,0,0.6);
 }
 
-input{
+input[type="text"]{
   width:100%;
   padding:8px;
   margin:5px 0;
   border-radius:8px;
   border:none;
   outline:none;
+}
+
+.colorRow{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  margin:6px 0;
+  gap:10px;
+}
+
+input[type="color"]{
+  width:60px;
+  height:35px;
+  border:none;
+  background:none;
+  cursor:pointer;
+}
+
+.previewName{
+  margin-top:10px;
+  font-size:20px;
+  font-weight:bold;
+}
+
+.glow{
+  text-shadow:0 0 10px #6c5ce7, 0 0 20px #6c5ce7;
+}
+
+.wave span{
+  display:inline-block;
+  animation:wave 1.2s infinite ease-in-out;
+}
+
+.wave span:nth-child(2){animation-delay:0.1s}
+.wave span:nth-child(3){animation-delay:0.2s}
+.wave span:nth-child(4){animation-delay:0.3s}
+.wave span:nth-child(5){animation-delay:0.4s}
+
+@keyframes wave{
+  0%,100%{transform:translateY(0);}
+  50%{transform:translateY(-8px);}
 }
 
 button{
@@ -52,27 +93,6 @@ button{
   font-family:monospace;
   word-break:break-all;
 }
-
-/* Glow */
-.glow{
-  text-shadow:0 0 10px #6c5ce7, 0 0 20px #6c5ce7;
-}
-
-/* Wave */
-.wave span{
-  display:inline-block;
-  animation:wave 1.2s infinite ease-in-out;
-}
-
-.wave span:nth-child(2){animation-delay:0.1s}
-.wave span:nth-child(3){animation-delay:0.2s}
-.wave span:nth-child(4){animation-delay:0.3s}
-.wave span:nth-child(5){animation-delay:0.4s}
-
-@keyframes wave{
-  0%,100%{transform:translateY(0);}
-  50%{transform:translateY(-8px);}
-}
 </style>
 </head>
 
@@ -80,20 +100,19 @@ button{
 
 <div class="box">
 
-<h2>🔥 XAT ENGINE</h2>
+<h2>🌈 XAT COLOR ENGINE VIP</h2>
 
-<input id="name" placeholder="Name">
-<input id="glow" placeholder="Glow Color (#000000)">
+<input id="name" type="text" placeholder="Enter Name">
 
-<input id="c1" placeholder="Color 1">
-<input id="c2" placeholder="Color 2">
-<input id="c3" placeholder="Color 3">
-<input id="c4" placeholder="Color 4">
-<input id="c5" placeholder="Color 5">
+<div class="colorRow">Color 1 <input type="color" id="c1"></div>
+<div class="colorRow">Color 2 <input type="color" id="c2"></div>
+<div class="colorRow">Color 3 <input type="color" id="c3"></div>
+<div class="colorRow">Color 4 <input type="color" id="c4"></div>
+<div class="colorRow">Color 5 <input type="color" id="c5"></div>
 
-<button onclick="generate()">Generate</button>
+<button onclick="generate()">Generate XAT Code</button>
 
-<div id="preview" class="output"></div>
+<div id="preview" class="previewName"></div>
 <div id="result" class="output"></div>
 
 </div>
@@ -107,7 +126,6 @@ function waveText(text){
 
 function generate(){
   const name = document.getElementById("name").value || "USER";
-  const glow = document.getElementById("glow").value || "#000000";
 
   let colors = [
     document.getElementById("c1").value,
@@ -117,7 +135,7 @@ function generate(){
     document.getElementById("c5").value
   ];
 
-  colors = colors.map(c => c || "#999999");
+  const glow = colors[0]; // أول لون Glow تلقائي
 
   const code = `glow#${glow}#grad#r50#o1#` + colors.join("#");
 
