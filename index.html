@@ -2,57 +2,61 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>XAT COLOR ENGINE</title>
+<title>XAT GOD ENGINE</title>
 
 <style>
 body{
-  background:#111;
+  background:#0d0d0d;
   color:#fff;
   font-family:Arial;
+  text-align:center;
   padding:20px;
 }
 
+h2{
+  color:#fff;
+}
+
 .panel{
-  max-width:700px;
+  max-width:800px;
   margin:auto;
 }
 
 input{
-  width:100%;
+  width:90%;
   padding:10px;
-  margin:5px 0;
-  border-radius:8px;
+  margin:5px;
+  border-radius:10px;
   border:none;
 }
 
 button{
-  padding:10px;
-  margin-top:10px;
-  width:100%;
-  cursor:pointer;
+  width:90%;
+  padding:12px;
+  margin:5px;
+  border-radius:10px;
   border:none;
-  border-radius:8px;
-  background:#6c5ce7;
-  color:#fff;
+  cursor:pointer;
   font-weight:bold;
+  background:#6c5ce7;
+  color:white;
 }
 
 #preview{
-  font-size:40px;
-  text-align:center;
-  margin:20px 0;
+  font-size:55px;
+  margin:30px 0;
   font-weight:bold;
 }
 
-/* 🌈 Wave Animation */
+/* 🎭 Wave animation */
 .wave span{
   display:inline-block;
   animation:wave 1.2s infinite ease-in-out;
 }
 
 @keyframes wave{
-  0%,100%{ transform:translateY(0); }
-  50%{ transform:translateY(-10px); }
+  0%,100%{transform:translateY(0);}
+  50%{transform:translateY(-12px);}
 }
 </style>
 </head>
@@ -61,68 +65,74 @@ button{
 
 <div class="panel">
 
-<h2>⚡ XAT COLOR ENGINE V3</h2>
+<h2>👑 XAT GOD ENGINE V1</h2>
 
 <input id="name" placeholder="Enter Name">
 
-<input id="glow" placeholder="Glow Color (#000000)">
-<input id="g1" placeholder="Gradient 1">
-<input id="g2" placeholder="Gradient 2">
-<input id="g3" placeholder="Gradient 3">
-<input id="g4" placeholder="Gradient 4">
-<input id="g5" placeholder="Gradient 5">
+<input id="glow" placeholder="Glow Color (optional)">
 
-<button onclick="apply()">Apply Preview</button>
-<button onclick="generate()">Generate XAT Code</button>
+<input id="c1" placeholder="Color 1">
+<input id="c2" placeholder="Color 2">
+<input id="c3" placeholder="Color 3">
+<input id="c4" placeholder="Color 4">
+<input id="c5" placeholder="Color 5">
+
+<button onclick="preview()">⚡ Preview Name</button>
+<button onclick="generate()">💎 Generate XAT Code</button>
 
 <div id="preview"></div>
 
-<textarea id="output" rows="4" style="width:100%;margin-top:10px;"></textarea>
+<textarea id="output" rows="4" style="width:90%;margin-top:10px;"></textarea>
 
 </div>
 
 <script>
 
-function apply(){
+function preview(){
   let name = document.getElementById("name").value;
 
-  let preview = document.getElementById("preview");
-  preview.innerHTML = "";
+  let colors = getColors();
+
+  let box = document.getElementById("preview");
+  box.innerHTML = "";
 
   for(let i=0;i<name.length;i++){
-    let span = document.createElement("span");
-    span.textContent = name[i];
+    let s = document.createElement("span");
+    s.textContent = name[i];
 
-    // gradient effect per letter
-    let colors = [
-      document.getElementById("g1").value,
-      document.getElementById("g2").value,
-      document.getElementById("g3").value,
-      document.getElementById("g4").value,
-      document.getElementById("g5").value
-    ];
+    // 🎨 color per letter
+    s.style.color = colors[i % colors.length];
 
-    span.style.color = colors[i % colors.length];
-
-    preview.appendChild(span);
+    box.appendChild(s);
   }
 
-  preview.classList.add("wave");
+  box.classList.add("wave");
 }
 
 function generate(){
+
   let glow = document.getElementById("glow").value || "#000000";
 
-  let g1 = document.getElementById("g1").value;
-  let g2 = document.getElementById("g2").value;
-  let g3 = document.getElementById("g3").value;
-  let g4 = document.getElementById("g4").value;
-  let g5 = document.getElementById("g5").value;
+  let colors = getColors();
 
   let code =
-`glow#${glow}#grad#r50#o1#${g1}#${g2}#${g3}#${g4}#${g5}`;
+`glow#${glow}#grad#r50#o1#${colors.join("#")}`;
 
   document.getElementById("output").value = code;
+}
+
+function getColors(){
+  return [
+    val("c1"),
+    val("c2"),
+    val("c3"),
+    val("c4"),
+    val("c5")
+  ];
+}
+
+function val(id){
+  return document.getElementById(id).value || "#ffffff";
 }
 
 </script>
