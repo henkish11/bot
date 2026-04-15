@@ -3,101 +3,65 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>XAT Color Generator</title>
-
+<title>XAT Code Order Engine</title>
 <style>
 body{
 margin:0;
-padding:0;
 background:#0d0d0d;
 font-family:Arial;
 display:flex;
 justify-content:center;
 align-items:center;
 height:100vh;
-color:white;
+color:#fff;
 }
-
 .panel{
-width:800px;
+width:850px;
 padding:30px;
 border-radius:25px;
-background:rgba(255,255,255,0.05);
-backdrop-filter:blur(14px);
-box-shadow:0 0 40px rgba(0,0,0,.6);
+background:rgba(255,255,255,.05);
 text-align:center;
+box-shadow:0 0 35px rgba(0,0,0,.6);
 }
-
-h1{
-margin-bottom:20px;
-font-size:32px;
-}
-
-input[type=text]{
-width:90%;
-padding:14px;
-font-size:18px;
+input,select,button{
+padding:12px;
+margin:8px;
 border:none;
 border-radius:12px;
-text-align:center;
-margin-bottom:15px;
-outline:none;
+font-size:16px;
 }
-
 .colors{
 display:grid;
 grid-template-columns:repeat(5,1fr);
 gap:10px;
-margin-bottom:20px;
+margin:15px 0;
 }
-
 .colors input{
 height:55px;
-border:none;
-cursor:pointer;
-border-radius:10px;
+padding:0;
 }
-
 button{
-padding:14px 30px;
-font-size:18px;
-border:none;
-border-radius:14px;
 cursor:pointer;
-background:linear-gradient(90deg,#00c6ff,#0072ff);
-color:white;
+background:#0072ff;
+color:#fff;
 font-weight:bold;
 }
-
-.preview{
-margin-top:30px;
-padding:25px;
-background:#000;
-border-radius:20px;
-min-height:120px;
-display:flex;
-justify-content:center;
-align-items:center;
-flex-direction:column;
-}
-
-#showName{
-font-size:60px;
+#name{
+font-size:58px;
 font-weight:900;
+margin:20px 0;
 display:inline-block;
 background-size:300% auto;
 -webkit-background-clip:text;
 -webkit-text-fill-color:transparent;
 animation:move 3s linear infinite;
-margin-bottom:20px;
 }
-
 #code{
 color:#00ffcc;
-font-size:18px;
 word-break:break-all;
+margin-top:15px;
+font-size:18px;
 }
-
 @keyframes move{
 0%{background-position:0%}
 100%{background-position:300%}
@@ -107,9 +71,16 @@ word-break:break-all;
 <body>
 
 <div class="panel">
-<h1>👑 XAT NAME COLOR SYSTEM</h1>
+<h1>👑 XAT ORDER SYSTEM</h1>
 
-<input type="text" id="username" placeholder="Write your name" value="Ramy">
+<input type="text" id="username" value="Ramy">
+
+<br>
+Glow:
+<input type="color" id="glow" value="#000000">
+
+Name Color:
+<input type="color" id="namecolor" value="#ffffff">
 
 <div class="colors">
 <input type="color" value="#7B7CA3">
@@ -119,38 +90,48 @@ word-break:break-all;
 <input type="color" value="#fcfcf0">
 </div>
 
-<button onclick="generate()">🚀 Show Result</button>
+<select id="order">
+<option value="wavefirst">Glow > NameColor > Wave > Grad</option>
+<option value="gradfirst">Glow > NameColor > Grad > Wave</option>
+</select>
 
-<div class="preview">
-<div id="showName">Ramy</div>
-<div id="code">Choose colors then press Enter</div>
-</div>
+<br>
+<button onclick="generate()">🚀 Generate</button>
+
+<div id="name">Ramy</div>
+<div id="code"></div>
 
 </div>
 
 <script>
-const nameInput=document.getElementById("username");
-const colorInputs=document.querySelectorAll(".colors input");
+const colors=document.querySelectorAll('.colors input');
 
 function generate(){
-let name=nameInput.value || "Ramy";
-let colors=[...colorInputs].map(c=>c.value);
+let user=document.getElementById("username").value||"Ramy";
+let glow=document.getElementById("glow").value.replace("#","");
+let namecolor=document.getElementById("namecolor").value.replace("#","");
+let vals=[...colors].map(c=>c.value.replace("#",""));
+let order=document.getElementById("order").value;
 
-let gradient=`linear-gradient(90deg,${colors.join(",")})`;
+let gradPart=`namegrad#r50#o1#${vals.join("#")}`;
+let code="";
 
-let showName=document.getElementById("showName");
-showName.innerText=name;
-showName.style.background=gradient;
-
-let finalCode=`grad#r50#o1#${colors.map(c=>c.replace("#","")).join("#")}`;
-
-document.getElementById("code").innerText=finalCode;
+if(order==="wavefirst"){
+code=`glow#${glow}#namecolor#${namecolor}#namewave#${gradPart}`;
+}else{
+code=`glow#${glow}#namecolor#${namecolor}#${gradPart}#namewave`;
 }
 
-nameInput.addEventListener("keypress",function(e){
-if(e.key==="Enter"){
-generate();
+document.getElementById("code").innerText=code;
+
+let show=document.getElementById("name");
+show.innerText=user;
+show.style.background=`linear-gradient(90deg,#${vals.join(",#")})`;
+show.style.textShadow=`0 0 8px #${glow},0 0 18px #${glow}`;
 }
+
+document.getElementById("username").addEventListener("keypress",e=>{
+if(e.key==="Enter") generate();
 });
 
 generate();
