@@ -2,127 +2,105 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>OMEGA GOD XAT SYSTEM</title>
+<title>XAT Namegrad Generator - STAGE 1</title>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
 <style>
 body{
-margin:0;
 font-family:Arial;
-background:black;
-overflow:hidden;
+background:#f2f2f2;
+margin:0;
+padding:20px;
 }
 
-/* GOD OVERLAY */
-#godPanel{
-position:fixed;
-top:20px;
-left:20px;
-width:320px;
-padding:15px;
-background:rgba(0,0,0,0.85);
-border:1px solid #0ff;
-border-radius:12px;
-color:#0ff;
-z-index:999999;
-box-shadow:0 0 20px #0ff;
+.container{
+max-width:1000px;
+margin:auto;
+background:#fff;
+padding:20px;
+border-radius:10px;
+box-shadow:0 0 10px rgba(0,0,0,0.2);
 }
 
-/* TITLE */
 h1{
-font-size:16px;
 text-align:center;
-color:#fff;
-text-shadow:0 0 10px #0ff;
 }
 
-/* INPUT */
-input{
+table{
 width:100%;
-padding:8px;
-margin-top:5px;
-background:black;
-border:1px solid #0ff;
-color:#0ff;
-outline:none;
+border-collapse:collapse;
 }
 
-/* BUTTON */
-button{
+td{
+padding:10px;
+border:1px solid #ddd;
+}
+
+input, select{
 width:100%;
-margin-top:8px;
-padding:8px;
-background:#0ff;
-border:none;
-cursor:pointer;
+padding:6px;
+}
+
+.preview{
+margin-top:20px;
+padding:15px;
+background:#eee;
+text-align:center;
 font-weight:bold;
-}
-
-/* OUTPUT */
-#output{
-margin-top:10px;
-font-size:12px;
-white-space:pre-wrap;
-color:#0f0;
-}
-
-/* XAT OVERLAY EFFECT */
-.xatGlow{
-text-shadow:0 0 10px #0ff,0 0 20px #0ff;
 }
 </style>
 </head>
 
 <body>
 
-<!-- GOD PANEL -->
-<div id="godPanel">
-<h1>👑 OMEGA GOD SYSTEM</h1>
+<div class="container">
 
-<input id="name" placeholder="Enter Name">
-<input id="color1" placeholder="Color 1 (hex)">
-<input id="color2" placeholder="Color 2 (hex)">
+<h1>👑 XAT Namegrad Generator (STAGE 1)</h1>
 
-<button onclick="generate()">GENERATE NAMEGRAD</button>
-<button onclick="ai()">ASK AI</button>
+<table>
+<tr>
+<td>Text:</td>
+<td><input id="text" value="FEXBots"></td>
+</tr>
 
-<div id="output"></div>
+<tr>
+<td>Color 1:</td>
+<td><input id="c1" value="000000"></td>
+</tr>
+
+<tr>
+<td>Color 2:</td>
+<td><input id="c2" value="ffffff"></td>
+</tr>
+
+<tr>
+<td>Rotation:</td>
+<td><input id="rot" value="-45"></td>
+</tr>
+</table>
+
+<button onclick="nextStage()">⚡ Generate Stage 2</button>
+
+<div class="preview">
+PREVIEW WILL APPEAR HERE IN STAGE 2
+</div>
+
 </div>
 
 <script>
-function generate(){
-let name=document.getElementById("name").value;
-let c1=document.getElementById("color1").value;
-let c2=document.getElementById("color2").value;
+function nextStage(){
+let data={
+text:document.getElementById("text").value,
+c1:document.getElementById("c1").value,
+c2:document.getElementById("c2").value,
+rot:document.getElementById("rot").value
+};
 
-let code=`(glow#${c1}#grad#r45#${c1}#${c2})${name}`;
+localStorage.setItem("xat_data",JSON.stringify(data));
 
-document.getElementById("output").innerText=
-"🔥 XAT CODE:\n"+code;
+window.location.href="stage2.html";
 }
-
-function ai(){
-let name=document.getElementById("name").value;
-
-let responses=[
-"👑 OMEGA ENTITY ACTIVE",
-"⚡ POWER LEVEL MAXIMUM",
-"🌌 MULTIVERSE LINKED",
-"🧠 AI CORE RESPONDING",
-"🔥 "+name+" IS NOW ASCENDED"
-];
-
-document.getElementById("output").innerText =
-responses[Math.floor(Math.random()*responses.length)];
-}
-
-/* AUTO INJECT INTO XAT PAGE */
-setInterval(()=>{
-document.querySelectorAll("b,span,div").forEach(el=>{
-if(el.innerText && el.innerText.length<20){
-el.classList.add("xatGlow");
-}
-});
-},2000);
-
 </script>
 
 </body>
