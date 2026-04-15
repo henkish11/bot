@@ -3,85 +3,146 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>XAT Code Order Engine</title>
+<title>XAT Gradient Code Generator</title>
+
 <style>
-body{
+*{
 margin:0;
-background:#0d0d0d;
-font-family:Arial;
+padding:0;
+box-sizing:border-box;
+}
+
+body{
+height:100vh;
 display:flex;
 justify-content:center;
 align-items:center;
-height:100vh;
-color:#fff;
+background:linear-gradient(135deg,#050505,#111,#1a1a1a);
+font-family:Arial, sans-serif;
+color:white;
+padding:20px;
 }
+
 .panel{
-width:850px;
-padding:30px;
+width:900px;
+max-width:100%;
+background:rgba(255,255,255,0.05);
+backdrop-filter:blur(16px);
 border-radius:25px;
-background:rgba(255,255,255,.05);
+padding:30px;
+box-shadow:0 0 40px rgba(0,0,0,0.6);
 text-align:center;
-box-shadow:0 0 35px rgba(0,0,0,.6);
 }
-input,select,button{
-padding:12px;
-margin:8px;
+
+h1{
+font-size:34px;
+margin-bottom:25px;
+}
+
+label{
+display:block;
+margin:12px 0 8px;
+font-size:18px;
+font-weight:bold;
+}
+
+input[type=text]{
+width:100%;
+padding:14px;
 border:none;
-border-radius:12px;
-font-size:16px;
+border-radius:14px;
+font-size:18px;
+text-align:center;
+outline:none;
 }
+
 .colors{
 display:grid;
 grid-template-columns:repeat(5,1fr);
-gap:10px;
-margin:15px 0;
+gap:12px;
+margin-top:10px;
 }
-.colors input{
-height:55px;
-padding:0;
-}
-button{
+
+.colors input,
+#glow{
+width:100%;
+height:60px;
+border:none;
+border-radius:14px;
 cursor:pointer;
-background:#0072ff;
-color:#fff;
-font-weight:bold;
+background:none;
 }
-#name{
-font-size:58px;
+
+.preview{
+margin-top:30px;
+padding:30px;
+border-radius:20px;
+background:#000;
+box-shadow:inset 0 0 20px rgba(255,255,255,0.08);
+}
+
+#namePreview{
+font-size:64px;
 font-weight:900;
-margin:20px 0;
 display:inline-block;
 background-size:300% auto;
 -webkit-background-clip:text;
 -webkit-text-fill-color:transparent;
+background-clip:text;
+color:transparent;
 animation:move 3s linear infinite;
 }
-#code{
+
+@keyframes move{
+0%{background-position:0%;}
+100%{background-position:300%;}
+}
+
+button{
+margin-top:20px;
+padding:14px 28px;
+border:none;
+border-radius:14px;
+font-size:18px;
+font-weight:bold;
+cursor:pointer;
+background:linear-gradient(90deg,#00c6ff,#0072ff);
+color:white;
+transition:0.3s;
+}
+
+button:hover{
+transform:scale(1.05);
+}
+
+#codeBox{
+margin-top:25px;
+background:#111;
+padding:18px;
+border-radius:14px;
+font-size:18px;
 color:#00ffcc;
 word-break:break-all;
-margin-top:15px;
-font-size:18px;
-}
-@keyframes move{
-0%{background-position:0%}
-100%{background-position:300%}
+min-height:60px;
+display:flex;
+justify-content:center;
+align-items:center;
 }
 </style>
 </head>
 <body>
 
 <div class="panel">
-<h1>👑 XAT ORDER SYSTEM</h1>
 
+<h1>👑 XAT COLOR SYSTEM</h1>
+
+<label>Your Name</label>
 <input type="text" id="username" value="Ramy">
 
-<br>
-Glow:
+<label>Glow Color</label>
 <input type="color" id="glow" value="#000000">
 
-Name Color:
-<input type="color" id="namecolor" value="#ffffff">
-
+<label>Choose 5 Gradient Colors</label>
 <div class="colors">
 <input type="color" value="#7B7CA3">
 <input type="color" value="#999acb">
@@ -90,49 +151,62 @@ Name Color:
 <input type="color" value="#fcfcf0">
 </div>
 
-<select id="order">
-<option value="wavefirst">Glow > NameColor > Wave > Grad</option>
-<option value="gradfirst">Glow > NameColor > Grad > Wave</option>
-</select>
+<button onclick="generate()">🚀 Show Result</button>
+<button onclick="copyCode()">📋 Copy Code</button>
 
-<br>
-<button onclick="generate()">🚀 Generate</button>
+<div class="preview">
+<div id="namePreview">Ramy</div>
+</div>
 
-<div id="name">Ramy</div>
-<div id="code"></div>
+<div id="codeBox">
+glow#000000#grad#r50#o1#7B7CA3#999acb#999acb#B7B8F2#fcfcf0
+</div>
 
 </div>
 
 <script>
-const colors=document.querySelectorAll('.colors input');
+const nameInput=document.getElementById("username");
+const glowInput=document.getElementById("glow");
+const colorInputs=document.querySelectorAll(".colors input");
+const preview=document.getElementById("namePreview");
+const codeBox=document.getElementById("codeBox");
 
 function generate(){
-let user=document.getElementById("username").value||"Ramy";
-let glow=document.getElementById("glow").value.replace("#","");
-let namecolor=document.getElementById("namecolor").value.replace("#","");
-let vals=[...colors].map(c=>c.value.replace("#",""));
-let order=document.getElementById("order").value;
+let username=nameInput.value || "Ramy";
+let glow=glowInput.value.replace("#","");
+let colors=[...colorInputs].map(c=>c.value.replace("#",""));
 
-let gradPart=`namegrad#r50#o1#${vals.join("#")}`;
-let code="";
+preview.textContent=username;
 
-if(order==="wavefirst"){
-code=`glow#${glow}#namecolor#${namecolor}#namewave#${gradPart}`;
-}else{
-code=`glow#${glow}#namecolor#${namecolor}#${gradPart}#namewave`;
+preview.style.background=`linear-gradient(90deg,#${colors.join(",#")})`;
+
+preview.style.textShadow=`
+0 0 5px #${glow},
+0 0 10px #${glow},
+0 0 20px #${glow},
+0 0 35px #${glow}
+`;
+
+let finalCode=`glow#${glow}#grad#r50#o1#${colors.join("#")}`;
+codeBox.textContent=finalCode;
 }
 
-document.getElementById("code").innerText=code;
-
-let show=document.getElementById("name");
-show.innerText=user;
-show.style.background=`linear-gradient(90deg,#${vals.join(",#")})`;
-show.style.textShadow=`0 0 8px #${glow},0 0 18px #${glow}`;
+function copyCode(){
+navigator.clipboard.writeText(codeBox.textContent);
+alert("Copied 👑");
 }
 
-document.getElementById("username").addEventListener("keypress",e=>{
-if(e.key==="Enter") generate();
+nameInput.addEventListener("keypress",function(e){
+if(e.key==="Enter"){
+generate();
+}
 });
+
+colorInputs.forEach(input=>{
+input.addEventListener("input",generate);
+});
+
+glowInput.addEventListener("input",generate);
 
 generate();
 </script>
