@@ -3,125 +3,102 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>XAT Name Color Engine</title>
+<title>XAT Name Effects</title>
 
 <style>
 body{
 margin:0;
-padding:0;
-font-family:Arial;
-background:linear-gradient(135deg,#0f0f0f,#1c1c1c);
+height:100vh;
 display:flex;
 justify-content:center;
 align-items:center;
-height:100vh;
-color:white;
+background:#111;
+font-family:Arial;
 }
 
-.panel{
-width:700px;
+.box{
+width:750px;
 padding:30px;
 border-radius:25px;
-background:rgba(255,255,255,0.06);
-backdrop-filter:blur(18px);
-box-shadow:0 0 40px rgba(0,0,0,0.6);
+background:rgba(255,255,255,0.05);
+backdrop-filter:blur(15px);
 text-align:center;
+box-shadow:0 0 35px rgba(0,0,0,.5);
+color:white;
 }
 
 h1{
 margin-bottom:20px;
-font-size:32px;
 }
 
-input{
+input[type=text]{
 width:90%;
-padding:12px;
-margin:8px;
+padding:14px;
 border:none;
 border-radius:12px;
-font-size:16px;
-outline:none;
+font-size:18px;
 text-align:center;
+margin-bottom:15px;
 }
 
 .colors{
 display:grid;
 grid-template-columns:repeat(5,1fr);
 gap:10px;
-margin-top:15px;
+margin-bottom:15px;
 }
 
 .colors input{
 height:55px;
-padding:0;
+border:none;
 cursor:pointer;
 }
 
-.previewBox{
-margin-top:35px;
-padding:25px;
+.preview{
+margin-top:25px;
+padding:30px;
+background:#000;
 border-radius:20px;
-background:#111;
-box-shadow:inset 0 0 20px rgba(255,255,255,0.08);
 }
 
-#previewName{
-font-size:52px;
-font-weight:bold;
-background-size:400% 400%;
+#name{
+font-size:60px;
+font-weight:900;
+display:inline-block;
+background-size:300% auto;
 -webkit-background-clip:text;
 -webkit-text-fill-color:transparent;
-display:inline-block;
-animation:gradientMove 4s ease infinite,waveMove 1.2s ease-in-out infinite;
+background-clip:text;
+color:transparent;
+animation:move 3s linear infinite,wave 1s ease-in-out infinite;
 }
 
 .output{
-margin-top:25px;
-background:#000;
-color:#00ffcc;
-font-size:16px;
+margin-top:20px;
 padding:15px;
+background:#111;
 border-radius:12px;
+color:#00ffcc;
 word-break:break-all;
 }
 
-button{
-margin-top:20px;
-padding:14px 30px;
-font-size:16px;
-border:none;
-border-radius:14px;
-cursor:pointer;
-background:linear-gradient(90deg,#00c6ff,#0072ff);
-color:white;
-font-weight:bold;
+@keyframes move{
+0%{background-position:0%}
+100%{background-position:300%}
 }
 
-button:hover{
-transform:scale(1.05);
-}
-
-@keyframes gradientMove{
-0%{background-position:0% 50%;}
-50%{background-position:100% 50%;}
-100%{background-position:0% 50%;}
-}
-
-@keyframes waveMove{
-0%{transform:translateY(0px);}
-25%{transform:translateY(-6px);}
-50%{transform:translateY(0px);}
-75%{transform:translateY(6px);}
-100%{transform:translateY(0px);}
+@keyframes wave{
+0%,100%{transform:translateY(0)}
+50%{transform:translateY(-8px)}
 }
 </style>
 </head>
 <body>
 
-<div class="panel">
-<h1>👑 XAT COLOR ENGINE</h1>
+<div class="box">
+<h1>👑 XAT NAME ENGINE</h1>
 
-<input type="text" id="nameInput" placeholder="Enter Name" value="Ramy">
+<input type="text" id="username" value="Ramy">
 
 <div class="colors">
 <input type="color" value="#7B7CA3">
@@ -131,48 +108,35 @@ transform:scale(1.05);
 <input type="color" value="#fcfcf0">
 </div>
 
-<input type="color" id="glowColor" value="#000000">
-
-<div class="previewBox">
-<div id="previewName">Ramy</div>
+<div class="preview">
+<div id="name">Ramy</div>
 </div>
 
-<div class="output" id="codeOutput"></div>
-
-<button onclick="copyCode()">📋 Copy Code</button>
+<div class="output" id="code"></div>
 </div>
 
 <script>
-const nameInput=document.getElementById("nameInput");
-const preview=document.getElementById("previewName");
-const glow=document.getElementById("glowColor");
-const colorInputs=document.querySelectorAll(".colors input");
-const output=document.getElementById("codeOutput");
+const nameInput=document.getElementById("username");
+const nameText=document.getElementById("name");
+const code=document.getElementById("code");
+const colors=document.querySelectorAll(".colors input");
 
-function updatePreview(){
-let name=nameInput.value || "Ramy";
-preview.textContent=name;
+function update(){
+let txt=nameInput.value || "Ramy";
+nameText.innerText=txt;
 
-let colors=[...colorInputs].map(c=>c.value);
-let gradient=`linear-gradient(90deg,${colors.join(",")})`;
+let vals=[...colors].map(x=>x.value);
+let grad=`linear-gradient(90deg,${vals.join(",")})`;
 
-preview.style.background=gradient;
-preview.style.textShadow=`0 0 8px ${glow.value},0 0 15px ${glow.value},0 0 25px ${glow.value}`;
+nameText.style.background=grad;
 
-let code=`glow#${glow.value.replace("#","")}#grad#r50#o1#${colors.map(c=>c.replace("#","")).join("#")}#namewave`;
-output.textContent=code;
+code.innerText=`grad#r50#o1#${vals.map(v=>v.replace("#","")).join("#")}#namewave`;
 }
 
-function copyCode(){
-navigator.clipboard.writeText(output.textContent);
-alert("Copied 👑");
-}
+nameInput.addEventListener("input",update);
+colors.forEach(c=>c.addEventListener("input",update));
 
-nameInput.addEventListener("input",updatePreview);
-glow.addEventListener("input",updatePreview);
-colorInputs.forEach(c=>c.addEventListener("input",updatePreview));
-
-updatePreview();
+update();
 </script>
 
 </body>
