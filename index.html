@@ -62,14 +62,19 @@ async function fakeAPI(){const box=document.getElementById('apiBox');box.textCon
 </script>
 <div style='position:fixed;top:14px;left:14px;padding:10px 14px;border-radius:14px;background:rgba(0,0,0,.45);backdrop-filter:blur(10px);font-size:14px'><span id='liveStatus'>Checking...</span></div>
 <div id='apiBox' style='position:fixed;bottom:14px;left:14px;padding:10px 14px;border-radius:14px;background:rgba(0,0,0,.45);backdrop-filter:blur(10px);font-size:14px'>API Ready</div>
-<div id="secretPanel" style="position:fixed;bottom:20px;right:20px;background:rgba(0,0,0,.75);padding:14px;border-radius:16px;color:#fff;z-index:9999;max-width:320px;backdrop-filter:blur(8px)">
-<h3 style="margin:0 0 10px 0;">🎨 التحكم والخصوصية</h3>
-<label>لون رئيسي: <input type="color" id="mainColor" value="#6d28d9"></label><br><br>
-<label>لون ثانوي: <input type="color" id="secondColor" value="#06b6d4"></label><br><br>
-<label>كلمة مرور الملاحظات: <input type="password" id="vaultPass" placeholder="اكتب باسورد"></label><br><br>
-<textarea id="vaultText" placeholder="اكتب حاجاتك المهمة هنا" style="width:100%;height:90px;border-radius:10px;padding:8px;"></textarea><br><br>
-<button onclick="applyTheme()">تطبيق الألوان</button>
-<button onclick="saveVault()">حفظ</button>
+<div id="secretPanel" style="position:fixed;bottom:20px;right:20px;background:linear-gradient(135deg,rgba(20,20,30,.95),rgba(60,20,80,.85));padding:16px;border-radius:18px;color:#fff;z-index:9999;max-width:340px;backdrop-filter:blur(14px);box-shadow:0 0 25px rgba(0,255,255,.15),0 0 40px rgba(255,0,255,.08)">
+<h3 style="margin:0 0 12px 0;font-size:16px">🎨 لوحة الألوان المتقدمة</h3>
+
+<label>🌈 اللون الأساسي:</label><br>
+<input type="color" id="mainColor" value="#6d28d9" style="width:100%;height:40px;border:none;border-radius:10px"><br><br>
+
+<label>⚡ اللون الثانوي:</label><br>
+<input type="color" id="secondColor" value="#06b6d4" style="width:100%;height:40px;border:none;border-radius:10px"><br><br>
+
+<label>✨ تدرج مباشر (Preview):</label>
+<div id="gradPreview" style="height:40px;border-radius:10px;background:linear-gradient(90deg,#6d28d9,#06b6d4);margin-top:6px"></div><br>
+
+<button onclick="applyTheme()" style="width:100%;padding:10px;border:none;border-radius:10px;background:#00e5ff;color:#000;font-weight:bold">تطبيق الألوان 🔥</button>
 </div>
 <script>
 function applyTheme(){document.documentElement.style.setProperty('--primary',document.getElementById('mainColor').value);document.documentElement.style.setProperty('--secondary',document.getElementById('secondColor').value);}
