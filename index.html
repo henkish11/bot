@@ -1,135 +1,171 @@
-<!-- XAT Profile Project - Integrated Namegrad Generator Module -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>XAT Profile + Namegrad System</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>XAT Ultra God Profile System</title>
 
 <style>
 body{
     margin:0;
-    font-family:Arial, sans-serif;
-    background:#0f0f1a;
-    color:#fff;
+    font-family:Arial, Helvetica, sans-serif;
+    background:#0b0b0f;
+    color:white;
 }
-
-.profile{
+.header{
     padding:20px;
+    text-align:center;
+    background:linear-gradient(90deg,#000,#111,#000);
+    border-bottom:1px solid #222;
 }
-
-.card{
-    background:rgba(255,255,255,0.05);
-    border:1px solid rgba(255,255,255,0.1);
+.profile-card{
+    max-width:900px;
+    margin:20px auto;
+    padding:20px;
+    background:#12121a;
     border-radius:12px;
-    padding:15px;
-    margin-bottom:20px;
+    box-shadow:0 0 30px rgba(0,0,0,0.6);
 }
-
-/* ===== NAMEGRAD SYSTEM ===== */
-.name-container{
-    position:relative;
-    display:inline-block;
-    font-size:28px;
-    font-weight:bold;
+.avatar{
+    width:120px;
+    height:120px;
+    border-radius:50%;
+    border:3px solid #444;
 }
-
-.layer1{
-    position:absolute;
-    top:0;
-    left:0;
-    width:100%;
-    background-clip:text;
-    -webkit-background-clip:text;
-    -webkit-text-fill-color:transparent;
+.tabs{
+    display:flex;
+    justify-content:center;
+    margin-top:20px;
+    gap:10px;
 }
-
-.layer2{
-    position:relative;
-    text-shadow:0 0 8px #00f;
+.tab{
+    padding:10px 15px;
+    background:#1a1a25;
+    border-radius:8px;
+    cursor:pointer;
 }
-
-.controls input, .controls select{
-    padding:6px;
+.tab.active{
+    background:#2b2b40;
+    box-shadow:0 0 10px #00f;
+}
+.section{
+    display:none;
+    margin-top:20px;
+}
+.section.active{
+    display:block;
+}
+input, select{
+    padding:8px;
     margin:5px;
     border-radius:6px;
     border:none;
 }
-
 button{
-    padding:8px 12px;
+    padding:10px 15px;
+    background:#0066ff;
     border:none;
+    color:white;
     border-radius:8px;
     cursor:pointer;
-    background:#4f46e5;
-    color:white;
 }
-
+button:hover{
+    background:#0051cc;
+}
 .preview{
     margin-top:15px;
-    padding:10px;
-    background:rgba(255,255,255,0.05);
-    border-radius:10px;
+    padding:15px;
+    background:#000;
+    border-radius:8px;
+    font-weight:bold;
+}
+.glow{
+    text-shadow:0 0 5px #00f,0 0 10px #00f;
+}
+.gradient-text{
+    background:linear-gradient(45deg,#ff0000,#00ffcc,#0066ff);
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
 }
 </style>
+
 </head>
 <body>
 
-<div class="profile">
+<div class="header">
+    <h1>👑 XAT ULTRA GOD SYSTEM</h1>
+    <p>Full Profile + Namegrad Engine</p>
+</div>
 
-    <div class="card">
-        <h2>XAT Profile System</h2>
-        <p>User: <b>Ramy</b> | ID: 106080 | Username: iegypt</p>
+<div class="profile-card">
+
+    <img class="avatar" src="https://xatimg.com/image/RKP5IrStF45l.png">
+
+    <h2 class="gradient-text">ramy</h2>
+    <p>ID: 106080 | User: iegypt</p>
+
+    <div class="tabs">
+        <div class="tab active" onclick="showTab('info')">Info</div>
+        <div class="tab" onclick="showTab('namegrad')">Namegrad</div>
+        <div class="tab" onclick="showTab('powers')">Powers</div>
     </div>
 
-    <!-- NAMEGRAD MODULE -->
-    <div class="card">
-        <h3>Namegrad Generator (Integrated)</h3>
+    <!-- INFO -->
+    <div id="info" class="section active">
+        <h3>Profile Info</h3>
+        <p>Status: 👑 Ultra God Mode Active</p>
+    </div>
 
-        <div class="controls">
-            <input id="text" type="text" value="Ramy" />
-            <input id="glow" type="text" value="0000ff" />
-            <select id="colors">
-                <option value="2">2 Colors</option>
-                <option value="3">3 Colors</option>
-                <option value="4">4 Colors</option>
-            </select>
-            <input id="angle" type="number" value="-45" />
-            <button onclick="generate()">Generate</button>
-        </div>
+    <!-- NAMEGRAD -->
+    <div id="namegrad" class="section">
+        <h3>Namegrad Generator</h3>
 
-        <div class="preview">
-            <div class="name-container" id="preview">
-                <div class="layer1" id="layer1">Ramy</div>
-                <div class="layer2" id="layer2">Ramy</div>
-            </div>
-        </div>
+        <input id="text" value="FEXBots">
+        <input id="c1" type="color" value="#000000">
+        <input id="c2" type="color" value="#ffffff">
+        <input id="glow" type="color" value="#0000ff">
 
-        <p>Generated Code:</p>
-        <input id="code" style="width:100%" readonly />
+        <button onclick="generate()">Generate</button>
+
+        <div class="preview" id="preview">Preview Here</div>
+        <input id="output" style="width:100%" readonly>
+    </div>
+
+    <!-- POWERS -->
+    <div id="powers" class="section">
+        <h3>Ultra Powers</h3>
+        <ul>
+            <li>⚡ Name Gradient Engine</li>
+            <li>🔥 Glow Text System</li>
+            <li>🌌 Animated Namewave (Lite)</li>
+        </ul>
     </div>
 
 </div>
 
 <script>
-function generate(){
-    let text = document.getElementById('text').value;
-    let glow = document.getElementById('glow').value;
-    let angle = document.getElementById('angle').value;
-
-    document.getElementById('layer1').innerText = text;
-    document.getElementById('layer2').innerText = text;
-
-    let gradient = `repeating-linear-gradient(${angle}deg, #ffffff, #000000)`;
-
-    document.getElementById('layer1').style.backgroundImage = gradient;
-    document.getElementById('layer2').style.textShadow = `0 0 10px #${glow}`;
-
-    let code = `(glow#${glow}#grad#r${angle}#------#ffffff)`;
-    document.getElementById('code').value = code;
+function showTab(id){
+    document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+    document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+    event.target.classList.add('active');
 }
 
-generate();
+function generate(){
+    let text = document.getElementById('text').value;
+    let c1 = document.getElementById('c1').value;
+    let c2 = document.getElementById('c2').value;
+    let glow = document.getElementById('glow').value;
+
+    let gradient = `linear-gradient(45deg, ${c1}, ${c2})`;
+
+    let html = `<span style="background:${gradient};-webkit-background-clip:text;-webkit-text-fill-color:transparent;">${text}</span>`;
+
+    document.getElementById('preview').innerHTML = html;
+
+    let code = `(glow#${glow.replace('#','')}#grad#r45#${c1.replace('#','')}#${c2.replace('#','')})`;
+    document.getElementById('output').value = code;
+}
 </script>
 
 </body>
