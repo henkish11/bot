@@ -1,151 +1,135 @@
+<!-- XAT Profile Project - Integrated Namegrad Generator Module -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>GOD ENGINE V3</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>XAT Profile + Namegrad System</title>
 
 <style>
 body{
-  background:#0a0a0a;
-  color:#fff;
-  font-family:Arial;
-  text-align:center;
-  padding:20px;
+    margin:0;
+    font-family:Arial, sans-serif;
+    background:#0f0f1a;
+    color:#fff;
 }
 
-.container{
-  max-width:950px;
-  margin:auto;
+.profile{
+    padding:20px;
 }
 
-input,button{
-  width:95%;
-  padding:10px;
-  margin:5px;
-  border-radius:10px;
-  border:none;
+.card{
+    background:rgba(255,255,255,0.05);
+    border:1px solid rgba(255,255,255,0.1);
+    border-radius:12px;
+    padding:15px;
+    margin-bottom:20px;
+}
+
+/* ===== NAMEGRAD SYSTEM ===== */
+.name-container{
+    position:relative;
+    display:inline-block;
+    font-size:28px;
+    font-weight:bold;
+}
+
+.layer1{
+    position:absolute;
+    top:0;
+    left:0;
+    width:100%;
+    background-clip:text;
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
+}
+
+.layer2{
+    position:relative;
+    text-shadow:0 0 8px #00f;
+}
+
+.controls input, .controls select{
+    padding:6px;
+    margin:5px;
+    border-radius:6px;
+    border:none;
 }
 
 button{
-  background:#6c5ce7;
-  color:#fff;
-  font-weight:bold;
-  cursor:pointer;
+    padding:8px 12px;
+    border:none;
+    border-radius:8px;
+    cursor:pointer;
+    background:#4f46e5;
+    color:white;
 }
 
-#preview{
-  font-size:65px;
-  margin:25px 0;
-  font-weight:bold;
-}
-
-/* 🌊 Wave */
-.wave span{
-  display:inline-block;
-  animation:wave 1.2s infinite ease-in-out;
-}
-
-@keyframes wave{
-  0%,100%{transform:translateY(0);}
-  50%{transform:translateY(-12px);}
-}
-
-/* 🔥 Glow effect */
-.glow{
-  text-shadow:0 0 10px currentColor,0 0 20px currentColor;
+.preview{
+    margin-top:15px;
+    padding:10px;
+    background:rgba(255,255,255,0.05);
+    border-radius:10px;
 }
 </style>
 </head>
-
 <body>
 
-<div class="container">
+<div class="profile">
 
-<h2>👑 GOD ENGINE V3</h2>
+    <div class="card">
+        <h2>XAT Profile System</h2>
+        <p>User: <b>Ramy</b> | ID: 106080 | Username: iegypt</p>
+    </div>
 
-<input id="name" placeholder="Enter Name">
+    <!-- NAMEGRAD MODULE -->
+    <div class="card">
+        <h3>Namegrad Generator (Integrated)</h3>
 
-<input id="glow" placeholder="Glow Color (#000000)">
+        <div class="controls">
+            <input id="text" type="text" value="Ramy" />
+            <input id="glow" type="text" value="0000ff" />
+            <select id="colors">
+                <option value="2">2 Colors</option>
+                <option value="3">3 Colors</option>
+                <option value="4">4 Colors</option>
+            </select>
+            <input id="angle" type="number" value="-45" />
+            <button onclick="generate()">Generate</button>
+        </div>
 
-<button onclick="autoColors()">🧠 AUTO AI COLORS</button>
+        <div class="preview">
+            <div class="name-container" id="preview">
+                <div class="layer1" id="layer1">Ramy</div>
+                <div class="layer2" id="layer2">Ramy</div>
+            </div>
+        </div>
 
-<input id="c1">
-<input id="c2">
-<input id="c3">
-<input id="c4">
-<input id="c5">
-
-<button onclick="preview()">⚡ LIVE PREVIEW</button>
-<button onclick="generate()">💎 GENERATE XAT CODE</button>
-<button onclick="exportCode()">📦 EXPORT FILE</button>
-
-<div id="preview"></div>
-
-<textarea id="output" rows="4" style="width:95%;margin-top:10px;"></textarea>
+        <p>Generated Code:</p>
+        <input id="code" style="width:100%" readonly />
+    </div>
 
 </div>
 
 <script>
-
-function cols(){
-  return [v("c1"),v("c2"),v("c3"),v("c4"),v("c5")];
-}
-
-function v(id){
-  return document.getElementById(id).value || "#ffffff";
-}
-
-/* 🧠 AI COLOR GENERATOR */
-function autoColors(){
-  let base = ["#7B7CA3","#999acb","#B7B8F2","#fcfcf0","#5f6caf"];
-
-  document.getElementById("c1").value = base[0];
-  document.getElementById("c2").value = base[1];
-  document.getElementById("c3").value = base[2];
-  document.getElementById("c4").value = base[3];
-  document.getElementById("c5").value = base[4];
-}
-
-function preview(){
-  let name = document.getElementById("name").value;
-  let box = document.getElementById("preview");
-  box.innerHTML = "";
-
-  let c = cols();
-
-  for(let i=0;i<name.length;i++){
-    let s = document.createElement("span");
-    s.textContent = name[i];
-    s.style.color = c[i % c.length];
-    box.appendChild(s);
-  }
-
-  box.classList.add("wave");
-}
-
 function generate(){
-  let glow = document.getElementById("glow").value || "#000000";
-  let c = cols();
+    let text = document.getElementById('text').value;
+    let glow = document.getElementById('glow').value;
+    let angle = document.getElementById('angle').value;
 
-  let code =
-`glow#${glow}#grad#r50#o1#${c.join("#")}`;
+    document.getElementById('layer1').innerText = text;
+    document.getElementById('layer2').innerText = text;
 
-  document.getElementById("output").value = code;
+    let gradient = `repeating-linear-gradient(${angle}deg, #ffffff, #000000)`;
+
+    document.getElementById('layer1').style.backgroundImage = gradient;
+    document.getElementById('layer2').style.textShadow = `0 0 10px #${glow}`;
+
+    let code = `(glow#${glow}#grad#r${angle}#------#ffffff)`;
+    document.getElementById('code').value = code;
 }
 
-/* 📦 EXPORT SYSTEM */
-function exportCode(){
-  let data = document.getElementById("output").value;
-
-  let blob = new Blob([data],{type:"text/plain"});
-  let url = URL.createObjectURL(blob);
-
-  let a = document.createElement("a");
-  a.href = url;
-  a.download = "xat_god_export.txt";
-  a.click();
-}
-
+generate();
 </script>
 
 </body>
