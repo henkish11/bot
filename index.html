@@ -1,161 +1,63 @@
 <!DOCTYPE html>
-<html lang="ar">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>iegypt Spotify Arabic</title>
-
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>iegypt Full Profile</title>
 <style>
-body{
-margin:0;
-font-family:Segoe UI,Arial;
-background:url('https://xatimg.com/image/PKE63yJ4Y6Q9.jpg') center/cover fixed;
-color:#fff;
-}
-
-.overlay{
-position:fixed;
-inset:0;
-background:rgba(0,0,0,0.6);
-}
-
-.player{
-position:relative;
-max-width:500px;
-margin:80px auto;
-background:rgba(0,0,0,0.6);
-border:1px solid #0af;
-border-radius:20px;
-padding:20px;
-box-shadow:0 0 30px #0af;
-}
-
-h1{
-text-align:center;
-color:#0af;
-}
-
-.song{
-padding:10px;
-margin:8px 0;
-background:rgba(255,255,255,0.1);
-border-radius:10px;
-cursor:pointer;
-transition:0.3s;
-}
-
-.song:hover{
-background:#0af;
-}
-
-.controls{
-display:flex;
-justify-content:center;
-gap:10px;
-margin-top:15px;
-}
-
-button{
-padding:10px 15px;
-border:none;
-border-radius:10px;
-cursor:pointer;
-background:#0af;
-color:#fff;
-}
-
-.info{
-text-align:center;
-margin-top:10px;
-color:#ffd700;
-}
+body{margin:0;font-family:Segoe UI,Arial,sans-serif;background:url('https://xatimg.com/image/PKE63yJ4Y6Q9.jpg') center/cover fixed;color:#fff;overflow:hidden}*{box-sizing:border-box}.overlay{position:fixed;inset:0;background:rgba(0,0,0,.55)}.intro,.app{position:relative;z-index:2}.intro{height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center}.avatar{width:220px;height:220px;border-radius:24px;object-fit:cover;border:4px solid #fff;box-shadow:0 0 30px #09f}.rainbow{background:linear-gradient(90deg,#09f,#ffd700,#f00,#fff,#09f);background-size:300% auto;-webkit-background-clip:text;color:transparent;animation:move 5s linear infinite}.btn{padding:12px 22px;border:none;border-radius:999px;background:#0048ff;color:#fff;cursor:pointer;margin:6px}.app{display:none;height:100vh}.side{width:260px;background:rgba(0,0,0,.45);padding:15px;overflow:auto}.content{flex:1;padding:20px;overflow:auto}.wrap{display:flex;height:100%}.card{background:rgba(255,255,255,.08);padding:18px;border:1px solid rgba(255,255,255,.15);border-radius:16px;margin-bottom:16px}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:15px}.link{display:block;text-decoration:none;color:#fff;padding:12px;border-radius:12px;background:rgba(255,255,255,.08);margin-bottom:10px}.gallery img{width:100%;border-radius:14px;height:180px;object-fit:cover}.music-box{position:fixed;bottom:15px;right:15px;z-index:5;background:rgba(0,0,0,.5);padding:12px;border-radius:12px;border:1px solid rgba(255,255,255,.2)}.hide{display:none}@keyframes move{to{background-position:300% center}}
 </style>
-
 </head>
 <body>
+<div class='overlay'></div>
 
-<div class="overlay"></div>
+<section class='intro' id='intro'>
+<img class='avatar' src='https://xatimg.com/image/RKP5IrStF45l.png'>
+<h1 class='rainbow'>iegypt</h1><p>ID (106080)</p>
+<button class='btn' onclick='enterSite()'>Enter</button>
+</section>
 
-<div class="player">
+<section class='app' id='app'>
+<div class='wrap'>
+<aside class='side'>
+<h2 class='rainbow'>MENU</h2>
+<a class='link' href='#home'>Home</a>
+<a class='link' href='https://xat.com/TRADE#' target='_blank'>TRADE</a>
+<a class='link' href='https://xat.com/2ra' target='_blank'>2ra</a>
+<a class='link' href='https://xat.com/cambio#' target='_blank'>Cambio</a>
+</aside>
 
-<h1>🎧 Spotify Arabic - iegypt</h1>
-
-<div id="list"></div>
-
-<div class="controls">
-<button onclick="prev()">⏮</button>
-<button onclick="toggle()">▶ / ⏸</button>
-<button onclick="next()">⏭</button>
+<main class='content'>
+<div class='card' id='home'>
+<h2 class='rainbow'>Welcome</h2>
+<p>Full profile restored (stable version without broken music player).</p>
 </div>
 
-<div class="info" id="now">لا يوجد تشغيل</div>
+<div class='card'>
+<h2 class='rainbow'>Arabic Music Section</h2>
+<p>Music system replaced with stable YouTube embed.</p>
 
-<audio id="audio"></audio>
+<iframe width="100%" height="315" src="https://www.youtube.com/embed/5qap5aO4i9A" frameborder="0" allowfullscreen></iframe>
+</div>
 
+<div class='grid gallery'>
+<div class='card'><img src='https://images.unsplash.com/photo-1542751371-adc38448a05e?q=80&w=1200&auto=format&fit=crop'></div>
+<div class='card'><img src='https://images.unsplash.com/photo-1493711662062-fa541adb3fc8?q=80&w=1200&auto=format&fit=crop'></div>
+<div class='card'><img src='https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=1200&auto=format&fit=crop'></div>
+</div>
+</main>
+</div>
+</section>
+
+<div class='music-box'>
+🎵 Music system stable (YouTube embed active)
 </div>
 
 <script>
-
-const playlist = [
-{
-name:"محمد فؤاد - الحب الحقيقي",
-url:"https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"
-},
-{
-name:"محمد فؤاد - حبيبي يا",
-url:"https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3"
-},
-{
-name:"محمد فؤاد - خدني الحنين",
-url:"https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3"
-},
-{
-name:"محمد فؤاد - لو على قلبي",
-url:"https://www.soundhelix.com/examples/mp3/SoundHelix-Song-4.mp3"
-},
-{
-name:"محمد فؤاد - ساعات بشتاق",
-url:"https://www.soundhelix.com/examples/mp3/SoundHelix-Song-5.mp3"
+function enterSite(){
+ document.getElementById('intro').style.display='none';
+ document.getElementById('app').style.display='block';
 }
-];
-
-let index = 0;
-const audio = document.getElementById("audio");
-
-function load(i){
-audio.src = playlist[i].url;
-audio.play();
-document.getElementById("now").innerText = playlist[i].name;
-}
-
-function toggle(){
-if(audio.paused){
-load(index);
-}else{
-audio.pause();
-}
-}
-
-function next(){
-index = (index+1)%playlist.length;
-load(index);
-}
-
-function prev(){
-index = (index-1+playlist.length)%playlist.length;
-load(index);
-}
-
-const list = document.getElementById("list");
-
-playlist.forEach((s,i)=>{
-let div = document.createElement("div");
-div.className="song";
-div.innerText = s.name;
-div.onclick = ()=>{index=i;load(i);};
-list.appendChild(div);
-});
-
 </script>
 
 </body>
