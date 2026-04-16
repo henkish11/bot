@@ -1,157 +1,42 @@
 <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>XAT Namegrad Generator - GOD MODE</title>
-
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>iegypt Full Profile</title>
 <style>
-body{
-font-family:Arial;
-background:#111;
-margin:0;
-padding:20px;
-color:#fff;
-}
-
-.container{
-max-width:900px;
-margin:auto;
-background:#1b1b1b;
-padding:20px;
-border-radius:12px;
-box-shadow:0 0 20px rgba(0,255,255,0.2);
-}
-
-h1{
-text-align:center;
-color:#0ff;
-text-shadow:0 0 10px #0ff;
-}
-
-table{
-width:100%;
-border-collapse:collapse;
-margin-top:10px;
-}
-
-td{
-padding:10px;
-border:1px solid #333;
-}
-
-input{
-width:100%;
-padding:8px;
-background:#000;
-border:1px solid #0ff;
-color:#0ff;
-outline:none;
-}
-
-button{
-width:100%;
-margin-top:10px;
-padding:10px;
-background:#0ff;
-border:none;
-cursor:pointer;
-font-weight:bold;
-}
-
-#output{
-margin-top:20px;
-padding:15px;
-background:#000;
-border:1px solid #0ff;
-white-space:pre-wrap;
-}
-
-.name{
-margin-top:20px;
-text-align:center;
-font-size:28px;
-font-weight:bold;
-position:relative;
-}
-
-.layer1{
-background-clip:text;
--webkit-background-clip:text;
-color:transparent;
-position:absolute;
-width:100%;
-}
-
-.layer2{
-text-shadow:0 0 10px #00f,0 0 20px #00f;
-}
+body{margin:0;font-family:Segoe UI,Arial,sans-serif;background:url('https://images.unsplash.com/photo-1511512578047-dfb367046420?q=80&w=1600&auto=format&fit=crop') center/cover fixed;color:#fff;overflow:hidden}*{box-sizing:border-box}.overlay{position:fixed;inset:0;background:rgba(0,0,0,.55)}.intro,.app{position:relative;z-index:2}.intro{height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center}.avatar{width:220px;height:220px;border-radius:24px;object-fit:cover;border:4px solid #fff;box-shadow:0 0 30px #09f}.rainbow{background:linear-gradient(90deg,#09f,#ffd700,#f00,#fff,#09f);background-size:300% auto;-webkit-background-clip:text;color:transparent;animation:move 5s linear infinite}.btn{padding:12px 22px;border:none;border-radius:999px;background:#0048ff;color:#fff;cursor:pointer;margin:6px}.app{display:none;height:100vh}.side{width:260px;background:rgba(0,0,0,.45);padding:15px;overflow:auto}.content{flex:1;padding:20px;overflow:auto}.wrap{display:flex;height:100%}.card{background:rgba(255,255,255,.08);padding:18px;border:1px solid rgba(255,255,255,.15);border-radius:16px;margin-bottom:16px}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:15px}.link{display:block;text-decoration:none;color:#fff;padding:12px;border-radius:12px;background:rgba(255,255,255,.08);margin-bottom:10px}.gallery img{width:100%;border-radius:14px;height:180px;object-fit:cover}.music{position:fixed;bottom:15px;right:15px;z-index:5}.music button{padding:10px 14px}.hide{display:none}@keyframes move{to{background-position:300% center}}
 </style>
 </head>
-
 <body>
-
-<div class="container">
-
-<h1>👑 XAT NAMEGRAD GOD SYSTEM</h1>
-
-<table>
-<tr>
-<td>Text</td>
-<td><input id="text" value="FEXBots"></td>
-</tr>
-
-<tr>
-<td>Color 1</td>
-<td><input id="c1" value="000000"></td>
-</tr>
-
-<tr>
-<td>Color 2</td>
-<td><input id="c2" value="ffffff"></td>
-</tr>
-
-<tr>
-<td>Rotation</td>
-<td><input id="rot" value="-45"></td>
-</tr>
-</table>
-
-<button onclick="generate()">⚡ GENERATE NAMEGRAD</button>
-
-<div id="output"></div>
-
-<div id="preview"></div>
-
+<div class='overlay'></div>
+<section class='intro' id='intro'>
+<img class='avatar' src='https://xatimg.com/image/RKP5IrStF45l.png'>
+<h1 class='rainbow'>iegypt</h1><p>ID (106080)</p>
+<button class='btn' onclick='enterSite()'>Enter</button>
+</section>
+<section class='app' id='app'>
+<div class='wrap'>
+<aside class='side'>
+<h2 class='rainbow'>MENU</h2>
+<a class='link' href='#home'>Home</a>
+<a class='link' href='https://xat.com/TRADE#' target='_blank'>TRADE</a>
+<a class='link' href='https://xat.com/2ra' target='_blank'>2ra</a>
+<a class='link' href='https://xat.com/cambio#' target='_blank'>Cambio</a>
+</aside>
+<main class='content'>
+<div class='card' id='home'><h2 class='rainbow'>Welcome</h2><p>Official full template for iegypt with custom colors, links and style.</p></div>
+<div class='grid gallery'>
+<div class='card'><img src='https://images.unsplash.com/photo-1542751371-adc38448a05e?q=80&w=1200&auto=format&fit=crop'></div>
+<div class='card'><img src='https://images.unsplash.com/photo-1493711662062-fa541adb3fc8?q=80&w=1200&auto=format&fit=crop'></div>
+<div class='card'><img src='https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=1200&auto=format&fit=crop'></div>
 </div>
-
+</main></div></section>
+<div class='music'><button class='btn' onclick='toggleAudio()'>Play / Pause</button></div>
+<audio id='audio' loop src='https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3'></audio>
 <script>
-function generate(){
-
-let text=document.getElementById("text").value;
-let c1=document.getElementById("c1").value;
-let c2=document.getElementById("c2").value;
-let rot=document.getElementById("rot").value;
-
-let code=`(glow#0000ff#grad#r${Math.abs(rot)}#${c1}#${c2})`;
-
-document.getElementById("output").innerHTML=
-"🔥 XAT CODE:\n"+code;
-
-let gradient=`repeating-linear-gradient(${rot}deg,#${c1},#${c2})`;
-
-document.getElementById("preview").innerHTML=`
-<div class="name">
-<div class="layer1" style="background-image:${gradient}">
-${text}
-</div>
-
-<div class="layer2">
-${text}
-</div>
-</div>
-`;
-}
+function enterSite(){intro.style.display='none';app.style.display='block';audio.play().catch(()=>{})}
+function toggleAudio(){if(audio.paused)audio.play();else audio.pause();}
 </script>
-
-</body>
-</html>
+</body></html>
