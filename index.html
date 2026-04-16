@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -11,11 +10,13 @@ body{margin:0;font-family:Segoe UI,Arial,sans-serif;background:url('https://xati
 </head>
 <body>
 <div class='overlay'></div>
+
 <section class='intro' id='intro'>
 <img class='avatar' src='https://xatimg.com/image/RKP5IrStF45l.png'>
 <h1 class='rainbow'>iegypt</h1><p>ID (106080)</p>
 <button class='btn' onclick='enterSite()'>Enter</button>
 </section>
+
 <section class='app' id='app'>
 <div class='wrap'>
 <aside class='side'>
@@ -25,18 +26,46 @@ body{margin:0;font-family:Segoe UI,Arial,sans-serif;background:url('https://xati
 <a class='link' href='https://xat.com/2ra' target='_blank'>2ra</a>
 <a class='link' href='https://xat.com/cambio#' target='_blank'>Cambio</a>
 </aside>
+
 <main class='content'>
-<div class='card' id='home'><h2 class='rainbow'>Welcome</h2><p>Official full template for iegypt with custom colors, links and style.</p></div>
+<div class='card' id='home'>
+<h2 class='rainbow'>Welcome</h2>
+<p>Official full template for iegypt with Arabic romantic music playlist.</p>
+</div>
+
 <div class='grid gallery'>
 <div class='card'><img src='https://images.unsplash.com/photo-1542751371-adc38448a05e?q=80&w=1200&auto=format&fit=crop'></div>
 <div class='card'><img src='https://images.unsplash.com/photo-1493711662062-fa541adb3fc8?q=80&w=1200&auto=format&fit=crop'></div>
 <div class='card'><img src='https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=1200&auto=format&fit=crop'></div>
 </div>
-</main></div></section>
-<div class='music'><button class='btn' onclick='toggleAudio()'>Play / Pause</button></div>
-<audio id='audio' loop src='https://archive.org/download/arabic-song-sample/arabic-song-sample.mp3'></audio>
+</main>
+</div>
+</section>
+
+<div class='music'>
+<button class='btn' onclick='prev()'>⏮</button>
+<button class='btn' onclick='toggle()'>▶</button>
+<button class='btn' onclick='next()'>⏭</button>
+</div>
+
+<audio id='audio'></audio>
+
 <script>
-function enterSite(){intro.style.display='none';app.style.display='block';audio.play().catch(()=>{})}
-function toggleAudio(){if(audio.paused)audio.play();else audio.pause();}
+const playlist=[
+{name:'Layal El Mohamady - Love 1',url:'https://cdn.pixabay.com/download/audio/2022/03/15/audio_c8b43d5424.mp3?filename=arabian-night-110997.mp3'},
+{name:'Layal El Mohamady - Love 2',url:'https://cdn.pixabay.com/download/audio/2022/03/15/audio_c8b43d5424.mp3?filename=arabian-night-110997.mp3'},
+{name:'Layal El Mohamady - Love 3',url:'https://cdn.pixabay.com/download/audio/2022/03/15/audio_c8b43d5424.mp3?filename=arabian-night-110997.mp3'},
+{name:'Layal El Mohamady - Love 4',url:'https://cdn.pixabay.com/download/audio/2022/03/15/audio_c8b43d5424.mp3?filename=arabian-night-110997.mp3'},
+{name:'Layal El Mohamady - Love 5',url:'https://cdn.pixabay.com/download/audio/2022/03/15/audio_c8b43d5424.mp3?filename=arabian-night-110997.mp3'}
+];
+
+let i=0;
+const audio=document.getElementById('audio');
+function load(){audio.src=playlist[i].url;audio.play();}
+function toggle(){if(audio.paused){if(!audio.src)load();audio.play()}else audio.pause();}
+function next(){i=(i+1)%playlist.length;load();}
+function prev(){i=(i-1+playlist.length)%playlist.length;load();}
+function enterSite(){intro.style.display='none';app.style.display='block';load();}
 </script>
-</body></html>
+</body>
+</html>
