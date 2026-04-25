@@ -13,16 +13,16 @@
 body{
   background: radial-gradient(circle at top,#010514,#020617);
   color:#fff;
-  overflow:hidden;
 }
 
+/* BACKGROUND */
 canvas{
   position:fixed;
   inset:0;
-  z-index:-3;
+  z-index:-1;
 }
 
-/* LOGIN OVERLAY */
+/* LOGIN */
 .login{
   position:fixed;
   inset:0;
@@ -59,7 +59,7 @@ canvas{
   border-radius:8px;
 }
 
-/* TOP STATUS BAR */
+/* TOPBAR */
 .topbar{
   position:fixed;
   top:0;
@@ -135,11 +135,16 @@ canvas{
 .tab:hover{transform:scale(1.05);box-shadow:0 0 20px #38bdf8}
 .tab.active{box-shadow:0 0 25px #38bdf8}
 
+/* GRIDS */
 .grid{
   margin-top:20px;
-  display:grid;
+  display:none;
   grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
   gap:20px;
+}
+
+.grid.active{
+  display:grid;
 }
 
 .card{
@@ -151,12 +156,6 @@ canvas{
 }
 .card:hover{transform:translateY(-6px);box-shadow:0 0 25px rgba(0,140,255,0.3)}
 
-/* My favorite chats MAP */
-.My favorite chats{
-  display:none;
-  grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
-}
-
 .world{
   padding:20px;
   border-radius:15px;
@@ -164,11 +163,14 @@ canvas{
   border:1px solid rgba(255,255,255,0.1);
   cursor:pointer;
   transition:.3s;
+  text-decoration:none;
+  color:#fff;
+  display:block;
 }
 .world:hover{transform:scale(1.05);box-shadow:0 0 25px #00c3ff}
 
-/* My chat PANEL */
-.my chat{
+/* CHAT */
+.chat{
   position:fixed;
   bottom:20px;
   right:20px;
@@ -178,12 +180,12 @@ canvas{
   border-radius:15px;
   overflow:hidden;
 }
-.my chat-header{
+.chat-header{
   padding:10px;
   background:linear-gradient(45deg,#0ea5e9,#1e3a8a);
   font-size:12px;
 }
-.my chat-msgs{
+.chat-msgs{
   height:160px;
   overflow-y:auto;
   padding:10px;
@@ -206,10 +208,13 @@ canvas{
   cursor:pointer;
 }
 
-@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
-
+@keyframes float{
+  0%,100%{transform:translateY(0)}
+  50%{transform:translateY(-10px)}
+}
 </style>
 </head>
+
 <body>
 
 <canvas id="bg"></canvas>
@@ -218,77 +223,76 @@ canvas{
 <div class="login" id="login">
   <div class="login-box">
     <h3>ACCESS GOD SYSTEM</h3>
-    <input id="u" placeholder="Username">
-    <input id="p" placeholder="Password" type="password">
-    <button onclick="enter()">Enter My favorite chats</button>
+    <input placeholder="Username">
+    <input placeholder="Password" type="password">
+    <button onclick="enter()">Enter</button>
   </div>
 </div>
 
 <div class="topbar">
-  <div class="status" id="status">⚡ My favorite chats Sync: OFFLINE</div>
+  <div class="status" id="status">⚡ System: OFFLINE</div>
   <div>GOD SYSTEM V2</div>
 </div>
 
 <div class="container">
 
-  <div class="profile">
+<div class="profile">
 
-    <div class="top">
-      <img src="https://xatimg.com/image/RKP5IrStF45l.png">
-      <div>
-        <div class="name">Ramy</div>
-        <div>@iegypt • ID: 106080</div>
-      </div>
-    </div>
-
-    <div class="tabs">
-      <div class="tab active" onclick="tab('info')">Info</div>
-      <div class="tab" onclick="tab('worlds')">My favorite chats</div>
-      <div class="tab" onclick="tab('my chat')">My Chat</div>
-    </div>
-
-    <div class="grid" id="info">
-      <div class="card">⚡I love trading on the xat website</div>
-      <div class="card">❤️I got involved with Dolly and she's my whole life❤️</div>
-    </div>
-
-    <div class="grid My favorite chats" id="worlds">
-      <div class="world" onclick="enterWorld('My Chat')">https://xat.com/2ra</div>
-      <div class="world" onclick="enterWorld('7reqa')">https://xat.com/7reqa</div>
-      <div class="world" onclick="enterWorld('Trade')">https://xat.com/trade</div>
-      <div class="world" onclick="enterWorld('Cambio')">https://xat.com/cambio</div>
-    </div>
-
-    <div class="grid" id="my chat" style="display:none">
-      <div class="card">https://xat.com/2ra</div>
-    </div>
-
-  </div>
-
+<div class="top">
+<img src="https://xatimg.com/image/RKP5IrStF45l.png">
+<div>
+<div class="name">Ramy</div>
+<div>@iegypt • ID: 106080</div>
+</div>
 </div>
 
+<div class="tabs">
+<div class="tab active" onclick="showTab('info',this)">Info</div>
+<div class="tab" onclick="showTab('worlds',this)">My favorite chats</div>
+<div class="tab" onclick="showTab('mychat',this)">My Chat</div>
+</div>
+
+<div class="grid active" id="info">
+<div class="card">⚡ I love trading on xat</div>
+<div class="card">❤️ Dolly is my life ❤️</div>
+</div>
+
+<div class="grid" id="worlds">
+<a href="https://xat.com/2ra" target="_blank" class="world">xat.com/2ra</a>
+<a href="https://xat.com/7reqa" target="_blank" class="world">xat.com/7reqa</a>
+<a href="https://xat.com/trade" target="_blank" class="world">xat.com/trade</a>
+<a href="https://xat.com/cambio" target="_blank" class="world">xat.com/cambio</a>
+</div>
+
+<div class="grid" id="mychat">
+<div class="card">https://xat.com/2ra</div>
+</div>
+
+</div>
+</div>
+
+<!-- CHAT -->
 <div class="chat">
-  <div class="chat-header">By Ramy</div>
-  <div class="chat-msgs" id="msgs"></div>
-  <div class="chat-input">
-    <input id="msg">
-    <button onclick="send()">Send</button>
-  </div>
+<div class="chat-header">By Ramy</div>
+<div class="chat-msgs" id="msgs"></div>
+<div class="chat-input">
+<input id="msg">
+<button onclick="send()">Send</button>
+</div>
 </div>
 
 <script>
 function enter(){
   document.getElementById('login').style.display='none';
-  document.getElementById('status').innerText='⚡ My favorite chats Sync: ONLINE';
+  document.getElementById('status').innerText='⚡ System: ONLINE';
 }
 
-function tab(id){
-  document.querySelectorAll('.grid').forEach(g=>g.style.display='none');
-  document.getElementById(id).style.display='grid';
-}
+function showTab(id,el){
+  document.querySelectorAll('.grid').forEach(g=>g.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
 
-function enterWorld(w){
-  alert('Entering '+w+'...');
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  el.classList.add('active');
 }
 
 function send(){
@@ -300,13 +304,28 @@ function send(){
   m.value='';
 }
 
-// background particles
+// BG particles
 const c=document.getElementById('bg');
 const x=c.getContext('2d');
-c.width=innerWidth;c.height=innerHeight;
+c.width=innerWidth;
+c.height=innerHeight;
+
 let p=[];
-for(let i=0;i<70;i++)p.push({x:Math.random()*c.width,y:Math.random()*c.height,r:Math.random()*2});
-function a(){x.clearRect(0,0,c.width,c.height);x.fillStyle="#38bdf8";p.forEach(o=>{x.beginPath();x.arc(o.x,o.y,o.r,0,6.28);x.fill()});requestAnimationFrame(a)}a();
+for(let i=0;i<80;i++){
+  p.push({x:Math.random()*c.width,y:Math.random()*c.height,r:Math.random()*2});
+}
+
+function anim(){
+  x.clearRect(0,0,c.width,c.height);
+  x.fillStyle="#38bdf8";
+  p.forEach(o=>{
+    x.beginPath();
+    x.arc(o.x,o.y,o.r,0,6.28);
+    x.fill();
+  });
+  requestAnimationFrame(anim);
+}
+anim();
 </script>
 
 </body>
