@@ -2,62 +2,311 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>iegypt Full Profile</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ramy Profile - GOD SYSTEM V2</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+
 <style>
-body{margin:0;font-family:Segoe UI,Arial,sans-serif;background:url('https://xatimg.com/image/PKE63yJ4Y6Q9.jpg') center/cover fixed;color:#fff;overflow:hidden}*{box-sizing:border-box}.overlay{position:fixed;inset:0;background:rgba(0,0,0,.55)}.intro,.app{position:relative;z-index:2}.intro{height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center}.avatar{width:220px;height:220px;border-radius:24px;object-fit:cover;border:4px solid #fff;box-shadow:0 0 30px #09f}.rainbow{background:linear-gradient(90deg,#09f,#ffd700,#f00,#fff,#09f);background-size:300% auto;-webkit-background-clip:text;color:transparent;animation:move 5s linear infinite}.btn{padding:12px 22px;border:none;border-radius:999px;background:#0048ff;color:#fff;cursor:pointer;margin:6px}.app{display:none;height:100vh}.side{width:260px;background:rgba(0,0,0,.45);padding:15px;overflow:auto}.content{flex:1;padding:20px;overflow:auto}.wrap{display:flex;height:100%}.card{background:rgba(255,255,255,.08);padding:18px;border:1px solid rgba(255,255,255,.15);border-radius:16px;margin-bottom:16px}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:15px}.link{display:block;text-decoration:none;color:#fff;padding:12px;border-radius:12px;background:rgba(255,255,255,.08);margin-bottom:10px}.gallery img{width:100%;border-radius:14px;height:180px;object-fit:cover}.music-box{position:fixed;bottom:15px;right:15px;z-index:5;background:rgba(0,0,0,.5);padding:12px;border-radius:12px;border:1px solid rgba(255,255,255,.2)}.hide{display:none}@keyframes move{to{background-position:300% center}}
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif}
+
+body{
+  background: radial-gradient(circle at top,#010514,#020617);
+  color:#fff;
+  overflow:hidden;
+}
+
+canvas{
+  position:fixed;
+  inset:0;
+  z-index:-3;
+}
+
+/* LOGIN OVERLAY */
+.login{
+  position:fixed;
+  inset:0;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:rgba(0,0,0,0.7);
+  backdrop-filter:blur(12px);
+  z-index:50;
+}
+.login-box{
+  width:320px;
+  padding:20px;
+  border-radius:15px;
+  background:rgba(255,255,255,0.05);
+  border:1px solid rgba(255,255,255,0.1);
+}
+.login-box input{
+  width:100%;
+  margin:10px 0;
+  padding:10px;
+  background:#0f172a;
+  border:none;
+  color:#fff;
+  border-radius:8px;
+}
+.login-box button{
+  width:100%;
+  padding:10px;
+  background:linear-gradient(45deg,#0ea5e9,#1e3a8a);
+  border:none;
+  color:#fff;
+  cursor:pointer;
+  border-radius:8px;
+}
+
+/* TOP STATUS BAR */
+.topbar{
+  position:fixed;
+  top:0;
+  left:0;
+  right:0;
+  padding:10px 20px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  background:rgba(0,0,0,0.4);
+  backdrop-filter:blur(12px);
+  border-bottom:1px solid rgba(255,255,255,0.08);
+  z-index:10;
+}
+
+.status{
+  font-size:12px;
+  color:#38bdf8;
+  text-shadow:0 0 10px #38bdf8;
+}
+
+.container{
+  max-width:1100px;
+  margin:80px auto;
+  padding:20px;
+}
+
+.profile{
+  background:linear-gradient(180deg,rgba(255,255,255,0.08),rgba(255,255,255,0.03));
+  border-radius:25px;
+  border:1px solid rgba(255,255,255,0.1);
+  padding:25px;
+  backdrop-filter:blur(18px);
+  box-shadow:0 0 70px rgba(0,140,255,0.25);
+}
+
+.top{
+  display:flex;
+  gap:20px;
+  align-items:center;
+}
+
+.top img{
+  width:130px;
+  height:130px;
+  border-radius:50%;
+  border:3px solid #00c3ff;
+  animation:float 3s infinite ease-in-out;
+}
+
+.name{
+  font-size:42px;
+  font-weight:700;
+  color:#4fc3ff;
+  text-shadow:0 0 20px rgba(79,195,255,0.8);
+}
+
+.tabs{
+  display:flex;
+  gap:10px;
+  margin-top:25px;
+  flex-wrap:wrap;
+}
+
+.tab{
+  padding:10px 18px;
+  border-radius:10px;
+  background:linear-gradient(45deg,#0ea5e9,#1e3a8a);
+  cursor:pointer;
+  transition:.3s;
+}
+
+.tab:hover{transform:scale(1.05);box-shadow:0 0 20px #38bdf8}
+.tab.active{box-shadow:0 0 25px #38bdf8}
+
+.grid{
+  margin-top:20px;
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+  gap:20px;
+}
+
+.card{
+  background:rgba(255,255,255,0.05);
+  padding:20px;
+  border-radius:20px;
+  border:1px solid rgba(255,255,255,0.1);
+  transition:.3s;
+}
+.card:hover{transform:translateY(-6px);box-shadow:0 0 25px rgba(0,140,255,0.3)}
+
+/* UNIVERSE MAP */
+.universe{
+  display:none;
+  grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+}
+
+.world{
+  padding:20px;
+  border-radius:15px;
+  background:linear-gradient(135deg,rgba(0,195,255,0.1),rgba(0,0,0,0.2));
+  border:1px solid rgba(255,255,255,0.1);
+  cursor:pointer;
+  transition:.3s;
+}
+.world:hover{transform:scale(1.05);box-shadow:0 0 25px #00c3ff}
+
+/* CHAT PANEL */
+.chat{
+  position:fixed;
+  bottom:20px;
+  right:20px;
+  width:280px;
+  background:rgba(0,0,0,0.5);
+  border:1px solid rgba(255,255,255,0.1);
+  border-radius:15px;
+  overflow:hidden;
+}
+.chat-header{
+  padding:10px;
+  background:linear-gradient(45deg,#0ea5e9,#1e3a8a);
+  font-size:12px;
+}
+.chat-msgs{
+  height:160px;
+  overflow-y:auto;
+  padding:10px;
+  font-size:12px;
+}
+.chat-input{
+  display:flex;
+}
+.chat-input input{
+  flex:1;
+  padding:8px;
+  border:none;
+  background:#0f172a;
+  color:#fff;
+}
+.chat-input button{
+  padding:8px;
+  border:none;
+  background:#38bdf8;
+  cursor:pointer;
+}
+
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+
 </style>
 </head>
 <body>
-<div class='overlay'></div>
 
-<section class='intro' id='intro'>
-<img class='avatar' src='https://xatimg.com/image/RKP5IrStF45l.png'>
-<h1 class='rainbow'>iegypt</h1><p>ID (106080)</p>
-<button class='btn' onclick='enterSite()'>Enter</button>
-</section>
+<canvas id="bg"></canvas>
 
-<section class='app' id='app'>
-<div class='wrap'>
-<aside class='side'>
-<h2 class='rainbow'>MENU</h2>
-<a class='link' href='#home'>Home</a>
-<a class='link' href='https://xat.com/TRADE#' target='_blank'>TRADE</a>
-<a class='link' href='https://xat.com/2ra' target='_blank'>2ra</a>
-<a class='link' href='https://xat.com/cambio#' target='_blank'>Cambio</a>
-</aside>
-
-<main class='content'>
-<div class='card' id='home'>
-<h2 class='rainbow'>Welcome</h2>
-<p>Full profile restored (stable version without broken music player).</p>
+<!-- LOGIN -->
+<div class="login" id="login">
+  <div class="login-box">
+    <h3>ACCESS GOD SYSTEM</h3>
+    <input id="u" placeholder="Username">
+    <input id="p" placeholder="Password" type="password">
+    <button onclick="enter()">Enter Universe</button>
+  </div>
 </div>
 
-<div class='card'>
-<h2 class='rainbow'>Arabic Music Section</h2>
-<p>Music system replaced with stable YouTube embed.</p>
-
-<iframe width="100%" height="315" src="https://www.youtube.com/embed/5qap5aO4i9A" frameborder="0" allowfullscreen></iframe>
+<div class="topbar">
+  <div class="status" id="status">⚡ Universe Sync: OFFLINE</div>
+  <div>GOD SYSTEM V2</div>
 </div>
 
-<div class='grid gallery'>
-<div class='card'><img src='https://images.unsplash.com/photo-1542751371-adc38448a05e?q=80&w=1200&auto=format&fit=crop'></div>
-<div class='card'><img src='https://images.unsplash.com/photo-1493711662062-fa541adb3fc8?q=80&w=1200&auto=format&fit=crop'></div>
-<div class='card'><img src='https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=1200&auto=format&fit=crop'></div>
-</div>
-</main>
-</div>
-</section>
+<div class="container">
 
-<div class='music-box'>
-🎵 Music system stable (YouTube embed active)
+  <div class="profile">
+
+    <div class="top">
+      <img src="https://xatimg.com/image/RKP5IrStF45l.png">
+      <div>
+        <div class="name">Ramy</div>
+        <div>@iegypt • ID: 106080</div>
+      </div>
+    </div>
+
+    <div class="tabs">
+      <div class="tab active" onclick="tab('info')">Info</div>
+      <div class="tab" onclick="tab('worlds')">Universe</div>
+      <div class="tab" onclick="tab('chat')">Chat</div>
+    </div>
+
+    <div class="grid" id="info">
+      <div class="card">⚡I love trading on the xat website</div>
+      <div class="card">❤️I got involved with Dolly and she's my whole life❤️</div>
+    </div>
+
+    <div class="grid My favorite chats" id="worlds">
+      <div class="world" onclick="enterWorld('My Chat')">https://xat.com/2ra</div>
+      <div class="world" onclick="enterWorld('7reqa')">https://xat.com/7reqa</div>
+      <div class="world" onclick="enterWorld('Trade')">https://xat.com/trade</div>
+      <div class="world" onclick="enterWorld('Cambio')">https://xat.com/cambio</div>
+    </div>
+
+    <div class="grid" id="my chat" style="display:none">
+      <div class="card">https://xat.com/2ra</div>
+    </div>
+
+  </div>
+
+</div>
+
+<div class="chat">
+  <div class="chat-header">Live Chat</div>
+  <div class="chat-msgs" id="msgs"></div>
+  <div class="chat-input">
+    <input id="msg">
+    <button onclick="send()">Send</button>
+  </div>
 </div>
 
 <script>
-function enterSite(){
- document.getElementById('intro').style.display='none';
- document.getElementById('app').style.display='block';
+function enter(){
+  document.getElementById('login').style.display='none';
+  document.getElementById('status').innerText='⚡ Universe Sync: ONLINE';
 }
+
+function tab(id){
+  document.querySelectorAll('.grid').forEach(g=>g.style.display='none');
+  document.getElementById(id).style.display='grid';
+}
+
+function enterWorld(w){
+  alert('Entering '+w+'...');
+}
+
+function send(){
+  let m=document.getElementById('msg');
+  if(!m.value)return;
+  let d=document.createElement('div');
+  d.textContent='You: '+m.value;
+  document.getElementById('msgs').appendChild(d);
+  m.value='';
+}
+
+// background particles
+const c=document.getElementById('bg');
+const x=c.getContext('2d');
+c.width=innerWidth;c.height=innerHeight;
+let p=[];
+for(let i=0;i<70;i++)p.push({x:Math.random()*c.width,y:Math.random()*c.height,r:Math.random()*2});
+function a(){x.clearRect(0,0,c.width,c.height);x.fillStyle="#38bdf8";p.forEach(o=>{x.beginPath();x.arc(o.x,o.y,o.r,0,6.28);x.fill()});requestAnimationFrame(a)}a();
 </script>
 
 </body>
