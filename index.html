@@ -13,12 +13,13 @@
 body{
   background: radial-gradient(circle at top,#010514,#020617);
   color:#fff;
+  overflow:hidden;
 }
 
 canvas{
   position:fixed;
   inset:0;
-  z-index:-1;
+  z-index:-3;
 }
 
 /* LOGIN */
@@ -128,39 +129,90 @@ canvas{
   border-radius:10px;
   background:linear-gradient(45deg,#0ea5e9,#1e3a8a);
   cursor:pointer;
+  transition:.3s;
 }
+
+.tab:hover{transform:scale(1.05);box-shadow:0 0 20px #38bdf8}
+.tab.active{box-shadow:0 0 25px #38bdf8}
 
 .grid{
   margin-top:20px;
-  display:none;
+  display:grid;
   grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
   gap:20px;
 }
-.grid.active{display:grid;}
+
+.grid.hidden{
+  display:none;
+}
 
 .card{
   background:rgba(255,255,255,0.05);
   padding:20px;
   border-radius:20px;
+  border:1px solid rgba(255,255,255,0.1);
+  transition:.3s;
 }
+.card:hover{transform:translateY(-6px);box-shadow:0 0 25px rgba(0,140,255,0.3)}
 
 .world{
-  display:block;
   padding:20px;
   border-radius:15px;
-  background:rgba(0,195,255,0.1);
+  background:linear-gradient(135deg,rgba(0,195,255,0.1),rgba(0,0,0,0.2));
+  border:1px solid rgba(255,255,255,0.1);
+  cursor:pointer;
+  transition:.3s;
   text-decoration:none;
   color:#fff;
+  display:block;
+}
+.world:hover{transform:scale(1.05);box-shadow:0 0 25px #00c3ff}
+
+/* CHAT */
+.chat{
+  position:fixed;
+  bottom:20px;
+  right:20px;
+  width:280px;
+  background:rgba(0,0,0,0.5);
+  border:1px solid rgba(255,255,255,0.1);
+  border-radius:15px;
+  overflow:hidden;
+}
+.chat-header{
+  padding:10px;
+  background:linear-gradient(45deg,#0ea5e9,#1e3a8a);
+  font-size:12px;
+}
+.chat-msgs{
+  height:160px;
+  overflow-y:auto;
+  padding:10px;
+  font-size:12px;
+}
+.chat-input{
+  display:flex;
+}
+.chat-input input{
+  flex:1;
+  padding:8px;
+  border:none;
+  background:#0f172a;
+  color:#fff;
+}
+.chat-input button{
+  padding:8px;
+  border:none;
+  background:#38bdf8;
+  cursor:pointer;
 }
 
-/* HIDDEN AUDIO */
-#audioPlayer{
-  display:none;
-}
+/* AUDIO مخفي */
+#audioPlayer{display:none;}
 
 @keyframes float{
-  0%,100%{transform:translateY(0)}
-  50%{transform:translateY(-10px)}
+0%,100%{transform:translateY(0)}
+50%{transform:translateY(-10px)}
 }
 </style>
 </head>
@@ -177,14 +229,15 @@ canvas{
 <!-- LOGIN -->
 <div class="login" id="login">
   <div class="login-box">
-    <h3>ACCESS</h3>
+    <h3>ACCESS GOD SYSTEM</h3>
     <input id="password" type="password">
     <button onclick="enter()">Enter</button>
   </div>
 </div>
 
 <div class="topbar">
-  <div class="status" id="status">⚡ System: OFFLINE</div>
+  <div class="status" id="status">⚡ My favorite chats Sync: OFFLINE</div>
+  <div>GOD SYSTEM V2</div>
 </div>
 
 <div class="container">
@@ -194,36 +247,55 @@ canvas{
 <img src="https://xatimg.com/image/RKP5IrStF45l.png">
 <div>
 <div class="name">Ramy</div>
+<div>@iegypt • ID: 106080</div>
 </div>
 </div>
 
 <div class="tabs">
-<div class="tab" onclick="showTab('info')">Info</div>
-<div class="tab" onclick="showTab('worlds')">Chats</div>
+<div class="tab active" onclick="tab('info',this)">Info</div>
+<div class="tab" onclick="tab('worlds',this)">My favorite chats</div>
+<div class="tab" onclick="tab('mychat',this)">My Chat</div>
 </div>
 
-<div class="grid active" id="info">
-<div class="card">❤️ القرآن شغال تلقائي ❤️</div>
+<div class="grid" id="info">
+<div class="card">⚡I love trading on the xat website</div>
+<div class="card">❤️I got involved with Dolly and she's my whole life❤️</div>
 </div>
 
-<div class="grid" id="worlds">
-<a href="https://xat.com/2ra" target="_blank" class="world">2ra</a>
+<div class="grid hidden" id="worlds">
+<a href="https://xat.com/2ra" target="_blank" class="world">https://xat.com/2ra</a>
+<a href="https://xat.com/7reqa" target="_blank" class="world">https://xat.com/7reqa</a>
+<a href="https://xat.com/trade" target="_blank" class="world">https://xat.com/trade</a>
+<a href="https://xat.com/cambio" target="_blank" class="world">https://xat.com/cambio</a>
 </div>
 
+<div class="grid hidden" id="mychat">
+<div class="card">https://xat.com/2ra</div>
+</div>
+
+</div>
+</div>
+
+<div class="chat">
+<div class="chat-header">By Ramy</div>
+<div class="chat-msgs" id="msgs"></div>
+<div class="chat-input">
+<input id="msg">
+<button onclick="send()">Send</button>
 </div>
 </div>
 
 <script>
+
 // LOGIN
 function enter(){
   let p = document.getElementById('password').value;
 
   if(p === "106080"){
     document.getElementById('login').style.display='none';
-    document.getElementById('status').innerText='⚡ System: ONLINE';
+    document.getElementById('status').innerText='⚡ My favorite chats Sync: ONLINE';
 
-    let audio = document.getElementById("audioPlayer");
-    audio.play().catch(()=>{});
+    document.getElementById("audioPlayer").play().catch(()=>{});
   } else {
     alert("Wrong password");
   }
@@ -237,9 +309,22 @@ document.addEventListener("keydown", function(e){
 });
 
 // TABS
-function showTab(id){
-  document.querySelectorAll('.grid').forEach(g=>g.classList.remove('active'));
-  document.getElementById(id).classList.add('active');
+function tab(id,el){
+  document.querySelectorAll('.grid').forEach(g=>g.classList.add('hidden'));
+  document.getElementById(id).classList.remove('hidden');
+
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  el.classList.add('active');
+}
+
+// CHAT
+function send(){
+  let m=document.getElementById('msg');
+  if(!m.value)return;
+  let d=document.createElement('div');
+  d.textContent='You: '+m.value;
+  document.getElementById('msgs').appendChild(d);
+  m.value='';
 }
 
 // BG
@@ -247,18 +332,9 @@ const c=document.getElementById('bg');
 const x=c.getContext('2d');
 c.width=innerWidth;c.height=innerHeight;
 let p=[];
-for(let i=0;i<60;i++)p.push({x:Math.random()*c.width,y:Math.random()*c.height,r:Math.random()*2});
-function a(){
-  x.clearRect(0,0,c.width,c.height);
-  x.fillStyle="#38bdf8";
-  p.forEach(o=>{
-    x.beginPath();
-    x.arc(o.x,o.y,o.r,0,6.28);
-    x.fill();
-  });
-  requestAnimationFrame(a);
-}
-a();
+for(let i=0;i<70;i++)p.push({x:Math.random()*c.width,y:Math.random()*c.height,r:Math.random()*2});
+function a(){x.clearRect(0,0,c.width,c.height);x.fillStyle="#38bdf8";p.forEach(o=>{x.beginPath();x.arc(o.x,o.y,o.r,0,6.28);x.fill()});requestAnimationFrame(a)}a();
+
 </script>
 
 </body>
