@@ -158,6 +158,10 @@ canvas{
   display:none;
 }
 
+@keyframes float{
+  0%,100%{transform:translateY(0)}
+  50%{transform:translateY(-10px)}
+}
 </style>
 </head>
 
@@ -166,7 +170,7 @@ canvas{
 <canvas id="bg"></canvas>
 
 <!-- AUDIO -->
-<audio id="audioPlayer" autoplay loop>
+<audio id="audioPlayer" loop>
   <source src="https://stream.radiojar.com/8s5u5tpdtwzuv" type="audio/mpeg">
 </audio>
 
@@ -210,14 +214,14 @@ canvas{
 </div>
 
 <script>
+// LOGIN
 function enter(){
   let p = document.getElementById('password').value;
 
-  if(p === "1234"){
+  if(p === "106080"){
     document.getElementById('login').style.display='none';
     document.getElementById('status').innerText='⚡ System: ONLINE';
 
-    // تشغيل الصوت
     let audio = document.getElementById("audioPlayer");
     audio.play().catch(()=>{});
   } else {
@@ -225,14 +229,14 @@ function enter(){
   }
 }
 
-// Enter key
+// ENTER KEY
 document.addEventListener("keydown", function(e){
   if(e.key === "Enter"){
     enter();
   }
 });
 
-// Tabs
+// TABS
 function showTab(id){
   document.querySelectorAll('.grid').forEach(g=>g.classList.remove('active'));
   document.getElementById(id).classList.add('active');
@@ -244,7 +248,17 @@ const x=c.getContext('2d');
 c.width=innerWidth;c.height=innerHeight;
 let p=[];
 for(let i=0;i<60;i++)p.push({x:Math.random()*c.width,y:Math.random()*c.height,r:Math.random()*2});
-function a(){x.clearRect(0,0,c.width,c.height);x.fillStyle="#38bdf8";p.forEach(o=>{x.beginPath();x.arc(o.x,o.y,o.r,0,6.28);x.fill()});requestAnimationFrame(a)}a();
+function a(){
+  x.clearRect(0,0,c.width,c.height);
+  x.fillStyle="#38bdf8";
+  p.forEach(o=>{
+    x.beginPath();
+    x.arc(o.x,o.y,o.r,0,6.28);
+    x.fill();
+  });
+  requestAnimationFrame(a);
+}
+a();
 </script>
 
 </body>
